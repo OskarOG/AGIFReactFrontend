@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import "./CalendarWeek.css";
 import { CalendarDay } from "../CalendarDay/CalendarDay";
 import { SampleData } from "../../helpers/SampleData";
 
 export const CalendarWeek = (props) => {
     const days = ["Söndag", "Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag"];
-    const fields = SampleData.field; // TODO: API call fields
+    
+    const [fields, setFields] = useState(SampleData.field); // TODO: API CALL!
+    const [events, setEvents] = useState(SampleData.events); // TODO: API CALL!
 
     const d = new Date(props.weekStartDate);
     const calDays = [];
@@ -14,7 +16,7 @@ export const CalendarWeek = (props) => {
 
         calDays.push(<CalendarDay key={d.getTime()}
                                     fields={fields}
-                                    dayEvents={props.weekEvents.filter((e) => e.dateStart.getDate() == d.getDate())}
+                                    dayEvents={events.filter((e) => e.dateStart.getDate() == d.getDate())}
                                     dayDate={new Date(d)}
                                     dayName={days[d.getDay()]} />);
     }

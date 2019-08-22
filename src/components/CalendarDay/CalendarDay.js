@@ -5,8 +5,8 @@ import { DayHeader } from "../DayHeader/DayHeader";
 
 export const CalendarDay = (props) => {
     const fieldItems = props.fields.map((f) =>
-        <Field key={f.id}
-                fieldTitle={f.title} 
+        <Field key={props.dayDate.getTime()+"-"+f.id}
+                fieldTitle={f.title}
                 fieldEvents={props.dayEvents.filter((e) => e.fieldId == f.id)} />
     );
 

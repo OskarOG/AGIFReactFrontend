@@ -1,5 +1,8 @@
 .field-header {
-    width:50%;
-    height: 50px;
+    width:100%;
+    height: 40px;
     float: left;
+    text-align: center;
+    font-size: 12px;
+    border-bottom: 1px solid #c2c1a549;
 }
