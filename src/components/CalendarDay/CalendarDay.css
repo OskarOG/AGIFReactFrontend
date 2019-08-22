@@ -1,0 +1,8 @@
+.day-container {
+    width:250px;
+    display: block;
+    float: left;
+    height: 1000px;
+    background-color: #444;
+    border: solid 1px #FFF;
+}

@@ -1,0 +1,14 @@
+.day-header {
+    height: 40px;
+    width: 100%;
+    background-color: yellow;
+    text-align: center;
+}
+
+.day-header-day-name {
+    display: block;
+}
+
+.day-header-day-date {
+    display: block;
+}

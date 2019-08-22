@@ -1,15 +1,26 @@
-import React, { Component } from "react";
-import { hot } from "react-hot-loader";
+import React, { useEffect, useState } from "react";
 import "./App.css";
+import { CalendarWeek } from "./CalendarWeek/CalendarWeek";
+import API from "../helpers/Api";
 
-class App extends Component {
-    render() {
-        return (
-            <div className="App">
-                <h1>Hello, World!</h1>
-            </div>
-        );
-    }
+export const App = (props) => {
+    const [events, setEvents] = useState([]);
+
+    const tDate = new Date();
+    tDate.setHours(0,0,0,0);
+
+    const startDate = tDate.subtractDays(tDate.getDay()-1);
+    const endDate = tDate.addDays(7 - tDate.getDay());
+    endDate.setHours(23,59,59,999);
+
+    API.events()
+        .getForWeek(startDate, endDate)
+        .then((r) => {
+            setEvents(r.data);
+        });
+    
+    return (
+        <div className="App">
+            <CalendarWeek weekEvents={events} weekStartDate={startDate} />
+        </div>);
 }
-
-export default hot(module)(App);
