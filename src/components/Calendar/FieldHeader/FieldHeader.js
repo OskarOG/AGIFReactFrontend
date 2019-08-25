@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./FieldHeader.css";
 
 export const FieldHeader = (props) => {
+    useEffect(() => {
+        document.querySelectorAll(".field-header").forEach((e) => e.style = "top:" + window.scrollY + "px");
+    });
+
     return (
         <div className="field-header">
             <div className="field-title">

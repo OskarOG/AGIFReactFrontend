@@ -5,4 +5,7 @@
     text-align: center;
     font-size: 12px;
     border-bottom: 1px solid #c2c1a549;
+    position: relative;
+    z-index: 3000;
+    background-color: #FCFCFC;
 }

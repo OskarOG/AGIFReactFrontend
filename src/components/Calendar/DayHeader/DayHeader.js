@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./DayHeader.css";
 
 export const DayHeader = (props) => {
+    useEffect(() => {
+        document.querySelectorAll(".day-header").forEach((e) => e.style = "top:" + window.scrollY + "px");  
+    });
+
     return (
         <div className="day-header">
             <div className="day-header-day-name">{props.dayName}</div>

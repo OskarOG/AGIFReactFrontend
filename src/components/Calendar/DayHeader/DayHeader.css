@@ -3,6 +3,9 @@
     width: 100%;
     text-align: center;
     border-bottom: 1px solid #c2c1a549;
+    position: relative;
+    z-index: 3000;
+    background-color: #FCFCFC;
 }
 
 .day-header-day-name {
