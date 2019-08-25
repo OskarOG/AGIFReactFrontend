@@ -12,7 +12,7 @@ import API from "../helpers/Api";
 
 export const App = (props) => {
     const [events, setEvents] = useState(SampleData.events);
-    const [displayLogin, setDisplayLogin] = useState(true);
+    const [isLoggedIn, setLoggedIn] = useState(false);
 
     const weekDateSpan = new Date().getWeekDateSpan();
 
@@ -30,12 +30,10 @@ export const App = (props) => {
             <main>
                 <div className="navigation">
                     <SideNav onSelect={(selected) => {
-                        console.log(selected);
-
                         if (selected === "next-week") {
-                            setDisplayLogin(false);
+                            setLoggedIn(false);
                         } else if (selected === "previous-week") {
-                            setDisplayLogin(true);
+                            setLoggedIn(true);
                         }
                     }}>
                         <SideNav.Toggle />
@@ -52,11 +50,31 @@ export const App = (props) => {
                                 </NavIcon>
                                 <NavText>Föregående vecka</NavText>
                             </NavItem>
-                            <NavItem style={{ visibility: `${ displayLogin ? "visible" : "hidden"}` } } eventKey="signin">
+
+                            <NavItem eventKey="new-event">
+                                <NavIcon>
+                                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                </NavIcon>
+                                <NavText>Ny bokning</NavText>
+                            </NavItem>
+
+                            <NavItem style={{ visibility: `${ isLoggedIn ? "hidden" : "visible" }` } } eventKey="signin">
                                 <NavIcon>
                                     <i className="fa fa-sign-in" />
                                 </NavIcon>
                                 <NavText>Logga in</NavText>
+                            </NavItem>
+                            <NavItem style={{ visibility: `${ isLoggedIn ? "visible" : "hidden"}` } } eventKey="admin">
+                                <NavIcon>
+                                <i class="fa fa-user-circle" aria-hidden="true"></i>
+                                </NavIcon>
+                                <NavText>Administrera</NavText>
+                            </NavItem>
+                            <NavItem style={{ visibility: `${ isLoggedIn ? "visible" : "hidden"}` } } eventKey="signout">
+                                <NavIcon>
+                                    <i className="fa fa-sign-out" />
+                                </NavIcon>
+                                <NavText>Logga ut</NavText>
                             </NavItem>
                         </SideNav.Nav>
                     </SideNav>
