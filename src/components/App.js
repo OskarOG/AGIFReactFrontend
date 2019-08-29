@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 
 import "./App.css";
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
+import "react-datepicker/dist/react-datepicker.css";
 
 import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from "@trendmicro/react-sidenav";
+
+import Datepicker from "react-datepicker";
 
 import { CalendarWeek } from "./Calendar/CalendarWeek/CalendarWeek";
 import { SampleData } from "../helpers/SampleData";
@@ -11,10 +14,10 @@ import { SampleData } from "../helpers/SampleData";
 import API from "../helpers/Api";
 
 export const App = (props) => {
-    const [events, setEvents] = useState(SampleData.events);
     const [isLoggedIn, setLoggedIn] = useState(false);
 
-    const weekDateSpan = new Date().getWeekDateSpan();
+    const [weekStartDate, setWeekStartDate] = useState(new Date().getWeekDateSpan().startDate);
+    const [selectedDate, setSelectedDate] = useState(weekStartDate);
 
     useEffect(() => {
         let d = new Date();
@@ -25,37 +28,55 @@ export const App = (props) => {
         window.scrollTo(pxToScrollForDays, scrollToTimeInPx);
     }, []);
 
+    const handleDate = (date) => {
+        setSelectedDate(date);
+    };
+
     return (
         <div className="App">
             <main>
                 <div className="navigation">
                     <SideNav onSelect={(selected) => {
                         if (selected === "next-week") {
-                            setLoggedIn(false);
+                            setWeekStartDate(weekStartDate.addDays(7));
                         } else if (selected === "previous-week") {
-                            setLoggedIn(true);
+                            setWeekStartDate(weekStartDate.addDays(-7));
+                        } else if (selected === "new-event") {
+                            // TODO: Display modal
+                        } else if (selected === "signin") {
+                            // TODO: Sign in modal
+                        } else if (selected === "admin") {
+                            // TODO: Open admin page/view
+                        } else if (selected === "signout") {
+
                         }
                     }}>
                         <SideNav.Toggle />
                         <SideNav.Nav>
                             <NavItem eventKey="next-week">
                                 <NavIcon>
-                                <i class="fa fa-step-forward" aria-hidden="true" />
+                                <i className="fa fa-step-forward" aria-hidden="true" />
                                 </NavIcon>
                                 <NavText>Nästa vecka</NavText>
                             </NavItem>
                             <NavItem eventKey="previous-week">
                                 <NavIcon>
-                                <i class="fa fa-step-backward" aria-hidden="true"></i>
+                                <i className="fa fa-step-backward" aria-hidden="true"></i>
                                 </NavIcon>
                                 <NavText>Föregående vecka</NavText>
                             </NavItem>
 
                             <NavItem eventKey="new-event">
                                 <NavIcon>
-                                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                <i className="fa fa-plus-circle" aria-hidden="true"></i>
                                 </NavIcon>
                                 <NavText>Ny bokning</NavText>
+                            </NavItem>
+
+                            <NavItem>
+                                <NavText>
+                                <Datepicker selected={selectedDate} onChange={date => handleDate(date) } inline />
+                                </NavText>
                             </NavItem>
 
                             <NavItem style={{ visibility: `${ isLoggedIn ? "hidden" : "visible" }` } } eventKey="signin">
@@ -66,7 +87,7 @@ export const App = (props) => {
                             </NavItem>
                             <NavItem style={{ visibility: `${ isLoggedIn ? "visible" : "hidden"}` } } eventKey="admin">
                                 <NavIcon>
-                                <i class="fa fa-user-circle" aria-hidden="true"></i>
+                                <i className="fa fa-user-circle" aria-hidden="true"></i>
                                 </NavIcon>
                                 <NavText>Administrera</NavText>
                             </NavItem>
@@ -79,7 +100,7 @@ export const App = (props) => {
                         </SideNav.Nav>
                     </SideNav>
                 </div>
-                <CalendarWeek weekEvents={events} weekStartDate={weekDateSpan.startDate} />
+                <CalendarWeek weekStartDate={weekStartDate} />
             </main>
         </div>);
 }

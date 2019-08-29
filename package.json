@@ -26,7 +26,9 @@
     "@trendmicro/react-sidenav": "^0.4.5",
     "axios": "^0.19.0",
     "react": "^16.9.0",
+    "react-datepicker": "^2.9.3",
     "react-dom": "^16.9.0",
+    "react-flatpickr": "^3.9.1",
     "react-hot-loader": "^4.3.11"
   }
 }
