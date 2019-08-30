@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./CalendarWeek.css";
 import { CalendarDay } from "../CalendarDay/CalendarDay";
-import { SampleData } from "../../../helpers/SampleData";
 import { Time } from "../Time/Time";
 import { Timeline } from "../Timeline/Timeline";
+
+import { SampleData } from "../../../helpers/SampleData";
 
 export const CalendarWeek = (props) => {
     const days = ["Söndag", "Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag"];

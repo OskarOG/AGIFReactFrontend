@@ -1,0 +1,74 @@
+.navigation {
+    position: fixed;
+    top:0;
+    left:0;
+    height:100%;
+    background-color: #009b62;
+    z-index: 4000;
+    width: 308px;
+    color: #fff;
+}
+
+.nav-slide-controlls {
+    display: block;
+    height: 45px;
+    padding: 5px;
+    font-size: 33px;
+    padding-left: 13px;
+}
+
+.close-icon {
+    float: right;
+    margin-top: 5px;
+    padding-right: 10px;
+    cursor: pointer;
+}
+
+.bar-icon:hover {
+    cursor: pointer;
+}
+
+.hidden {
+    visibility: hidden;
+    display: none;
+}
+
+.nav-title {
+    display:block;
+    height:45px;
+    padding: 5px;
+}
+
+.title h1 {
+    float: left;
+    margin-left: 5px;
+    font-size: 17px;
+}
+
+.title img {
+    float: left;
+}
+
+.day-picker-move-left {
+    margin-left: -10px;
+}
+
+.DayPicker-Day--outside {
+    color: #C4C4C4;
+}
+
+.DayPicker-WeekNumber {
+    color: #C4C4C4;
+}
+
+.DayPicker-Weekday {
+    color: #C4C4C4;
+}
+
+.DayPicker-NavButton {
+    color: #C4C4C4;
+}
+
+.DayPicker-Day--today {
+    color: #000;
+}
