@@ -5,6 +5,9 @@ import DayPicker from "react-day-picker";
 
 import "./Navigation.css";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserCog, faSignOutAlt, faSignInAlt, faBars, faTimes, faStepForward, faStepBackward } from "@fortawesome/free-solid-svg-icons";
+
 export const Navigation = (props) => {
 
     const handleBarClick = () => {
@@ -23,16 +26,33 @@ export const Navigation = (props) => {
         props.onLoginClick("logout");
     }
 
+    const handleNextWeekClick = () => {
+        props.onNextClick();
+    }
+
+    const handlePrevWeekClick = () => {
+        props.onPrevClick();
+    }
+
     return <div className={"navigation " + (props.drawerIsOpen ? "" : "nav-closed")}>
         <div className="nav-slide-controlls">
-            <i onClick={handleBarClick} className={"fa fa-bars bar-icon " + (props.drawerIsOpen ? "hidden" : "")} />
-            <i onClick={handleCloseClick} className={"fa fa-times close-icon " + (props.drawerIsOpen ? "" : "hidden")} />
+            <FontAwesomeIcon onClick={handleBarClick} className={"bar-icon " + (props.drawerIsOpen ? "hidden" : "")} icon={ faBars } />
+            <FontAwesomeIcon onClick={handleCloseClick} className={"close-icon " + (props.drawerIsOpen ? "" : "hidden")} icon={ faTimes } />
         </div>
         <div className="nav-title title">
             <img src="./imgs/agif-logo-small.png" height="42" widht="42" />
             <h1 className={props.drawerIsOpen ? "" : "hidden"}>Alvesta GIF Planbokning</h1>
         </div>
         <div className="nav-content">
+            <div onClick={handleNextWeekClick} className="nav-item">
+                <FontAwesomeIcon className="nav-item-icon" icon={ faStepForward } />
+                <p className={(props.drawerIsOpen ? "" : "hidden")}>Nästa vecka</p>
+            </div>
+            <div onClick={handlePrevWeekClick} className="nav-item">
+                <FontAwesomeIcon className="nav-item-icon" icon={ faStepBackward } />
+                <p className={(props.drawerIsOpen ? "" : "hidden")}>Föregående vecka</p>
+            </div>
+
             <DayPicker
                 className={"day-picker-move-left " + (props.drawerIsOpen ? "" : "hidden")}
                 showWeekNumbers
@@ -42,18 +62,18 @@ export const Navigation = (props) => {
                 onDayClick={props.onChange} />
 
             <div onClick={handleLoginClick} className={"nav-item " + (props.isLoggedIn ? "hidden" : "")}>
-                <i className="fa fa-sign-in nav-item-icon" />
-                <p>Logga in</p>
+                <FontAwesomeIcon className="nav-item-icon" icon={ faSignInAlt } />
+                <p className={(props.drawerIsOpen ? "" : "hidden")}>Logga in</p>
             </div>
 
             <div onClick={handleLogoutClick} className={"nav-item " + (props.isLoggedIn ? "" : "hidden")}>
-                <i className="fa fa-sign-out nav-item-icon" />
-                <p>Logga ut</p>
+                <FontAwesomeIcon className="nav-item-icon" icon={ faSignOutAlt } />
+                <p className={(props.drawerIsOpen ? "" : "hidden")}>Logga ut</p>
             </div>
 
             <div className={"nav-item " + (props.isLoggedIn ? "" : "hidden")}>
-                <i className="fa fa-user-check nav-item-icon" />
-                <p>Administrera</p>
+                <FontAwesomeIcon className="nav-item-icon" icon={ faUserCog } />
+                <p className={(props.drawerIsOpen ? "" : "hidden")}>Administrera</p>
             </div>
         </div>
     </div>;

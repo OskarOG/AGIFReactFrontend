@@ -42,6 +42,18 @@ export const App = (props) => {
         }
     }
 
+    const handleOnNextClick = () => {
+        const d = selectedDate.addDays(7);
+        setSelectedDate(d);
+        setWeekStartDate(d.getMondayDate());
+    }
+
+    const handleOnPrevClick = () => {
+        const d = selectedDate.addDays(-7);
+        setSelectedDate(d);
+        setWeekStartDate(d.getMondayDate());
+    }
+
     return (
         <div className="App">
             <main>
@@ -51,7 +63,9 @@ export const App = (props) => {
                     selectedDate={selectedDate}
                     onChange={handleDate}
                     isLoggedIn={isLoggedIn}
-                    onLoginClick={handleLoginClick} />
+                    onLoginClick={handleLoginClick}
+                    onNextClick={handleOnNextClick}
+                    onPrevClick={handleOnPrevClick} />
                 <CalendarWeek shiftRight={drawerIsOpen} weekStartDate={weekStartDate} />
             </main>
         </div>);
