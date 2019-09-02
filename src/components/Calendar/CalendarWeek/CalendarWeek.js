@@ -56,10 +56,10 @@ export const CalendarWeek = (props) => {
     }, []);
 
     return (
-        <div className="calendar-week">
+        <div className={"calendar-week " + (props.shiftRight ? "if-drawer-open" : "if-drawer-closed")}>
             <Time />
             {calDays}
-            <Timeline top={timelinePos} />
+            <Timeline shiftRight={props.shiftRight} top={timelinePos} />
         </div>
     );
 }

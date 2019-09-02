@@ -12,6 +12,14 @@ Date.prototype.toTime = function () {
     return (h < 10 ? '0' : '') + h + ":" + (m < 10 ? '0' : '') + m
 }
 
+Date.prototype.getMondayDate = function () {
+    const d = new Date(this);
+    const day = d.getDay();
+    const diff = d.getDate() - day + (day == 0 ? -6 : 1);
+
+    return new Date(d.setDate(diff));
+}
+
 Date.prototype.getWeekDateSpan = function () {
     let d = new Date(this);
     let day = d.getDay();

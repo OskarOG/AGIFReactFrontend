@@ -1,11 +1,18 @@
 .timeline {
     content: '';
     width: 2166px;
-    margin-left: 308px;
     height: 1px;
     border-bottom: 1px solid red;
     display: block;
     position: absolute;
     left:0;
     z-index: 2500;
+}
+
+.timeline-shift-if-drawer-open {
+    margin-left: 306px;
+}
+
+.timeline-shift-if-drawer-closed {
+    margin-left: 55px;
 }

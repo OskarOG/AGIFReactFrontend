@@ -2,8 +2,11 @@
     width:2166px;
     height:100%;
 }
-
-html, body {
-    padding:0;
-    margin:0;
+/* 
+.if-drawer-open {
+    margin-left: 308px;
 }
+
+.if-drawer-closed {
+    margin-left: 55px;
+} */
