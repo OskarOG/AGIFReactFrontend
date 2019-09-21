@@ -4,6 +4,7 @@ import "./App.css";
 
 import { CalendarWeek } from "./Calendar/CalendarWeek/CalendarWeek";
 import { Navigation } from "./Navigation/Navigation";
+import { NewEventModal } from "./NewEventModal/NewEventModal";
 
 export const App = (props) => {
     const [isLoggedIn, setLoggedIn] = useState(false);
@@ -12,6 +13,8 @@ export const App = (props) => {
     const [selectedDate, setSelectedDate] = useState(new Date());
 
     const [drawerIsOpen, setDrawerOpen] = useState(true);
+
+    const [displayNewBookingModal, setDisplayNewBookingModal] = useState(false);
 
     useEffect(() => {
         let d = new Date();
@@ -29,6 +32,16 @@ export const App = (props) => {
 
     const handleDrawerToggle = status => {
         setDrawerOpen(status);
+    }
+
+    const handleNewBookingClick = () => {
+        console.log("Hello");
+
+        setDisplayNewBookingModal(true);
+    }
+
+    const handleCloseNewBookingClick = () => {
+        setDisplayNewBookingModal(false);
     }
 
     const handleLoginClick = loginEventType => {
@@ -55,7 +68,7 @@ export const App = (props) => {
     }
 
     return (
-        <div className="App">
+        <div id="app-element" className="App">
             <main>
                 <Navigation 
                     drawerIsOpen={drawerIsOpen}
@@ -63,10 +76,13 @@ export const App = (props) => {
                     selectedDate={selectedDate}
                     onChange={handleDate}
                     isLoggedIn={isLoggedIn}
+                    onNewBookingClick={handleNewBookingClick}
                     onLoginClick={handleLoginClick}
                     onNextClick={handleOnNextClick}
                     onPrevClick={handleOnPrevClick} />
                 <CalendarWeek shiftRight={drawerIsOpen} weekStartDate={weekStartDate} />
+                
+                <NewEventModal />
             </main>
         </div>);
 }

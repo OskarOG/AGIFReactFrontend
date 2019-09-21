@@ -6,7 +6,7 @@ import DayPicker from "react-day-picker";
 import "./Navigation.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserCog, faSignOutAlt, faSignInAlt, faBars, faTimes, faStepForward, faStepBackward } from "@fortawesome/free-solid-svg-icons";
+import { faUserCog, faSignOutAlt, faSignInAlt, faBars, faTimes, faStepForward, faStepBackward, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 export const Navigation = (props) => {
 
@@ -16,6 +16,10 @@ export const Navigation = (props) => {
 
     const handleCloseClick = () => {
         props.toggleDrawer(false);
+    }
+
+    const handleNewBookingClick = () => {
+        props.onNewBookingClick();
     }
 
     const handleLoginClick = () => {
@@ -44,6 +48,10 @@ export const Navigation = (props) => {
             <h1 className={props.drawerIsOpen ? "" : "hidden"}>Alvesta GIF Planbokning</h1>
         </div>
         <div className="nav-content">
+            <div onClick={handleNewBookingClick} className="nav-item">
+                <FontAwesomeIcon className="nav-item-icon" icon={ faPlus } />
+                <p className={(props.drawerIsOpen ? "" : "hidden")}>Ny bokning</p>
+            </div>
             <div onClick={handleNextWeekClick} className="nav-item">
                 <FontAwesomeIcon className="nav-item-icon" icon={ faStepForward } />
                 <p className={(props.drawerIsOpen ? "" : "hidden")}>Nästa vecka</p>

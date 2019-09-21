@@ -17,3 +17,17 @@ html, body {
 .if-drawer-closed {
     margin-left: 55px;
 }
+
+.modal {
+    margin: auto;
+    width: 400px;
+    height: 800px;
+    background-color: #ffffff
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    background-color: #2727277e;
+}
