@@ -14,7 +14,7 @@ export const App = (props) => {
 
     const [drawerIsOpen, setDrawerOpen] = useState(true);
 
-    const [displayNewBookingModal, setDisplayNewBookingModal] = useState(false);
+    const [newBookingModalIsHidden, setBookingModalHidden] = useState(true);
 
     useEffect(() => {
         let d = new Date();
@@ -37,11 +37,11 @@ export const App = (props) => {
     const handleNewBookingClick = () => {
         console.log("Hello");
 
-        setDisplayNewBookingModal(true);
+        setBookingModalHidden(false);
     }
 
     const handleCloseNewBookingClick = () => {
-        setDisplayNewBookingModal(false);
+        setBookingModalHidden(true);
     }
 
     const handleLoginClick = loginEventType => {
@@ -82,7 +82,7 @@ export const App = (props) => {
                     onPrevClick={handleOnPrevClick} />
                 <CalendarWeek shiftRight={drawerIsOpen} weekStartDate={weekStartDate} />
                 
-                <NewEventModal />
+                <NewEventModal isHidden={newBookingModalIsHidden} close={handleCloseNewBookingClick}/>
             </main>
         </div>);
 }

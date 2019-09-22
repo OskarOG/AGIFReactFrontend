@@ -99,3 +99,9 @@
 .close-btn:hover {
 	background-color:#ca0000;
 }
+
+.price-estimation {
+    display:block;
+    width:100%;
+    text-align: right;
+}

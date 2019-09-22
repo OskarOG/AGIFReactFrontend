@@ -2,19 +2,21 @@ import React, { useState } from 'react';
 
 import './NewEventModal.css';
 
-export const NewEventModal = () => {
-
+export const NewEventModal = (props) => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [team, setTeam] = useState("");
     const [club, setClub] = useState("");
+    const [selectedField, setSelectedField] = useState();
+    const [selectedFieldSize, setSelectedFieldSize] = useState();
     const [date, setDate] = useState("");
     const [timeFrom, setTimeFrom] = useState("");
     const [timeTo, setTimeTo] = useState("");
     const [comment, setComment] = useState("");
+    const [currentPrice, setCurrentPrice] = useState(0);
 
-    const [fields, setFields] = useState([]);
-    const [fieldSizes, setFieldSizes] = useState([]);
+    const [fields, setFields] = useState([]); // TODO: Get fields from server
+    const [fieldSizes, setFieldSizes] = useState([]); // TODO: Get fieldsizes from server
 
     const handleNameChange = () => {
         setName(event.target.value);
@@ -30,6 +32,14 @@ export const NewEventModal = () => {
 
     const handleClubChange = () => {
         setClub(event.target.value);
+    }
+
+    const handleFieldChange = () => {
+        setSelectedField(event.target.value);
+    }
+
+    const handleFieldSizeChange = () => {
+        setSelectedFieldSize(event.target.value);
     }
 
     const handleDateChange = () => {
@@ -51,12 +61,19 @@ export const NewEventModal = () => {
     const handleSendNewBooking = () => {
         console.log(name);
         console.log(date);
+
+        // TODO: Send event to server.
     }
 
-    
+    const handleCloseButton = () => {
+        props.close();
+    }
+
+    let fieldOpts = fields.map((field) => <option key={field.id} value={field.id}>{field.name}</option>);
+    let fieldSizesOpts = fieldSizes.map((fieldSize) => <option key={fieldSize.id} value={fieldSize.id}>{fieldSize.size}</option>);
 
     return (
-        <div className="modal-overlay">
+        <div className={"modal-overlay " + (props.isHidden ? "hidden" : "")}>
             <div className="modal-box">
                 <h2>Ny bokning</h2>
                 <form>
@@ -78,11 +95,15 @@ export const NewEventModal = () => {
                     </div>
                     <div>
                         <label className="label">Välj plan*</label>
-                        <select className="input"></select>
+                        <select className="input" onChange={handleFieldChange}>
+                            {fieldOpts}
+                        </select>
                     </div>
                     <div>
                         <label className="label">Välj storlek*</label>
-                        <select className="input"></select>
+                        <select className="input" onChange={handleFieldSizeChange}>
+                            {fieldSizesOpts}
+                        </select>
                     </div>
                     <div>
                         <label className="label">Datum*</label>
@@ -111,11 +132,14 @@ export const NewEventModal = () => {
                         <textarea className="input" value={comment} onChange={handleCommentChange} rows="2"></textarea>
                     </div>
                 </form>
-                <div>
-                    <h4 id="price-estimation"></h4>
+                <div className="price-estimation">
+                    {/* TODO: Show price estimation */}
+                    <h4>
+                        {currentPrice} SEK
+                    </h4> 
                 </div>
                 <div className="modal-buttons">
-                    <button type="button" className="btn close-btn">Stäng</button>
+                    <button type="button" className="btn close-btn" onClick={handleCloseButton}>Stäng</button>
                     <button type="button" className="btn send-btn" onClick={handleSendNewBooking}>Skicka bokningsförfrågan</button>
                 </div>
             </div>
