@@ -4,8 +4,6 @@ import { Field } from "../Field/Field";
 import { DayHeader } from "../DayHeader/DayHeader";
 
 export const CalendarDay = (props) => {
-    console.log(props.fields);
-
     const fieldItems = props.fields.map((f) =>
         <Field key={props.dayDate.getTime()+"-"+f.Id}
                 fieldTitle={f.Name}

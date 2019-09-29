@@ -4,7 +4,8 @@ export default {
     baseUrl: "http://localhost:57676/api",
     events() {
         return {
-            getForWeek: (startDate, endDate) => Axios.get(`${this.baseUrl}/event?startDate=${startDate}&endDate=${endDate}`)
+            getForWeek: (startDate, endDate) => Axios.get(`${this.baseUrl}/event?from=${startDate}&to=${endDate}`),
+            postEvent: (data) => Axios.post(`${this.baseUrl}/event`, data)
         }
     },
     fields() {

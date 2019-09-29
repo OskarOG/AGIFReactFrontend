@@ -3,6 +3,7 @@ import "./CalendarWeek.css";
 import { CalendarDay } from "../CalendarDay/CalendarDay";
 import { Time } from "../Time/Time";
 import { Timeline } from "../Timeline/Timeline";
+import { NewEventModal } from "../NewEventModal/NewEventModal";
 
 import API from "../../../helpers/Api";
 
@@ -21,9 +22,9 @@ export const CalendarWeek = (props) => {
             setEvents(res.data);
         });
 
+        // TODO: If the load is too slow, swap to static data.
         API.fields().getFields().then(res => {
-            console.log(fields);
-            setFields(fields.data); 
+            setFields(res.data);
         });
     }, []);
 
@@ -67,11 +68,17 @@ export const CalendarWeek = (props) => {
         }, (60 - dt.getSeconds()) * 1000);
     }, []);
 
+    const handleCloseNewBookingClick = () => {
+        props.onCloseBookingModal();
+    }
+
     return (
         <div className={"calendar-week " + (props.shiftRight ? "if-drawer-open" : "if-drawer-closed")}>
             <Time />
             {calDays}
             <Timeline shiftRight={props.shiftRight} top={timelinePos} />
+
+            <NewEventModal fields={fields} isHidden={props.newBookingModalIsHidden} close={handleCloseNewBookingClick}/>
         </div>
     );
 }

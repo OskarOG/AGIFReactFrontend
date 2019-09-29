@@ -4,16 +4,13 @@ import "./App.css";
 
 import { CalendarWeek } from "./Calendar/CalendarWeek/CalendarWeek";
 import { Navigation } from "./Navigation/Navigation";
-import { NewEventModal } from "./NewEventModal/NewEventModal";
 
 export const App = (props) => {
     const [isLoggedIn, setLoggedIn] = useState(false);
 
     const [weekDate, setWeekDate] = useState(new Date().getWeekDateSpan());
     const [selectedDate, setSelectedDate] = useState(new Date());
-
     const [drawerIsOpen, setDrawerOpen] = useState(true);
-
     const [newBookingModalIsHidden, setBookingModalHidden] = useState(true);
 
     useEffect(() => {
@@ -35,13 +32,7 @@ export const App = (props) => {
     }
 
     const handleNewBookingClick = () => {
-        console.log("Hello");
-
         setBookingModalHidden(false);
-    }
-
-    const handleCloseNewBookingClick = () => {
-        setBookingModalHidden(true);
     }
 
     const handleLoginClick = loginEventType => {
@@ -56,15 +47,23 @@ export const App = (props) => {
     }
 
     const handleOnNextClick = () => {
+        // TODO: Load the week after as well and save it so the switch is fast when the user change to the next week after.
+
         const d = selectedDate.addDays(7);
         setSelectedDate(d);
         setWeekDate(d.getWeekDateSpan());
     }
 
     const handleOnPrevClick = () => {
+        // TODO: Load the week before as well and save it so the switch is fast when the user change to the next week before.
+
         const d = selectedDate.addDays(-7);
         setSelectedDate(d);
         setWeekDate(d.getWeekDateSpan());
+    }
+
+    const handleCloseBookingModal = () => {
+        setBookingModalHidden(true);
     }
 
     return (
@@ -80,9 +79,7 @@ export const App = (props) => {
                     onLoginClick={handleLoginClick}
                     onNextClick={handleOnNextClick}
                     onPrevClick={handleOnPrevClick} />
-                <CalendarWeek shiftRight={drawerIsOpen} weekDate={weekDate}  />
-                
-                <NewEventModal isHidden={newBookingModalIsHidden} close={handleCloseNewBookingClick}/>
+                <CalendarWeek onCloseBookingModal={handleCloseBookingModal} newBookingModalIsHidden={newBookingModalIsHidden} shiftRight={drawerIsOpen} weekDate={weekDate} />
             </main>
         </div>);
 }

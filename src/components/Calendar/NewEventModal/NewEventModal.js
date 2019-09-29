@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import API from "../../../helpers/Api";
+
 import './NewEventModal.css';
 
 export const NewEventModal = (props) => {
@@ -7,16 +9,35 @@ export const NewEventModal = (props) => {
     const [email, setEmail] = useState("");
     const [team, setTeam] = useState("");
     const [club, setClub] = useState("");
-    const [selectedField, setSelectedField] = useState();
-    const [selectedFieldSize, setSelectedFieldSize] = useState();
+    const [selectedField, setSelectedField] = useState(0);
+    const [selectedFieldSize, setSelectedFieldSize] = useState(0);
     const [date, setDate] = useState("");
     const [timeFrom, setTimeFrom] = useState("");
     const [timeTo, setTimeTo] = useState("");
     const [comment, setComment] = useState("");
     const [currentPrice, setCurrentPrice] = useState(0);
 
-    const [fields, setFields] = useState([]); // TODO: Get fields from server
-    const [fieldSizes, setFieldSizes] = useState([]); // TODO: Get fieldsizes from server
+    const [fieldSizes, setFieldSizes] = useState([]);
+
+    const [fieldSizeIsDisabled, setFieldSizeIsDisabled] = useState(true);
+    const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
+
+    const updateFieldSizes = (selectedDate, selectedTimeFrom, selectedTimeTo, fieldId) => {
+        setFieldSizeIsDisabled(true);
+        setSubmitButtonDisabled(true);
+
+        if (selectedDate != "" && selectedTimeFrom != "" && selectedTimeTo != "" && fieldId != 0) {
+            var tempDateFrom = new Date(selectedDate + " " + selectedTimeFrom);
+            var tempDateTo = new Date(selectedDate + " " + selectedTimeTo);
+            
+            API.fields().getFieldSizes(fieldId, tempDateFrom.getUnixTimestamp(), tempDateTo.getUnixTimestamp()).then(res => {
+                setFieldSizes(res.data);
+
+                setFieldSizeIsDisabled(false);
+                setSubmitButtonDisabled(false);
+            });
+        }
+    }
 
     const handleNameChange = () => {
         setName(event.target.value);
@@ -36,6 +57,8 @@ export const NewEventModal = (props) => {
 
     const handleFieldChange = () => {
         setSelectedField(event.target.value);
+
+        updateFieldSizes(date, timeFrom, timeTo, event.target.value);
     }
 
     const handleFieldSizeChange = () => {
@@ -44,6 +67,8 @@ export const NewEventModal = (props) => {
 
     const handleDateChange = () => {
         setDate(event.target.value);
+
+        updateFieldSizes(event.target.value, timeFrom, timeTo, selectedField);
     }
 
     const handleTimeFromChange = () => {
@@ -54,23 +79,58 @@ export const NewEventModal = (props) => {
         setTimeTo(event.target.value);
     }
 
+    const handleTimeLeave = () => {
+        updateFieldSizes(date, timeFrom, timeTo, selectedField);
+    }
+
     const handleCommentChange = () => {
         setComment(event.target.value);
     }
 
     const handleSendNewBooking = () => {
-        console.log(name);
-        console.log(date);
+        API.events().postEvent({
+            "Name": name,
+            "Email": email,
+            "Club": club,
+            "Team": team,
+            "TimeFrom": new Date(date + " " + timeFrom).getUnixTimestamp(),
+            "TimeTo": new Date(date + " " + timeTo).getUnixTimestamp(),
+            "Comment": comment,
+            "FieldID": selectedField,
+            "FieldSizeID": selectedFieldSize
+        }).then(res => {
+            console.log(res);
+        });
+        
+        console.log("Event post sent");
 
-        // TODO: Send event to server.
+        // handleCloseButton();
     }
 
     const handleCloseButton = () => {
         props.close();
+
+        setName("");
+        setEmail("");
+        setTeam("");
+        setClub("");
+        setSelectedField(0);
+        setSelectedFieldSize(0);
+        setDate("");
+        setTimeFrom("");
+        setTimeTo("");
+        setComment("");
+        setCurrentPrice(0);
+        setFieldSizes([]);
+        setFieldSizeIsDisabled(true);
+        setSubmitButtonDisabled(true);
     }
 
-    let fieldOpts = fields.map((field) => <option key={field.id} value={field.id}>{field.name}</option>);
-    let fieldSizesOpts = fieldSizes.map((fieldSize) => <option key={fieldSize.id} value={fieldSize.id}>{fieldSize.size}</option>);
+    let fieldOpts = props.fields.map((field) => <option key={field.Id} value={field.Id}>{field.Name}</option>);
+    fieldOpts.unshift(<option key={0} value={0}>Välj plan</option>)
+
+    let fieldSizesOpts = fieldSizes.map((fieldSize) => <option key={fieldSize.Id} value={fieldSize.Id}>{fieldSize.Size}</option>);
+    fieldSizesOpts.unshift(<option key={0} value={0}>Välj planstorlek</option>);
 
     return (
         <div className={"modal-overlay " + (props.isHidden ? "hidden" : "")}>
@@ -94,18 +154,6 @@ export const NewEventModal = (props) => {
                         <input className="input" value={club} onChange={handleClubChange} type="text" />
                     </div>
                     <div>
-                        <label className="label">Välj plan*</label>
-                        <select className="input" onChange={handleFieldChange}>
-                            {fieldOpts}
-                        </select>
-                    </div>
-                    <div>
-                        <label className="label">Välj storlek*</label>
-                        <select className="input" onChange={handleFieldSizeChange}>
-                            {fieldSizesOpts}
-                        </select>
-                    </div>
-                    <div>
                         <label className="label">Datum*</label>
                         <input className="input" value={date} onChange={handleDateChange} type="date" />
                     </div>
@@ -115,17 +163,29 @@ export const NewEventModal = (props) => {
                             <div className="time-input-div">
                                 <div>
                                     <div>Från</div>
-                                    <input className="time-input" value={timeFrom} onChange={handleTimeFromChange} type="time" />
+                                    <input className="time-input" value={timeFrom} onChange={handleTimeFromChange} onBlur={handleTimeLeave} type="time" />
                                     <span>-</span>
                                 </div>
                             </div>
                             <div className="time-input-div">
                                 <div>
                                     <div>Till</div>
-                                    <input className="time-input" value={timeTo} onChange={handleTimeToChange} type="time" />
+                                    <input className="time-input" value={timeTo} onChange={handleTimeToChange} onBlur={handleTimeLeave} type="time" />
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div className="field-input">
+                        <label className="label">Välj plan*</label>
+                        <select className="input" onChange={handleFieldChange}>
+                            {fieldOpts}
+                        </select>
+                    </div>
+                    <div>
+                        <label className="label">Välj storlek*</label>
+                        <select disabled={fieldSizeIsDisabled} className="input" onChange={handleFieldSizeChange}>
+                            {fieldSizesOpts}
+                        </select>
                     </div>
                     <div className="input-comment-div">
                         <label className="label">Annan kommentar:</label>
@@ -140,7 +200,11 @@ export const NewEventModal = (props) => {
                 </div>
                 <div className="modal-buttons">
                     <button type="button" className="btn close-btn" onClick={handleCloseButton}>Stäng</button>
-                    <button type="button" className="btn send-btn" onClick={handleSendNewBooking}>Skicka bokningsförfrågan</button>
+                    <button type="button" className={submitButtonDisabled ? "disabled-btn submit-disabled" : "btn send-btn"}
+                            disabled={submitButtonDisabled} 
+                            onClick={handleSendNewBooking}>
+                                Skicka bokningsförfrågan
+                    </button>
                 </div>
             </div>
         </div>

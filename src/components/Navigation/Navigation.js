@@ -70,7 +70,7 @@ export const Navigation = (props) => {
                 onDayClick={props.onChange} />
 
             <div onClick={handleLoginClick} className={"nav-item " + (props.isLoggedIn ? "hidden" : "")}>
-                <FontAwesomeIcon className="nav-item-icon" icon={ faSignInAlt } />
+                <FontAwesomeIcon className="nav-item-icon sign-in-icon" icon={ faSignInAlt } />
                 <p className={(props.drawerIsOpen ? "" : "hidden")}>Logga in</p>
             </div>
 
@@ -80,7 +80,7 @@ export const Navigation = (props) => {
             </div>
 
             <div className={"nav-item " + (props.isLoggedIn ? "" : "hidden")}>
-                <FontAwesomeIcon className="nav-item-icon" icon={ faUserCog } />
+                <FontAwesomeIcon className="nav-item-icon admin-icon" icon={ faUserCog } />
                 <p className={(props.drawerIsOpen ? "" : "hidden")}>Administrera</p>
             </div>
         </div>
