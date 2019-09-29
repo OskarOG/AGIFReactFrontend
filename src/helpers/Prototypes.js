@@ -26,12 +26,20 @@ Date.prototype.getWeekDateSpan = function () {
     let diff = d.getDate() - day + (day == 0 ? -6 : 1);
 
     let s = new Date(d.setDate(diff));
+    s.setHours(0,0,0);
+
+    let e = new Date(d.setDate(s.getDate() + 6));
+    e.setHours(23,59,59);
     return {
         startDate: s,
-        endDate: new Date(d.setDate(s.getDate() + 6))
+        endDate: e
     }
 }
 
 Date.prototype.addMinutes = function (mins) {
     return new Date(this.getTime() + mins*60000);
+}
+
+Date.prototype.getUnixTimestamp = function () {
+    return Math.floor(this.getTime() / 1000);
 }

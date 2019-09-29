@@ -9,7 +9,7 @@ import { NewEventModal } from "./NewEventModal/NewEventModal";
 export const App = (props) => {
     const [isLoggedIn, setLoggedIn] = useState(false);
 
-    const [weekStartDate, setWeekStartDate] = useState(new Date().getWeekDateSpan().startDate);
+    const [weekDate, setWeekDate] = useState(new Date().getWeekDateSpan());
     const [selectedDate, setSelectedDate] = useState(new Date());
 
     const [drawerIsOpen, setDrawerOpen] = useState(true);
@@ -27,7 +27,7 @@ export const App = (props) => {
 
     const handleDate = date => {
         setSelectedDate(date);
-        setWeekStartDate(date.getMondayDate());
+        setWeekDate(date.getWeekDateSpan());
     };
 
     const handleDrawerToggle = status => {
@@ -58,13 +58,13 @@ export const App = (props) => {
     const handleOnNextClick = () => {
         const d = selectedDate.addDays(7);
         setSelectedDate(d);
-        setWeekStartDate(d.getMondayDate());
+        setWeekDate(d.getWeekDateSpan());
     }
 
     const handleOnPrevClick = () => {
         const d = selectedDate.addDays(-7);
         setSelectedDate(d);
-        setWeekStartDate(d.getMondayDate());
+        setWeekDate(d.getWeekDateSpan());
     }
 
     return (
@@ -80,7 +80,7 @@ export const App = (props) => {
                     onLoginClick={handleLoginClick}
                     onNextClick={handleOnNextClick}
                     onPrevClick={handleOnPrevClick} />
-                <CalendarWeek shiftRight={drawerIsOpen} weekStartDate={weekStartDate} />
+                <CalendarWeek shiftRight={drawerIsOpen} weekDate={weekDate}  />
                 
                 <NewEventModal isHidden={newBookingModalIsHidden} close={handleCloseNewBookingClick}/>
             </main>

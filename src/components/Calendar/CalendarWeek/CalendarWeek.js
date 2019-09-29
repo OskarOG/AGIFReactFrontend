@@ -4,21 +4,33 @@ import { CalendarDay } from "../CalendarDay/CalendarDay";
 import { Time } from "../Time/Time";
 import { Timeline } from "../Timeline/Timeline";
 
-import { SampleData } from "../../../helpers/SampleData";
+import API from "../../../helpers/Api";
 
 export const CalendarWeek = (props) => {
     const days = ["Söndag", "Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag"];
-    
-    const [fields, setFields] = useState(SampleData.field); // TODO: API CALL!
-    const [events, setEvents] = useState(SampleData.events); // TODO: API CALL!
+
+    const [fields, setFields] = useState([]);
+    const [events, setEvents] = useState([]); // TODO: API CALL!
 
     const initDate = new Date();
     const [timelinePos, setTimelinePos] = useState(`${(((initDate.getHours() * 60) + initDate.getMinutes()) * 2.5) + 82}px`);
 
-    const d = new Date(props.weekStartDate);
+    useEffect(() => {
+        API.events().getForWeek(props.weekDate.startDate.getUnixTimestamp(), props.weekDate.endDate.getUnixTimestamp()).then(res => {
+            console.log(res);
+            setEvents(res.data);
+        });
+
+        API.fields().getFields().then(res => {
+            console.log(fields);
+            setFields(fields.data); 
+        });
+    }, []);
+
+    const d = new Date(props.weekDate.startDate);
     const calDays = [];
     for (let i = 0; i < 7; i++) {
-        d.setTime(props.weekStartDate.getTime() + (i*24*60*60*1000));
+        d.setTime(props.weekDate.startDate.getTime() + (i*24*60*60*1000));
         calDays.push(<CalendarDay key={d.getTime()}
                                     fields={fields}
                                     dayEvents={events.filter((e) => e.dateStart.getDate() == d.getDate())}
