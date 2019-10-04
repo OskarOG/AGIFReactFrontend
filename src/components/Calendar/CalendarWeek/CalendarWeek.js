@@ -10,21 +10,23 @@ import API from "../../../helpers/Api";
 export const CalendarWeek = (props) => {
     const days = ["Söndag", "Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag"];
 
-    const [fields, setFields] = useState([]);
-    const [events, setEvents] = useState([]); // TODO: API CALL!
+    // Get fields from API if changes a lot.
+    const [fields, setFields] = useState([
+        {
+            Id: 1, Name: "Plan 1", MaxSize: 11
+        },
+        {
+            Id: 2, Name: "Plan 2", MaxSize: 7
+        }
+    ]);
+    const [events, setEvents] = useState([]);
 
     const initDate = new Date();
     const [timelinePos, setTimelinePos] = useState(`${(((initDate.getHours() * 60) + initDate.getMinutes()) * 2.5) + 82}px`);
 
     useEffect(() => {
         API.events().getForWeek(props.weekDate.startDate.getUnixTimestamp(), props.weekDate.endDate.getUnixTimestamp()).then(res => {
-            console.log(res);
             setEvents(res.data);
-        });
-
-        // TODO: If the load is too slow, swap to static data.
-        API.fields().getFields().then(res => {
-            setFields(res.data);
         });
     }, []);
 
@@ -34,7 +36,7 @@ export const CalendarWeek = (props) => {
         d.setTime(props.weekDate.startDate.getTime() + (i*24*60*60*1000));
         calDays.push(<CalendarDay key={d.getTime()}
                                     fields={fields}
-                                    dayEvents={events.filter((e) => e.dateStart.getDate() == d.getDate())}
+                                    dayEvents={events.filter((e) => new Date(e.TimeFrom).getDate() == d.getDate())}
                                     dayDate={new Date(d)}
                                     dayName={days[d.getDay()]} />);
     };

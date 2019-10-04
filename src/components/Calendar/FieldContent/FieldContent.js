@@ -6,6 +6,9 @@ export const FieldContent = (props) => {
     const minPxlSize = 2.5; // If change timeline li height must change as well.
 
     const eventItems = props.events.map((e) => {
+        console.log("FieldContent");
+        console.log(e);
+        
         const zeroDate = new Date(e.dateStart);
         zeroDate.setHours(0,0,0,0);
         let height = (Math.abs(e.dateStart - e.dateEnd) / 60 / 1000) * minPxlSize;
@@ -29,7 +32,7 @@ export const FieldContent = (props) => {
             }
         }
 
-        return <Event key={e.id}
+        return <Event key={e.Id}
                 divide={e.shouldDivide}
                 shouldBeRight={e.posRight}
                 height={height} 
