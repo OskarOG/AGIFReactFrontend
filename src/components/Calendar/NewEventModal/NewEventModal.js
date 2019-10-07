@@ -4,6 +4,8 @@ import API from "../../../helpers/Api";
 
 import './NewEventModal.css';
 
+import { EventTypePicker } from "../../EventTypePicker/EventTypePicker";
+
 export const NewEventModal = (props) => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -21,6 +23,9 @@ export const NewEventModal = (props) => {
 
     const [fieldSizeIsDisabled, setFieldSizeIsDisabled] = useState(true);
     const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
+
+    // TODO: Get eventtypes after page load.
+    const [eventType, setEventType] = useState(0);
 
     const updateFieldSizes = (selectedDate, selectedTimeFrom, selectedTimeTo, fieldId) => {
         setFieldSizeIsDisabled(true);
@@ -81,6 +86,10 @@ export const NewEventModal = (props) => {
 
     const handleTimeLeave = () => {
         updateFieldSizes(date, timeFrom, timeTo, selectedField);
+    }
+
+    const handleEventTypeChange = () => {
+        
     }
 
     const handleCommentChange = () => {
@@ -187,6 +196,10 @@ export const NewEventModal = (props) => {
                             {fieldSizesOpts}
                         </select>
                     </div>
+                    <div>
+                        <label className="label">Bokningstyp</label>
+                        <EventTypePicker onChange={} eventType={} />
+                    </div>
                     <div className="input-comment-div">
                         <label className="label">Annan kommentar:</label>
                         <textarea className="input" value={comment} onChange={handleCommentChange} rows="2"></textarea>
@@ -196,7 +209,7 @@ export const NewEventModal = (props) => {
                     {/* TODO: Show price estimation */}
                     <h4>
                         {currentPrice} SEK
-                    </h4> 
+                    </h4>
                 </div>
                 <div className="modal-buttons">
                     <button type="button" className="btn close-btn" onClick={handleCloseButton}>Stäng</button>

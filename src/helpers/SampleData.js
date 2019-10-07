@@ -13,14 +13,14 @@ export const SampleData = {
     ],
     events: [
         {
-            id: 2,
-            team: "Team 2",
-            club: "Club 2",
-            fieldSize: 5,
-            dateStart: new Date("2019-08-29T13:00:00"),
-            dateEnd: new Date("2019-08-29T13:30:00"),
-            fieldId: 2,
-            shouldDivide: true
+            Id: 2,
+            Team: "Team 2",
+            Club: "Club 2",
+            FieldSize: 5,
+            DateStart: new Date("2019-08-29T13:00:00"),
+            DateEnd: new Date("2019-08-29T13:30:00"),
+            FieldId: 2,
+            ShouldDivide: true
         },
         {
             id: 3,

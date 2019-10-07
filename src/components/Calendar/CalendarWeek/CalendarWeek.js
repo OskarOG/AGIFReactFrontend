@@ -13,10 +13,10 @@ export const CalendarWeek = (props) => {
     // Get fields from API if changes a lot.
     const [fields, setFields] = useState([
         {
-            Id: 1, Name: "Plan 1", MaxSize: 11
+            Id: 1, Name: "Plan 1 - 11 man", MaxSize: 11
         },
         {
-            Id: 2, Name: "Plan 2", MaxSize: 7
+            Id: 2, Name: "Plan 2 - 7 man", MaxSize: 7
         }
     ]);
     const [events, setEvents] = useState([]);
