@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./DayHeader.css";
 
-export const DayHeader = (props) => {
+const DayHeader = (props) => {
     useEffect(() => {
         document.querySelectorAll(".day-header").forEach((e) => e.style = "top:" + window.scrollY + "px");  
     });
@@ -12,4 +12,6 @@ export const DayHeader = (props) => {
             <div className="day-header-day-date">{props.date.getFullYear()}-{props.date.getMonth()+1 < 10 ? '0' : ''}{props.date.getMonth()+1}-{props.date.getDate() < 10 ? '0' :''}{props.date.getDate()}</div>
         </div>
     );
-}
+};
+
+export default DayHeader;

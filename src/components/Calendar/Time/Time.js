@@ -1,7 +1,7 @@
 import React from "react";
 import "./Time.css";
 
-export const Time = (props) => {
+const Time = (props) => {
     const timeList = [];
     for (let i = 0; i < 24; i++) {
         timeList.push(<li key={i+":00"}>{i}:00</li>);
@@ -16,3 +16,5 @@ export const Time = (props) => {
         </div>
     );
 };
+
+export default Time;

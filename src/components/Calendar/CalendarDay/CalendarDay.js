@@ -1,9 +1,9 @@
 import React from "react";
 import "./CalendarDay.css";
-import { Field } from "../Field/Field";
-import { DayHeader } from "../DayHeader/DayHeader";
+import Field from "../Field/Field";
+import DayHeader from "../DayHeader/DayHeader";
 
-export const CalendarDay = (props) => {
+const CalendarDay = (props) => {
     const fieldItems = props.fields.map((f) =>
         <Field key={props.dayDate.getTime()+"-"+f.Id}
                 fieldTitle={f.Name}
@@ -16,4 +16,6 @@ export const CalendarDay = (props) => {
             {fieldItems}
         </div>
     );
-}
+};
+
+export default CalendarDay;

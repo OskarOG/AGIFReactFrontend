@@ -4,9 +4,9 @@ import API from "../../../helpers/Api";
 
 import './NewEventModal.css';
 
-import { EventTypePicker } from "../../EventTypePicker/EventTypePicker";
+import EventTypePicker from "../../EventTypePicker/EventTypePicker";
 
-export const NewEventModal = (props) => {
+const NewEventModal = (props) => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [team, setTeam] = useState("");
@@ -196,10 +196,10 @@ export const NewEventModal = (props) => {
                             {fieldSizesOpts}
                         </select>
                     </div>
-                    <div>
+                    {/* <div>
                         <label className="label">Bokningstyp</label>
                         <EventTypePicker onChange={} eventType={} />
-                    </div>
+                    </div> */}
                     <div className="input-comment-div">
                         <label className="label">Annan kommentar:</label>
                         <textarea className="input" value={comment} onChange={handleCommentChange} rows="2"></textarea>
@@ -222,4 +222,6 @@ export const NewEventModal = (props) => {
             </div>
         </div>
     );
-}
+};
+
+export default NewEventModal;

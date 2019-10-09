@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./CalendarWeek.css";
-import { CalendarDay } from "../CalendarDay/CalendarDay";
-import { Time } from "../Time/Time";
-import { Timeline } from "../Timeline/Timeline";
-import { NewEventModal } from "../NewEventModal/NewEventModal";
+import CalendarDay from "../CalendarDay/CalendarDay";
+import Time from "../Time/Time";
+import Timeline from "../Timeline/Timeline";
+import NewEventModal from "../NewEventModal/NewEventModal";
 
 import API from "../../../helpers/Api";
 
-export const CalendarWeek = (props) => {
+const CalendarWeek = (props) => {
     const days = ["Söndag", "Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag"];
 
     // Get fields from API if changes a lot.
@@ -83,4 +83,6 @@ export const CalendarWeek = (props) => {
             <NewEventModal fields={fields} isHidden={props.newBookingModalIsHidden} close={handleCloseNewBookingClick}/>
         </div>
     );
-}
+};
+
+export default CalendarWeek;

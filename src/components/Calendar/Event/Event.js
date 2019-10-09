@@ -1,7 +1,7 @@
 import React from "react";
 import "./Event.css";
 
-export const Event = (props) => {
+const Event = (props) => {
     const divStyle = {
         width: props.divide ? "74px" : "150px",
         height: props.height,
@@ -20,4 +20,6 @@ export const Event = (props) => {
             </p>
         </div>
     );
-}
+};
+
+export default Event;

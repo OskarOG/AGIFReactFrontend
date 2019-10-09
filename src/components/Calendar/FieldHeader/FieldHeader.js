@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./FieldHeader.css";
 
-export const FieldHeader = (props) => {
+const FieldHeader = (props) => {
     useEffect(() => {
         document.querySelectorAll(".field-header").forEach((e) => e.style = "top:" + window.scrollY + "px");
     });
@@ -13,4 +13,6 @@ export const FieldHeader = (props) => {
             </div>
         </div>
     );
-}
+};
+
+export default FieldHeader;

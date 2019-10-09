@@ -1,8 +1,8 @@
 import React from "react";
 import "./FieldContent.css";
-import { Event } from "../Event/Event";
+import Event from "../Event/Event";
 
-export const FieldContent = (props) => {
+const FieldContent = (props) => {
     const minPxlSize = 2.5; // If change timeline li height must change as well.
 
     const eventItems = props.events.map((e) => {
@@ -50,3 +50,5 @@ export const FieldContent = (props) => {
         </div>
     );
 };
+
+export default FieldContent;

@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 
 import "./App.css";
 
-import { CalendarWeek } from "./Calendar/CalendarWeek/CalendarWeek";
-import { Navigation } from "./Navigation/Navigation";
+import CalendarWeek from "./Calendar/CalendarWeek/CalendarWeek";
+import Navigation from "./Navigation/Navigation";
 
-export const App = (props) => {
+const App = (props) => {
     const [isLoggedIn, setLoggedIn] = useState(false);
 
     const [weekDate, setWeekDate] = useState(new Date().getWeekDateSpan());
@@ -82,4 +82,6 @@ export const App = (props) => {
                 <CalendarWeek onCloseBookingModal={handleCloseBookingModal} newBookingModalIsHidden={newBookingModalIsHidden} shiftRight={drawerIsOpen} weekDate={weekDate} />
             </main>
         </div>);
-}
+};
+
+export default App;

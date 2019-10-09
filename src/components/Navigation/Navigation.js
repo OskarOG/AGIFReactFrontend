@@ -8,7 +8,7 @@ import "./Navigation.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCog, faSignOutAlt, faSignInAlt, faBars, faTimes, faStepForward, faStepBackward, faPlus } from "@fortawesome/free-solid-svg-icons";
 
-export const Navigation = (props) => {
+const Navigation = (props) => {
 
     const handleBarClick = () => {
         props.toggleDrawer(true);
@@ -85,4 +85,6 @@ export const Navigation = (props) => {
             </div>
         </div>
     </div>;
-}
+};
+
+export default Navigation;
