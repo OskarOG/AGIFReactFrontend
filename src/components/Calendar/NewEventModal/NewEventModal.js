@@ -24,18 +24,18 @@ const NewEventModal = (props) => {
     const [fieldSizeIsDisabled, setFieldSizeIsDisabled] = useState(true);
     const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
 
-    // TODO: Get eventtypes after page load.
-    const [eventType, setEventType] = useState(0);
-
     const updateFieldSizes = (selectedDate, selectedTimeFrom, selectedTimeTo, fieldId) => {
+        console.log("Inside updateFieldSizes");
+
         setFieldSizeIsDisabled(true);
         setSubmitButtonDisabled(true);
 
         if (selectedDate != "" && selectedTimeFrom != "" && selectedTimeTo != "" && fieldId != 0) {
             var tempDateFrom = new Date(selectedDate + " " + selectedTimeFrom);
             var tempDateTo = new Date(selectedDate + " " + selectedTimeTo);
-            
+
             API.fields().getFieldSizes(fieldId, tempDateFrom.getUnixTimestamp(), tempDateTo.getUnixTimestamp()).then(res => {
+                console.log(res);
                 setFieldSizes(res.data);
 
                 setFieldSizeIsDisabled(false);

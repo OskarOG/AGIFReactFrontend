@@ -9,10 +9,14 @@ const Event = (props) => {
         marginLeft: props.shouldBeRight ? "75px" : "0px",
         marginRight: props.divide ? "1px" : "0"
     };
+
+    const headerStyle = {
+        backgroundColor: props.IsApproved ? props.eventColor : "#d96d6d"
+    };
     
     return (
         <div style={divStyle} className="event-content">
-            <h1>{props.team}</h1>
+            <h1 style={headerStyle}>{props.team}</h1>
             <h3>{props.club}</h3>
             <p>
                 {props.fieldSize}-manna<br />

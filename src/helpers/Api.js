@@ -1,11 +1,11 @@
 import Axios from "axios";
 // http://localhost:57676/api
 export default {
-    baseUrl: "http://localhost:57676/api",
+    baseUrl: "https://localhost:44387/api",
     events() {
         return {
             getForWeek: (startDate, endDate) => Axios.get(`${this.baseUrl}/event?from=${startDate}&to=${endDate}`),
-            postEvent: (data) => Axios.post(`${this.baseUrl}/event`, JSON.stringify(data))
+            postEvent: (data) => Axios.post(`${this.baseUrl}/event`, data)
         }
     },
     eventTypes() {

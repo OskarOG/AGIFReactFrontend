@@ -1,5 +1,5 @@
 .event-content {
-    background-color: #dddddd;
+    background-color: #eeebdf;
     margin-top: 82px;
     position: absolute;
     float: left;
@@ -9,11 +9,12 @@
 }
 
 .event-content h1 {
+    padding-top: 10px;
+    padding-bottom: 10px;
     font-size: 12px;
     margin: 0;
     margin-bottom: 3px;
     display: block;
-    background-color: aliceblue;
     padding-left: 2px;
     white-space: nowrap;
 }

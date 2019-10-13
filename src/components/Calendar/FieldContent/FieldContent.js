@@ -6,21 +6,25 @@ const FieldContent = (props) => {
     const minPxlSize = 2.5; // If change timeline li height must change as well.
 
     const eventItems = props.events.map((e) => {
-        console.log("FieldContent");
+        e.TimeFrom = new Date(e.TimeFrom);
+        e.TimeTo = new Date(e.TimeTo);
+
         console.log(e);
-        
-        const zeroDate = new Date(e.dateStart);
+
+        const zeroDate = new Date(e.TimeFrom);
         zeroDate.setHours(0,0,0,0);
-        let height = (Math.abs(e.dateStart - e.dateEnd) / 60 / 1000) * minPxlSize;
-        let topPos = (Math.abs(zeroDate - e.dateStart) / 60 / 1000) * minPxlSize;
+        let height = (Math.abs(e.TimeFrom - e.TimeTo) / 60 / 1000) * minPxlSize;
+        let topPos = (Math.abs(zeroDate - e.TimeFrom) / 60 / 1000) * minPxlSize;
         e.posRight = false;
         
-        if (e.shouldDivide) {
+        console.log("Height: " + height + " Toppos: " + topPos);
+
+        if (e.ShouldDivide) {
             for (let el of props.events) {
                 if (el == e) break;
                 
-                if (el.shouldDivide) {
-                    if (e.dateStart >= el.dateStart && e.dateStart <= el.dateEnd.addMinutes(-1)) {
+                if (el.ShouldDivide) {
+                    if (e.TimeFrom >= el.TimeFrom && e.TimeFrom <= el.TimeTo.addMinutes(-1)) {
                         e.posRight = !el.posRight;
                         break;
                     }
@@ -33,15 +37,17 @@ const FieldContent = (props) => {
         }
 
         return <Event key={e.Id}
-                divide={e.shouldDivide}
+                divide={e.ShouldDivide}
                 shouldBeRight={e.posRight}
                 height={height} 
                 top={topPos}
-                team={e.team}
-                club={e.club}
-                fieldSize={e.fieldSize}
-                timeFrom={e.dateStart}
-                timeTo={e.dateEnd} />
+                team={e.Team}
+                club={e.Club}
+                fieldSize={e.FieldSize}
+                timeFrom={e.TimeFrom}
+                timeTo={e.TimeTo}
+                eventColor={e.EventColor}
+                isApproved={e.IsApproved} />
     });
 
     return (
