@@ -28,7 +28,7 @@ const CalendarWeek = (props) => {
         API.events().getForWeek(props.weekDate.startDate.getUnixTimestamp(), props.weekDate.endDate.getUnixTimestamp()).then(res => {
             setEvents(res.data);
         });
-    }, []);
+    }, [props.weekDate]);
 
     const d = new Date(props.weekDate.startDate);
     const calDays = [];

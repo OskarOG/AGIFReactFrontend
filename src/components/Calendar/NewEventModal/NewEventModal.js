@@ -4,7 +4,7 @@ import API from "../../../helpers/Api";
 
 import './NewEventModal.css';
 
-import EventTypePicker from "../../EventTypePicker/EventTypePicker";
+// import EventTypePicker from "../../EventTypePicker/EventTypePicker";
 
 const NewEventModal = (props) => {
     const [name, setName] = useState("");

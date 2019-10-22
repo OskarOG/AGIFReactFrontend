@@ -38,7 +38,8 @@ const Navigation = (props) => {
         props.onPrevClick();
     }
 
-    return <div className={"navigation " + (props.drawerIsOpen ? "" : "nav-closed")}>
+    return (
+    <div className={"navigation " + (props.drawerIsOpen ? "" : "nav-closed")}>
         <div className="nav-slide-controlls">
             <FontAwesomeIcon onClick={handleBarClick} className={"bar-icon " + (props.drawerIsOpen ? "hidden" : "")} icon={ faBars } />
             <FontAwesomeIcon onClick={handleCloseClick} className={"close-icon " + (props.drawerIsOpen ? "" : "hidden")} icon={ faTimes } />
@@ -84,7 +85,7 @@ const Navigation = (props) => {
                 <p className={(props.drawerIsOpen ? "" : "hidden")}>Administrera</p>
             </div>
         </div>
-    </div>;
+    </div>);
 };
 
 export default Navigation;

@@ -4,9 +4,16 @@ import "./App.css";
 
 import CalendarWeek from "./Calendar/CalendarWeek/CalendarWeek";
 import Navigation from "./Navigation/Navigation";
+import LoginModal from "./LoginModal/LoginModal";
+import Api from "../helpers/Api";
 
 const App = (props) => {
+    const AGIF_SESSION_STORAGE_USERKEY = "AGIFSESSIONKEY_USERKEY";
+
+
     const [isLoggedIn, setLoggedIn] = useState(false);
+    const [hideLoginModal, setHideLoginModal] = useState(true);
+    const [userApiKey, setApiKey] = useState("");
 
     const [weekDate, setWeekDate] = useState(new Date().getWeekDateSpan());
     const [selectedDate, setSelectedDate] = useState(new Date());
@@ -14,6 +21,16 @@ const App = (props) => {
     const [newBookingModalIsHidden, setBookingModalHidden] = useState(true);
 
     useEffect(() => {
+        const key = sessionStorage.getItem(AGIF_SESSION_STORAGE_USERKEY);
+        console.log(key);
+        setApiKey(key);
+
+        console.log(userApiKey);
+
+        if (userApiKey != "") {
+            setLoggedIn(true);
+        };
+
         let d = new Date();
         let dayInt = d.getDay() - 1;
         if (dayInt == -1) dayInt = 6;
@@ -29,22 +46,44 @@ const App = (props) => {
 
     const handleDrawerToggle = status => {
         setDrawerOpen(status);
-    }
+    };
 
     const handleNewBookingClick = () => {
         setBookingModalHidden(false);
-    }
+    };
 
     const handleLoginClick = loginEventType => {
         switch (loginEventType) {
             case "login" :
-                setLoggedIn(true);
+                setHideLoginModal(false);
                 break;
             case "logout" :
-                setLoggedIn(false);
+                console.log(userApiKey);
+
+                Api.login().signout(userApiKey).then((res) => {
+                    setLoggedIn(false);
+                });
+
+                sessionStorage.removeItem(AGIF_SESSION_STORAGE_USERKEY);
                 break;
-        }
-    }
+        };
+    };
+
+    const handleLoginResult = userKey => {
+        setLoggedIn(true);
+        setHideLoginModal(true);
+
+        console.log(userKey);
+
+        sessionStorage.setItem(AGIF_SESSION_STORAGE_USERKEY, userKey);
+        setApiKey(userKey);
+
+        console.log(userApiKey);
+    };
+
+    const handleCloseLoginModal = () => {
+        setHideLoginModal(true);
+    };
 
     const handleOnNextClick = () => {
         // TODO: Load the week after as well and save it so the switch is fast when the user change to the next week after.
@@ -52,7 +91,7 @@ const App = (props) => {
         const d = selectedDate.addDays(7);
         setSelectedDate(d);
         setWeekDate(d.getWeekDateSpan());
-    }
+    };
 
     const handleOnPrevClick = () => {
         // TODO: Load the week before as well and save it so the switch is fast when the user change to the next week before.
@@ -60,15 +99,17 @@ const App = (props) => {
         const d = selectedDate.addDays(-7);
         setSelectedDate(d);
         setWeekDate(d.getWeekDateSpan());
-    }
+    };
 
     const handleCloseBookingModal = () => {
         setBookingModalHidden(true);
-    }
+    };
 
     return (
         <div id="app-element" className="App">
             <main>
+                <LoginModal isHidden={hideLoginModal} saveUserKey={handleLoginResult} close={handleCloseLoginModal} />
+
                 <Navigation 
                     drawerIsOpen={drawerIsOpen}
                     toggleDrawer={handleDrawerToggle}
@@ -79,6 +120,7 @@ const App = (props) => {
                     onLoginClick={handleLoginClick}
                     onNextClick={handleOnNextClick}
                     onPrevClick={handleOnPrevClick} />
+                
                 <CalendarWeek onCloseBookingModal={handleCloseBookingModal} newBookingModalIsHidden={newBookingModalIsHidden} shiftRight={drawerIsOpen} weekDate={weekDate} />
             </main>
         </div>);

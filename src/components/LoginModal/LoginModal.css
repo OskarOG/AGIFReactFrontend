@@ -1,0 +1,82 @@
+.login-modal-overlay {
+    position: fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background-color: #00000054;
+    overflow:auto;
+    z-index: 1000000;
+    padding-top:20px;
+}
+
+.login-modal-box {
+    padding: 5px 10px;
+    max-width: 500px;
+    margin: auto;
+    background-color: #FFF;
+    z-index: 50001;
+    border-radius: 5px;
+    -webkit-box-shadow: -4px 25px 200px -68px rgba(0,0,0,0.75);
+    -moz-box-shadow: -4px 25px 200px -68px rgba(0,0,0,0.75);
+    box-shadow: -4px 25px 200px -68px rgba(0,0,0,0.75);
+}
+
+.input {
+    display: block;
+    width: 98%;
+    border-radius: 3px;
+    padding: 5px;
+    margin-top: 5px;
+    border: solid 1px rgb(194, 194, 194);
+}
+
+.label {
+    display: block;
+    width:100%;
+    margin-top:5px;
+}
+
+.login-modal-buttons {
+    display:block;
+    width: 100%;
+    text-align: right;
+    padding-top:20px;
+    padding-bottom: 15px;
+}
+
+.btn {
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:16px;
+	padding:8px 20px;
+    text-decoration:none;
+    border: solid 0px black;
+    margin-right: 5px;
+}
+
+.btn:active {
+	position:relative;
+	top:1px;
+}
+
+.send-btn {
+    background-color:#009b62;
+}
+
+.send-btn:hover {
+	background-color:#008a57;
+}
+
+.close-btn {
+    background-color:#d80000;
+}
+
+.close-btn:hover {
+	background-color:#ca0000;
+}
