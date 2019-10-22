@@ -1,5 +1,5 @@
 import Axios from "axios";
-// http://localhost:57676/api
+
 export default {
     baseUrl: "https://localhost:44387/api",
     events() {

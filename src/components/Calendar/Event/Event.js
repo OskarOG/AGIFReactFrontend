@@ -13,7 +13,7 @@ const Event = (props) => {
     const headerStyle = {
         backgroundColor: props.IsApproved ? props.eventColor : "#d96d6d"
     };
-    
+
     return (
         <div style={divStyle} className="event-content">
             <h1 style={headerStyle}>{props.team}</h1>

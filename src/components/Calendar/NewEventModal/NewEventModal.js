@@ -42,79 +42,68 @@ const NewEventModal = (props) => {
                 setSubmitButtonDisabled(false);
             });
         }
-    }
+    };
 
     const handleNameChange = () => {
         setName(event.target.value);
-    }
+    };
 
     const handleEmailChange = () => {
         setEmail(event.target.value);
-    }
+    };
 
     const handleTeamChange = () => {
         setTeam(event.target.value);
-    }
+    };
 
     const handleClubChange = () => {
         setClub(event.target.value);
-    }
+    };
 
     const handleFieldChange = () => {
         setSelectedField(event.target.value);
 
         updateFieldSizes(date, timeFrom, timeTo, event.target.value);
-    }
+    };
 
     const handleFieldSizeChange = () => {
         setSelectedFieldSize(event.target.value);
-    }
+    };
 
     const handleDateChange = () => {
         setDate(event.target.value);
 
         updateFieldSizes(event.target.value, timeFrom, timeTo, selectedField);
-    }
+    };
 
     const handleTimeFromChange = () => {
         setTimeFrom(event.target.value);
-    }
+    };
 
     const handleTimeToChange = () => {
         setTimeTo(event.target.value);
-    }
+    };
 
     const handleTimeLeave = () => {
         updateFieldSizes(date, timeFrom, timeTo, selectedField);
-    }
+    };
 
     const handleEventTypeChange = () => {
         
-    }
+    };
 
     const handleCommentChange = () => {
         setComment(event.target.value);
-    }
+    };
 
-    const handleSendNewBooking = () => {
-        API.events().postEvent({
-            "Name": name,
-            "Email": email,
-            "Club": club,
-            "Team": team,
-            "TimeFrom": new Date(date + " " + timeFrom).getUnixTimestamp(),
-            "TimeTo": new Date(date + " " + timeTo).getUnixTimestamp(),
-            "Comment": comment,
-            "FieldID": selectedField,
-            "FieldSizeID": selectedFieldSize
-        }).then(res => {
-            console.log(res);
-        });
-        
-        console.log("Event post sent");
-
-        // handleCloseButton();
-    }
+    const clearFieldInfo = () => {
+        setSelectedField(0);
+        setSelectedFieldSize(0);
+        setCurrentPrice(0);
+        setFieldSizes([]);
+        setFieldSizeIsDisabled(true);
+        setSubmitButtonDisabled(true);
+    };
 
     const handleCloseButton = () => {
         props.close();
@@ -133,10 +122,30 @@ const NewEventModal = (props) => {
         setFieldSizes([]);
         setFieldSizeIsDisabled(true);
         setSubmitButtonDisabled(true);
-    }
+    };
+
+    const handleSendNewBooking = () => {
+        API.events().postEvent({
+            "Name": name,
+            "Email": email,
+            "Club": club,
+            "Team": team,
+            "TimeFrom": new Date(date + " " + timeFrom).getUnixTimestamp(),
+            "TimeTo": new Date(date + " " + timeTo).getUnixTimestamp(),
+            "Comment": comment,
+            "FieldID": selectedField,
+            "FieldSizeID": selectedFieldSize
+        }).then(res => {
+            // TODO: Show posted message
+            console.log(res);
+        });
+        
+        clearFieldInfo();
+        // handleCloseButton();
+    };
 
     let fieldOpts = props.fields.map((field) => <option key={field.Id} value={field.Id}>{field.Name}</option>);
-    fieldOpts.unshift(<option key={0} value={0}>Välj plan</option>)
+    fieldOpts.unshift(<option key={0} value={0}>Välj plan</option>);
 
     let fieldSizesOpts = fieldSizes.map((fieldSize) => <option key={fieldSize.Id} value={fieldSize.Id}>{fieldSize.Size}</option>);
     fieldSizesOpts.unshift(<option key={0} value={0}>Välj planstorlek</option>);
