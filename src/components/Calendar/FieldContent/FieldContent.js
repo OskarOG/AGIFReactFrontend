@@ -9,15 +9,11 @@ const FieldContent = (props) => {
         e.TimeFrom = new Date(e.TimeFrom);
         e.TimeTo = new Date(e.TimeTo);
 
-        console.log(e);
-
         const zeroDate = new Date(e.TimeFrom);
         zeroDate.setHours(0,0,0,0);
         let height = (Math.abs(e.TimeFrom - e.TimeTo) / 60 / 1000) * minPxlSize;
         let topPos = (Math.abs(zeroDate - e.TimeFrom) / 60 / 1000) * minPxlSize;
         e.posRight = false;
-        
-        console.log("Height: " + height + " Toppos: " + topPos);
 
         if (e.ShouldDivide) {
             for (let el of props.events) {

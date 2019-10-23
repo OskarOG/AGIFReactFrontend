@@ -39,7 +39,7 @@
 
 .hidden {
     visibility: hidden;
-    display: none;
+    display: none !important;
 }
 
 .nav-title {

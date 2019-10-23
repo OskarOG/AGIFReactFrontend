@@ -7,13 +7,13 @@ import Navigation from "./Navigation/Navigation";
 import LoginModal from "./LoginModal/LoginModal";
 import Api from "../helpers/Api";
 
-const App = (props) => {
+const App = () => {
     const AGIF_SESSION_STORAGE_USERKEY = "AGIFSESSIONKEY_USERKEY";
 
 
     const [isLoggedIn, setLoggedIn] = useState(false);
     const [hideLoginModal, setHideLoginModal] = useState(true);
-    const [userApiKey, setApiKey] = useState("");
+    const [userApiKey, setApiKey] = useState(sessionStorage.getItem(AGIF_SESSION_STORAGE_USERKEY));
 
     const [weekDate, setWeekDate] = useState(new Date().getWeekDateSpan());
     const [selectedDate, setSelectedDate] = useState(new Date());
@@ -21,13 +21,7 @@ const App = (props) => {
     const [newBookingModalIsHidden, setBookingModalHidden] = useState(true);
 
     useEffect(() => {
-        const key = sessionStorage.getItem(AGIF_SESSION_STORAGE_USERKEY);
-        console.log(key);
-        setApiKey(key);
-
-        console.log(userApiKey);
-
-        if (userApiKey != "") {
+        if (userApiKey != null && userApiKey != "") {
             setLoggedIn(true);
         };
 
@@ -58,13 +52,10 @@ const App = (props) => {
                 setHideLoginModal(false);
                 break;
             case "logout" :
-                console.log(userApiKey);
-
                 Api.login().signout(userApiKey).then((res) => {
                     setLoggedIn(false);
+                    sessionStorage.removeItem(AGIF_SESSION_STORAGE_USERKEY);
                 });
-
-                sessionStorage.removeItem(AGIF_SESSION_STORAGE_USERKEY);
                 break;
         };
     };
@@ -73,12 +64,8 @@ const App = (props) => {
         setLoggedIn(true);
         setHideLoginModal(true);
 
-        console.log(userKey);
-
         sessionStorage.setItem(AGIF_SESSION_STORAGE_USERKEY, userKey);
         setApiKey(userKey);
-
-        console.log(userApiKey);
     };
 
     const handleCloseLoginModal = () => {
@@ -123,7 +110,8 @@ const App = (props) => {
                 
                 <CalendarWeek onCloseBookingModal={handleCloseBookingModal} newBookingModalIsHidden={newBookingModalIsHidden} shiftRight={drawerIsOpen} weekDate={weekDate} />
             </main>
-        </div>);
+        </div>
+    );
 };
 
 export default App;
