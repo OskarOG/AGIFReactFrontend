@@ -16,21 +16,27 @@ const FieldContent = (props) => {
         e.posRight = false;
 
         if (e.ShouldDivide) {
-            for (let el of props.events) {
-                if (el == e) break;
+            for (var el of props.events) {
+                if (el === e)
+                    continue;
                 
                 if (el.ShouldDivide) {
-                    if (e.TimeFrom >= el.TimeFrom && e.TimeFrom <= el.TimeTo.addMinutes(-1)) {
-                        e.posRight = !el.posRight;
+                    el.TimeFrom = new Date(el.TimeFrom);
+                    el.TimeTo = new Date(el.TimeTo);
+
+                    if (e.TimeFrom.getUnixTimestamp() == el.TimeFrom.getUnixTimestamp() && e.TimeTo.getUnixTimestamp() == el.TimeTo.getUnixTimestamp() && !el.posRight) {
+                        console.log("Pos right");
+                        e.posRight = true;
                         break;
-                    }
-                    if (e.dateEnd <= el.dateEnd && e.dateEnd > el.dateStart) {
-                        e.posRight = !el.posRight;
-                        break;
-                    }
-                }
-            }
-        }
+                    };
+
+                    // if (e.TimeFrom.getUnixTimestamp() >= el.TimeFrom.getUnixTimestamp() && e.TimeFrom.getUnixTimestamp() <= el.TimeTo.getUnixTimestamp()) {
+                    //     e.posRight = !el.posRight;
+                    //     break;
+                    // };
+                };
+            };
+        };
 
         return <Event key={e.Id}
                 divide={e.ShouldDivide}

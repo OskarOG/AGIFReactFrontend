@@ -38,6 +38,10 @@ const Navigation = (props) => {
         props.onPrevClick();
     }
 
+    const handleShowApproveModalClick = () => {
+        props.onShowApproveEventModal();
+    };
+
     return (
         <div className={"navigation " + (props.drawerIsOpen ? "" : "nav-closed")}>
             <div className="nav-slide-controlls">
@@ -80,9 +84,9 @@ const Navigation = (props) => {
                     <p className={(props.drawerIsOpen ? "" : "hidden")}>Logga ut</p>
                 </div>
 
-                <div className={"nav-item " + (props.isLoggedIn ? "" : "hidden")}>
+                <div onClick={handleShowApproveModalClick} className={"nav-item " + (props.isLoggedIn ? "" : "hidden")}>
                     <FontAwesomeIcon className="nav-item-icon admin-icon" icon={ faUserCog } />
-                    <p className={(props.drawerIsOpen ? "" : "hidden")}>Administrera</p>
+                    <p className={(props.drawerIsOpen ? "" : "hidden")}>Godkänn förfrågningar</p>
                 </div>
             </div>
         </div>

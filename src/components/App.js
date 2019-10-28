@@ -6,6 +6,7 @@ import CalendarWeek from "./Calendar/CalendarWeek/CalendarWeek";
 import Navigation from "./Navigation/Navigation";
 import LoginModal from "./LoginModal/LoginModal";
 import Api from "../helpers/Api";
+import ApproveEventModal from "./ApproveEventModal/ApproveEventModal";
 
 const App = () => {
     const AGIF_SESSION_STORAGE_USERKEY = "AGIFSESSIONKEY_USERKEY";
@@ -14,6 +15,9 @@ const App = () => {
     const [isLoggedIn, setLoggedIn] = useState(false);
     const [hideLoginModal, setHideLoginModal] = useState(true);
     const [userApiKey, setApiKey] = useState(sessionStorage.getItem(AGIF_SESSION_STORAGE_USERKEY));
+
+    const [hideNonApprovedModal, setHideNonApprovedModal] = useState(true);
+    const [nonApprovedEvents, setNonApprovedEvents] = useState([]);
 
     const [weekDate, setWeekDate] = useState(new Date().getWeekDateSpan());
     const [selectedDate, setSelectedDate] = useState(new Date());
@@ -92,10 +96,30 @@ const App = () => {
         setBookingModalHidden(true);
     };
 
+    const handleShowApproveEventModal = () => {
+        Api.nonApprovedEvents().get(userApiKey).then(res => {
+            setHideNonApprovedModal(false);
+            
+            setNonApprovedEvents(res.data);
+        });
+    };
+
+    const handleCloseApproveEventModal = () => {
+        setHideNonApprovedModal(true);
+    };
+
+    const handleSendApprovalEvent = (events) => {
+        Api.nonApprovedEvents().approve(userApiKey, events).then(res => {
+            // TODO: Show success msg.
+        });
+    };
+
     return (
         <div id="app-element" className="App">
             <main>
                 <LoginModal isHidden={hideLoginModal} saveUserKey={handleLoginResult} close={handleCloseLoginModal} />
+
+                <ApproveEventModal close={handleCloseApproveEventModal} isHidden={hideNonApprovedModal} nonApprovedEvents={nonApprovedEvents} send={handleSendApprovalEvent} />
 
                 <Navigation 
                     drawerIsOpen={drawerIsOpen}
@@ -106,7 +130,8 @@ const App = () => {
                     onNewBookingClick={handleNewBookingClick}
                     onLoginClick={handleLoginClick}
                     onNextClick={handleOnNextClick}
-                    onPrevClick={handleOnPrevClick} />
+                    onPrevClick={handleOnPrevClick}
+                    onShowApproveEventModal={handleShowApproveEventModal} />
                 
                 <CalendarWeek onCloseBookingModal={handleCloseBookingModal} newBookingModalIsHidden={newBookingModalIsHidden} shiftRight={drawerIsOpen} weekDate={weekDate} />
             </main>

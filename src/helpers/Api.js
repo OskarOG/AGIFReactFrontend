@@ -8,6 +8,13 @@ export default {
             postEvent: (data) => Axios.post(`${this.baseUrl}/event`, data)
         };
     },
+    nonApprovedEvents() {
+        return {
+            get: (userKey) => Axios.get(`${this.baseUrl}/nonapprovedevent?userkey=${userKey}`),
+            getCount: (userKey) => Axios.get(`${this.baseUrl}/nonapprovedevent/count?userKey=${userKey}`),
+            approve: (userKey, events) => Axios.put(`${this.baseUrl}/nonapprovedevent?userKey=${userKey}`, events)
+        };
+    },
     eventTypes() {
         return {
             getAll: () => Axios.get(`${this.baseUrl}/eventtype`)
