@@ -24,3 +24,14 @@
 .decision-buttons .deny-selected {
     background-color: rgb(143, 40, 40);
 }
+
+.non-approved-color-picker-container {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.specific-color-btn {
+    background-color: #bbb;
+}

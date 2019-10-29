@@ -30,7 +30,6 @@ const App = () => {
             setLoggedIn(true);
 
             Api.nonApprovedEvents().getCount(userApiKey).then(res => {
-                console.log(res);
                 setNonApprovedCount(res.data);
             });
         };
@@ -76,6 +75,10 @@ const App = () => {
 
         sessionStorage.setItem(AGIF_SESSION_STORAGE_USERKEY, userKey);
         setApiKey(userKey);
+
+        Api.nonApprovedEvents().getCount(userKey).then(res => {
+            setNonApprovedCount(res.data);
+        });
     };
 
     const handleCloseLoginModal = () => {
@@ -115,7 +118,10 @@ const App = () => {
     };
 
     const handleSendApprovalEvent = (events) => {
+        console.log(events);
+
         Api.nonApprovedEvents().approve(userApiKey, events).then(res => {
+            console.log(res);
             // TODO: Show success msg.
         });
     };

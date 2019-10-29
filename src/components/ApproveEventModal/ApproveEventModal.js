@@ -7,12 +7,12 @@ import Api from "../../helpers/Api";
 const ApproveEventModal = (props) => {
     const [eventMap, setEventMap] = useState(new Map());
 
-    const handleApproveSelected = id => {
-        eventMap.set(id, true);
+    const handleApproveSelected = (id, color) => {
+        eventMap.set(id, { approved: true, color });
     };
 
     const handleDenySelected = id => {
-        eventMap.set(id, false);
+        eventMap.set(id, { approved: false, color: "" });
     };
     
     const events = props.nonApprovedEvents.map((e) => {
@@ -30,6 +30,7 @@ const ApproveEventModal = (props) => {
                 TimeFrom={e.TimeFrom}
                 TimeTo={e.TimeTo}
                 Comment={e.Comment}
+                EventColor={e.EventColor}
                 onApproveSelected={handleApproveSelected}
                 onDenySelected={handleDenySelected} />
     });
@@ -44,7 +45,8 @@ const ApproveEventModal = (props) => {
         eventMap.forEach((value, key, map) => {
             eventList.push({
                 Id: key,
-                IsApproved: value
+                IsApproved: value.approved,
+                Color: value.color
             });
         });
 

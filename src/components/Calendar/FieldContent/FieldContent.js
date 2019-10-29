@@ -6,6 +6,7 @@ const FieldContent = (props) => {
     const minPxlSize = 2.5; // If change timeline li height must change as well.
 
     const eventItems = props.events.map((e) => {
+        console.log(e);
         e.TimeFrom = new Date(e.TimeFrom);
         e.TimeTo = new Date(e.TimeTo);
 
