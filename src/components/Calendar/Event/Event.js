@@ -11,7 +11,7 @@ const Event = (props) => {
     };
 
     const headerStyle = {
-        backgroundColor: props.IsApproved ? props.eventColor : "#d96d6d"
+        backgroundColor: props.eventColor
     };
 
     return (
