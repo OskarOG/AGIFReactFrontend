@@ -6,6 +6,8 @@ const FieldContent = (props) => {
     const minPxlSize = 2.5; // If change timeline li height must change as well.
 
     const eventItems = props.events.map((e) => {
+        console.log(e);
+        
         e.TimeFrom = new Date(e.TimeFrom);
         e.TimeTo = new Date(e.TimeTo);
 
@@ -13,34 +15,10 @@ const FieldContent = (props) => {
         zeroDate.setHours(0,0,0,0);
         let height = (Math.abs(e.TimeFrom - e.TimeTo) / 60 / 1000) * minPxlSize;
         let topPos = (Math.abs(zeroDate - e.TimeFrom) / 60 / 1000) * minPxlSize;
-        e.posRight = false;
-
-        if (e.ShouldDivide) {
-            for (var el of props.events) {
-                if (el === e)
-                    continue;
-                
-                if (el.ShouldDivide) {
-                    el.TimeFrom = new Date(el.TimeFrom);
-                    el.TimeTo = new Date(el.TimeTo);
-
-                    if (e.TimeFrom.getUnixTimestamp() == el.TimeFrom.getUnixTimestamp() && e.TimeTo.getUnixTimestamp() == el.TimeTo.getUnixTimestamp() && !el.posRight) {
-                        console.log("Pos right");
-                        e.posRight = true;
-                        break;
-                    };
-
-                    // if (e.TimeFrom.getUnixTimestamp() >= el.TimeFrom.getUnixTimestamp() && e.TimeFrom.getUnixTimestamp() <= el.TimeTo.getUnixTimestamp()) {
-                    //     e.posRight = !el.posRight;
-                    //     break;
-                    // };
-                };
-            };
-        };
 
         return <Event key={e.Id}
                 divide={e.ShouldDivide}
-                shouldBeRight={e.posRight}
+                shouldBeRight={e.PosToRight}
                 height={height} 
                 top={topPos}
                 team={e.Team}
