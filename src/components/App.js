@@ -18,6 +18,7 @@ const App = () => {
 
     const [hideNonApprovedModal, setHideNonApprovedModal] = useState(true);
     const [nonApprovedEvents, setNonApprovedEvents] = useState([]);
+    const [nonApprovedCount, setNonApprovedCount] = useState("");
 
     const [weekDate, setWeekDate] = useState(new Date().getWeekDateSpan());
     const [selectedDate, setSelectedDate] = useState(new Date());
@@ -27,6 +28,11 @@ const App = () => {
     useEffect(() => {
         if (userApiKey != null && userApiKey != "") {
             setLoggedIn(true);
+
+            Api.nonApprovedEvents().getCount(userApiKey).then(res => {
+                console.log(res);
+                setNonApprovedCount(res.data);
+            });
         };
 
         let d = new Date();
@@ -131,7 +137,8 @@ const App = () => {
                     onLoginClick={handleLoginClick}
                     onNextClick={handleOnNextClick}
                     onPrevClick={handleOnPrevClick}
-                    onShowApproveEventModal={handleShowApproveEventModal} />
+                    onShowApproveEventModal={handleShowApproveEventModal}
+                    nonApprovedCount={nonApprovedCount} />
                 
                 <CalendarWeek onCloseBookingModal={handleCloseBookingModal} newBookingModalIsHidden={newBookingModalIsHidden} shiftRight={drawerIsOpen} weekDate={weekDate} />
             </main>

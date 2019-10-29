@@ -86,7 +86,7 @@ const Navigation = (props) => {
 
                 <div onClick={handleShowApproveModalClick} className={"nav-item " + (props.isLoggedIn ? "" : "hidden")}>
                     <FontAwesomeIcon className="nav-item-icon admin-icon" icon={ faUserCog } />
-                    <p className={(props.drawerIsOpen ? "" : "hidden")}>Godkänn förfrågningar</p>
+                    <p className={(props.drawerIsOpen ? "" : "hidden")}>Godkänn förfrågningar <strong>{ props.nonApprovedCount }</strong></p>
                 </div>
             </div>
         </div>
