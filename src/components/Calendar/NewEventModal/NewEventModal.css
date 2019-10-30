@@ -124,3 +124,13 @@
 .submit-disabled {
     background-color: grey;
 }
+
+.new-event-color-picker {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    margin-left: 40px;
+}

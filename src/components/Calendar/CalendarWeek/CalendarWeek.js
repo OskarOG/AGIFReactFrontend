@@ -80,7 +80,7 @@ const CalendarWeek = (props) => {
             {calDays}
             <Timeline shiftRight={props.shiftRight} top={timelinePos} />
 
-            <NewEventModal fields={fields} isHidden={props.newBookingModalIsHidden} close={handleCloseNewBookingClick}/>
+            <NewEventModal userKey={props.userKey} showAdminOptions={props.adminLoggedIn} fields={fields} isHidden={props.newBookingModalIsHidden} close={handleCloseNewBookingClick}/>
         </div>
     );
 };

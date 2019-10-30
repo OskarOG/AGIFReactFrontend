@@ -4,9 +4,11 @@ import API from "../../../helpers/Api";
 
 import './NewEventModal.css';
 
-// import EventTypePicker from "../../EventTypePicker/EventTypePicker";
+import { CirclePicker } from "react-color";
 
 const NewEventModal = (props) => {
+    const colors = ["#009b62" /* AGIF Green */, "#d5cb72" /* External club */, "#9c83c3" /* Special event */, "#d96d6d" /* NonApproved */];
+
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [team, setTeam] = useState("");
@@ -18,6 +20,7 @@ const NewEventModal = (props) => {
     const [timeTo, setTimeTo] = useState("");
     const [comment, setComment] = useState("");
     const [currentPrice, setCurrentPrice] = useState(0);
+    const [eventColor, setEventColor] = useState("");
 
     const [fieldSizes, setFieldSizes] = useState([]);
 
@@ -88,8 +91,8 @@ const NewEventModal = (props) => {
         updateFieldSizes(date, timeFrom, timeTo, selectedField);
     };
 
-    const handleEventTypeChange = () => {
-        
+    const handleEventColorChange = (color) => {
+        setEventColor(color.hex);
     };
 
     const handleCommentChange = () => {
@@ -122,26 +125,48 @@ const NewEventModal = (props) => {
         setFieldSizes([]);
         setFieldSizeIsDisabled(true);
         setSubmitButtonDisabled(true);
+        setEventColor("");
     };
 
     const handleSendNewBooking = () => {
-        API.events().postEvent({
-            "Name": name,
-            "Email": email,
-            "Club": club,
-            "Team": team,
-            "TimeFrom": new Date(date + " " + timeFrom).getUnixTimestamp(),
-            "TimeTo": new Date(date + " " + timeTo).getUnixTimestamp(),
-            "Comment": comment,
-            "FieldID": selectedField,
-            "FieldSizeID": selectedFieldSize
-        }).then(res => {
-            // TODO: Show posted message
-            console.log(res);
-        });
+        if (props.showAdminOptions) {
+            API.events().postEvent({
+                "Name": name,
+                "Email": email,
+                "Club": club,
+                "Team": team,
+                "TimeFrom": new Date(date + " " + timeFrom).getUnixTimestamp(),
+                "TimeTo": new Date(date + " " + timeTo).getUnixTimestamp(),
+                "Comment": comment,
+                "FieldID": selectedField,
+                "FieldSizeID": selectedFieldSize,
+                "EventColor": eventColor,
+                "UserKey": props.userKey
+            }).then(res => {
+                // TODO: Show posted message
+                console.log(res);
+            });
+        } else {
+            API.events().postEvent({
+                "Name": name,
+                "Email": email,
+                "Club": club,
+                "Team": team,
+                "TimeFrom": new Date(date + " " + timeFrom).getUnixTimestamp(),
+                "TimeTo": new Date(date + " " + timeTo).getUnixTimestamp(),
+                "Comment": comment,
+                "FieldID": selectedField,
+                "FieldSizeID": selectedFieldSize,
+                "EventColor": eventColor
+            }).then(res => {
+                // TODO: Show posted message
+                console.log(res);
+            });
+
+            handleCloseButton();
+        }
         
         clearFieldInfo();
-        // handleCloseButton();
     };
 
     let fieldOpts = props.fields.map((field) => <option key={field.Id} value={field.Id}>{field.Name}</option>);
@@ -205,16 +230,17 @@ const NewEventModal = (props) => {
                             {fieldSizesOpts}
                         </select>
                     </div>
-                    {/* <div>
-                        <label className="label">Bokningstyp</label>
-                        <EventTypePicker onChange={} eventType={} />
-                    </div> */}
+                    
                     <div className="input-comment-div">
                         <label className="label">Annan kommentar:</label>
                         <textarea className="input" value={comment} onChange={handleCommentChange} rows="2"></textarea>
                     </div>
                 </form>
-                <div className="price-estimation">
+
+                <div className={(props.showAdminOptions ? "new-event-color-picker" : "hidden")}>
+                    <CirclePicker onChange={handleEventColorChange} colors={colors} color={ eventColor } />
+                </div>
+                <div className={(props.showAdminOptions ? "hidden" : "price-estimation")}>
                     {/* TODO: Show price estimation */}
                     <h4>
                         {currentPrice} SEK
