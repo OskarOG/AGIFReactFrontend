@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 import "./ApproveEventModal.css";
 import NonApprovedEvent from "./NonApprovedEvent/NonApprovedEvent";
-import Api from "../../helpers/Api";
 
 const ApproveEventModal = (props) => {
     const [eventMap, setEventMap] = useState(new Map());

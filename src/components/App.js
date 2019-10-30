@@ -146,7 +146,7 @@ const App = () => {
                     onShowApproveEventModal={handleShowApproveEventModal}
                     nonApprovedCount={nonApprovedCount} />
                 
-                <CalendarWeek onCloseBookingModal={handleCloseBookingModal} newBookingModalIsHidden={newBookingModalIsHidden} shiftRight={drawerIsOpen} weekDate={weekDate} />
+                <CalendarWeek userKey={userApiKey} adminLoggedIn={userApiKey != null} onCloseBookingModal={handleCloseBookingModal} newBookingModalIsHidden={newBookingModalIsHidden} shiftRight={drawerIsOpen} weekDate={weekDate} />
             </main>
         </div>
     );
