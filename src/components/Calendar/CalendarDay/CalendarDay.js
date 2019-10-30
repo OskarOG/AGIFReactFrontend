@@ -7,7 +7,8 @@ const CalendarDay = (props) => {
     const fieldItems = props.fields.map((f) =>
         <Field key={props.dayDate.getTime()+"-"+f.Id}
                 fieldTitle={f.Name}
-                fieldEvents={props.dayEvents.filter((e) => e.FieldID == f.Id)} />
+                fieldEvents={props.dayEvents.filter((e) => e.FieldID == f.Id)}
+                openAlterEventModal={props.openAlterEventModal} />
     );
 
     return (

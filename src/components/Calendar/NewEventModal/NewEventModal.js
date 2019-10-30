@@ -28,8 +28,6 @@ const NewEventModal = (props) => {
     const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
 
     const updateFieldSizes = (selectedDate, selectedTimeFrom, selectedTimeTo, fieldId) => {
-        console.log("Inside updateFieldSizes");
-
         setFieldSizeIsDisabled(true);
         setSubmitButtonDisabled(true);
 
