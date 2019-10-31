@@ -15,7 +15,7 @@ const Event = (props) => {
     };
 
     return (
-        <div style={divStyle} className="event-content">
+        <div style={divStyle} className="event-content" onDoubleClick={props.onEventClick}>
             <h1 style={headerStyle}>{props.team}</h1>
             <h3>{props.club}</h3>
             <p>

@@ -6,6 +6,8 @@ import Timeline from "../Timeline/Timeline";
 import NewEventModal from "../NewEventModal/NewEventModal";
 
 import API from "../../../helpers/Api";
+import AlterEventModal from "../AlterEventModal/AlterEventModal";
+import Api from "../../../helpers/Api";
 
 const CalendarWeek = (props) => {
     const days = ["Söndag", "Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag"];
@@ -24,11 +26,165 @@ const CalendarWeek = (props) => {
     const initDate = new Date();
     const [timelinePos, setTimelinePos] = useState(`${(((initDate.getHours() * 60) + initDate.getMinutes()) * 2.5) + 82}px`);
 
+    const [hideAlterEventModal, setHideAlterEventModal] = useState(true);
+    const [alterEventId, setAlterEventId] = useState(-1);
+    const [alterEventName, setAlterEventName] = useState("");
+    const [alterEventEmail, setAlterEventEmail] = useState("");
+    const [alterEventTeam, setAlterEventTeam] = useState("");
+    const [alterEventClub, setAlterEventClub] = useState("");
+    const [alterEventDate, setAlterEventDate] = useState("");
+    const [alterEventTimeFrom, setAlterEventTimeFrom] = useState("");
+    const [alterEventTimeTo, setAlterEventTimeTo] = useState("");
+    const [alterEventFieldSizesOpts, setAlterEventFieldSizesOpts] = useState([]);
+    const [alterEventSelectedField, setAlterEventSelectedField] = useState(0);
+    const [alterEventSelectedFieldSize, setAlterEventSelectedFieldSize] = useState(0);
+    const [alterEventComment, setAlterEventComment] = useState("");
+    const [alterEventColor, setAlterEventColor] = useState("");
+
+
     useEffect(() => {
         API.events().getForWeek(props.weekDate.startDate.getUnixTimestamp(), props.weekDate.endDate.getUnixTimestamp()).then(res => {
             setEvents(res.data);
         });
     }, [props.weekDate]);
+
+    const handleOpenAlterEventModal = (event) => {
+        if (props.userKey != null) {
+            setAlterEventId(event.Id);
+            setAlterEventName(event.Name);
+            setAlterEventEmail(event.Email);
+            setAlterEventTeam(event.Team);
+            setAlterEventClub(event.Club);
+
+            const month = event.TimeFrom.getMonth() + 1;
+            const day = event.TimeFrom.getDate();
+            setAlterEventDate(event.TimeFrom.getFullYear() + "-" + (month < 10 ? "0" + month : month) + "-" + (day < 10 ? "0" + day : day));
+
+            const hourFrom = event.TimeFrom.getHours();
+            const minFrom = event.TimeFrom.getMinutes();
+            setAlterEventTimeFrom((hourFrom < 10 ? "0" + hourFrom : hourFrom) + ":" + (minFrom < 10 ? "0" + minFrom : minFrom));
+
+            const hourTo = event.TimeTo.getHours();
+            const minTo = event.TimeTo.getMinutes();
+            setAlterEventTimeTo((hourTo < 10 ? "0" + hourTo : hourTo) + ":" + (minTo < 10 ? "0" + minTo : minTo));
+
+            setAlterEventSelectedField(event.FieldID);
+            setAlterEventSelectedFieldSize(event.FieldSizeID);
+            setAlterEventComment(event.Comment);
+            setAlterEventColor(event.EventColor);
+
+            updateFieldSizes(event.TimeFrom.getFullYear() + "-" + (month < 10 ? "0" + month : month) + "-" + (day < 10 ? "0" + day : day),
+                            (hourFrom < 10 ? "0" + hourFrom : hourFrom) + ":" + (minFrom < 10 ? "0" + minFrom : minFrom),
+                            (hourTo < 10 ? "0" + hourTo : hourTo) + ":" + (minTo < 10 ? "0" + minTo : minTo),
+                            event.FieldID);
+
+            setHideAlterEventModal(false);
+        }
+    };
+
+    const cleanAlterModal = () => {
+        setAlterEventName("");
+        setAlterEventEmail("");
+        setAlterEventTeam("");
+        setAlterEventClub("");
+        setAlterEventDate("");
+        setAlterEventTimeFrom("");
+        setAlterEventTimeTo("");
+        setAlterEventSelectedField(0);
+        setAlterEventSelectedFieldSize(0);
+        setAlterEventComment("");
+        setAlterEventColor("");
+    };
+
+    const handleCloseAlterEventModal = () => {
+        setHideAlterEventModal(true);
+        cleanAlterModal();
+    };
+
+    const handleUpdateBookingClick = () => {
+        setHideAlterEventModal(true);
+        cleanAlterModal();
+        
+        Api.events().updateEvent({
+            "Id": alterEventId,
+            "Name": alterEventName,
+            "Email": alterEventEmail,
+            "Club": alterEventClub,
+            "Team": alterEventTeam,
+            "TimeFrom": new Date(alterEventDate + " " + alterEventTimeFrom).getUnixTimestamp(),
+            "TimeTo": new Date(alterEventDate + " " + alterEventTimeTo).getUnixTimestamp(),
+            "Comment": alterEventComment,
+            "FieldID": alterEventSelectedField,
+            "FieldSizeID": alterEventSelectedFieldSize,
+            "EventColor": alterEventColor,
+            "UserKey": props.userKey
+        }).then(res => {
+            console.log(res);
+        });
+    };
+
+    const handleAlterNameChange = () => {
+        setAlterEventName(event.target.value);
+    };
+
+    const handleAlterEmailChange = () => {
+        setAlterEventEmail(event.target.value);
+    };
+
+    const handleAlterTeamChange = () => {
+        setAlterEventTeam(event.target.value);
+    };
+
+    const handleAlterClubChange = () => {
+        setAlterEventClub(event.target.value);
+    };
+
+    const handleAlterDateChange = () => {
+        setAlterEventDate(event.target.value);
+
+        updateFieldSizes(event.target.value, alterEventTimeFrom, alterEventTimeTo, alterEventSelectedField);
+    };
+
+    const handleAlterTimeFromChange = () => {
+        setAlterEventTimeFrom(event.target.value);
+    };
+
+    const handleAlterTimeToChange = () => {
+        setAlterEventTimeTo(event.target.value);
+    };
+
+    const handleAlterTimeLeave = () => {
+        updateFieldSizes(alterEventDate, alterEventTimeFrom, alterEventTimeTo, alterEventSelectedField);
+    };
+
+    const handleAlterFieldChange = () => {
+        setAlterEventSelectedField(event.target.value);
+
+        updateFieldSizes(alterEventDate, alterEventTimeFrom, alterEventTimeTo, event.target.value);
+    };
+
+    const handleAlterFieldSizeChange = () => {
+        setAlterEventSelectedFieldSize(event.target.value);
+    };
+
+    const handleAlterCommentChange = () => {
+        setAlterEventComment(event.target.value);
+    };
+
+    const handleAlterEventColorChange = () => {
+        setAlterEventColor(event.target.value);
+    };
+
+    const updateFieldSizes = (selectedDate, selectedTimeFrom, selectedTimeTo, fieldId) => {
+        if (selectedDate != "" && selectedTimeFrom != "" && selectedTimeTo != "" && fieldId != 0) {
+            var tempDateFrom = new Date(selectedDate + " " + selectedTimeFrom);
+            var tempDateTo = new Date(selectedDate + " " + selectedTimeTo);
+
+            API.fields().getFieldSizes(fieldId, tempDateFrom.getUnixTimestamp(), tempDateTo.getUnixTimestamp()).then(res => {
+                setAlterEventFieldSizesOpts(res.data);
+            });
+        }
+    };
 
     const d = new Date(props.weekDate.startDate);
     const calDays = [];
@@ -38,7 +194,8 @@ const CalendarWeek = (props) => {
                                     fields={fields}
                                     dayEvents={events.filter((e) => new Date(e.TimeFrom).getDate() == d.getDate())}
                                     dayDate={new Date(d)}
-                                    dayName={days[d.getDay()]} />);
+                                    dayName={days[d.getDay()]}
+                                    openAlterEventModal={handleOpenAlterEventModal} />);
     };
 
     // TODO: Possible refactor into their own components instead of here.
@@ -72,15 +229,45 @@ const CalendarWeek = (props) => {
 
     const handleCloseNewBookingClick = () => {
         props.onCloseBookingModal();
-    }
+    };
 
     return (
         <div className={"calendar-week " + (props.shiftRight ? "if-drawer-open" : "if-drawer-closed")}>
             <Time />
+            
             {calDays}
+            
             <Timeline shiftRight={props.shiftRight} top={timelinePos} />
 
             <NewEventModal userKey={props.userKey} showAdminOptions={props.adminLoggedIn} fields={fields} isHidden={props.newBookingModalIsHidden} close={handleCloseNewBookingClick}/>
+            <AlterEventModal isHidden={hideAlterEventModal}
+                fields={fields}
+                onClose={handleCloseAlterEventModal}
+                onUpdateBookingClick={handleUpdateBookingClick}
+                name={alterEventName}
+                email={alterEventEmail}
+                team={alterEventTeam}
+                club={alterEventClub}
+                date={alterEventDate}
+                timeFrom={alterEventTimeFrom}
+                timeTo={alterEventTimeTo}
+                fieldSizesOpts={alterEventFieldSizesOpts}
+                selectedField={alterEventSelectedField}
+                selectedFieldSize={alterEventSelectedFieldSize}
+                comment={alterEventComment}
+                eventColor={alterEventColor}
+                onNameChange={handleAlterNameChange}
+                onEmailChange={handleAlterEmailChange}
+                onTeamChange={handleAlterTeamChange}
+                onClubChange={handleAlterClubChange}
+                onDateChange={handleAlterDateChange}
+                onTimeFromChange={handleAlterTimeFromChange}
+                onTimeToChange={handleAlterTimeToChange}
+                onTimeLeave={handleAlterTimeLeave}
+                onSelectedFieldChange={handleAlterFieldChange}
+                onSelectedFieldSizeChange={handleAlterFieldSizeChange}
+                onCommentChange={handleAlterCommentChange}
+                onEventColorChange={handleAlterEventColorChange} />
         </div>
     );
 };

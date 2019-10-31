@@ -14,6 +14,10 @@ const FieldContent = (props) => {
         let height = (Math.abs(e.TimeFrom - e.TimeTo) / 60 / 1000) * minPxlSize;
         let topPos = (Math.abs(zeroDate - e.TimeFrom) / 60 / 1000) * minPxlSize;
 
+        const handleEventClick = () => {
+            props.openAlterEventModal(e);
+        };
+
         return <Event key={e.Id}
                 divide={e.ShouldDivide}
                 shouldBeRight={e.PosToRight}
@@ -25,7 +29,8 @@ const FieldContent = (props) => {
                 timeFrom={e.TimeFrom}
                 timeTo={e.TimeTo}
                 eventColor={e.EventColor}
-                isApproved={e.IsApproved} />
+                isApproved={e.IsApproved}
+                onEventClick={handleEventClick} />
     });
 
     return (
