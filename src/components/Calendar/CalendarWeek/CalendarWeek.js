@@ -7,6 +7,7 @@ import NewEventModal from "../NewEventModal/NewEventModal";
 
 import API from "../../../helpers/Api";
 import AlterEventModal from "../AlterEventModal/AlterEventModal";
+import Api from "../../../helpers/Api";
 
 const CalendarWeek = (props) => {
     const days = ["Söndag", "Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag"];
@@ -26,6 +27,7 @@ const CalendarWeek = (props) => {
     const [timelinePos, setTimelinePos] = useState(`${(((initDate.getHours() * 60) + initDate.getMinutes()) * 2.5) + 82}px`);
 
     const [hideAlterEventModal, setHideAlterEventModal] = useState(true);
+    const [alterEventId, setAlterEventId] = useState(-1);
     const [alterEventName, setAlterEventName] = useState("");
     const [alterEventEmail, setAlterEventEmail] = useState("");
     const [alterEventTeam, setAlterEventTeam] = useState("");
@@ -33,7 +35,6 @@ const CalendarWeek = (props) => {
     const [alterEventDate, setAlterEventDate] = useState("");
     const [alterEventTimeFrom, setAlterEventTimeFrom] = useState("");
     const [alterEventTimeTo, setAlterEventTimeTo] = useState("");
-    const [alterEventFieldOpts, setAlterEventFieldOpts] = useState([]);
     const [alterEventFieldSizesOpts, setAlterEventFieldSizesOpts] = useState([]);
     const [alterEventSelectedField, setAlterEventSelectedField] = useState(0);
     const [alterEventSelectedFieldSize, setAlterEventSelectedFieldSize] = useState(0);
@@ -49,12 +50,13 @@ const CalendarWeek = (props) => {
 
     const handleOpenAlterEventModal = (event) => {
         if (props.userKey != null) {
+            setAlterEventId(event.Id);
             setAlterEventName(event.Name);
             setAlterEventEmail(event.Email);
             setAlterEventTeam(event.Team);
             setAlterEventClub(event.Club);
 
-            const month = event.TimeFrom.getMonth();
+            const month = event.TimeFrom.getMonth() + 1;
             const day = event.TimeFrom.getDate();
             setAlterEventDate(event.TimeFrom.getFullYear() + "-" + (month < 10 ? "0" + month : month) + "-" + (day < 10 ? "0" + day : day));
 
@@ -80,7 +82,7 @@ const CalendarWeek = (props) => {
         }
     };
 
-    const handleCloseAlterEventModal = () => {
+    const cleanAlterModal = () => {
         setAlterEventName("");
         setAlterEventEmail("");
         setAlterEventTeam("");
@@ -92,12 +94,33 @@ const CalendarWeek = (props) => {
         setAlterEventSelectedFieldSize(0);
         setAlterEventComment("");
         setAlterEventColor("");
+    };
 
+    const handleCloseAlterEventModal = () => {
         setHideAlterEventModal(true);
+        cleanAlterModal();
     };
 
     const handleUpdateBookingClick = () => {
+        setHideAlterEventModal(true);
+        cleanAlterModal();
         
+        Api.events().updateEvent({
+            "Id": alterEventId,
+            "Name": alterEventName,
+            "Email": alterEventEmail,
+            "Club": alterEventClub,
+            "Team": alterEventTeam,
+            "TimeFrom": new Date(alterEventDate + " " + alterEventTimeFrom).getUnixTimestamp(),
+            "TimeTo": new Date(alterEventDate + " " + alterEventTimeTo).getUnixTimestamp(),
+            "Comment": alterEventComment,
+            "FieldID": alterEventSelectedField,
+            "FieldSizeID": alterEventSelectedFieldSize,
+            "EventColor": alterEventColor,
+            "UserKey": props.userKey
+        }).then(res => {
+            console.log(res);
+        });
     };
 
     const handleAlterNameChange = () => {
@@ -153,18 +176,12 @@ const CalendarWeek = (props) => {
     };
 
     const updateFieldSizes = (selectedDate, selectedTimeFrom, selectedTimeTo, fieldId) => {
-        console.log(selectedDate);
-        console.log(selectedTimeFrom);
-        console.log(selectedTimeTo);
-        console.log(fieldId);
-
         if (selectedDate != "" && selectedTimeFrom != "" && selectedTimeTo != "" && fieldId != 0) {
             var tempDateFrom = new Date(selectedDate + " " + selectedTimeFrom);
             var tempDateTo = new Date(selectedDate + " " + selectedTimeTo);
 
             API.fields().getFieldSizes(fieldId, tempDateFrom.getUnixTimestamp(), tempDateTo.getUnixTimestamp()).then(res => {
-                console.log(res);
-                // setAlterEventFieldSizesOpts(res.data);
+                setAlterEventFieldSizesOpts(res.data);
             });
         }
     };
