@@ -4,7 +4,9 @@ import API from "../../../helpers/Api";
 
 import './NewEventModal.css';
 
-import { CirclePicker } from "react-color";
+// import { CirclePicker } from "react-color";
+
+import ColorPicker from "../../ColorPicker/ColorPicker.js";
 
 const NewEventModal = (props) => {
     const colors = ["#009b62" /* AGIF Green */, "#d5cb72" /* External club */, "#9c83c3" /* Special event */, "#d96d6d" /* NonApproved */];
@@ -90,7 +92,7 @@ const NewEventModal = (props) => {
     };
 
     const handleEventColorChange = (color) => {
-        setEventColor(color.hex);
+        setEventColor(color);
     };
 
     const handleCommentChange = () => {
@@ -236,7 +238,9 @@ const NewEventModal = (props) => {
                 </form>
 
                 <div className={(props.showAdminOptions ? "new-event-color-picker" : "hidden")}>
-                    <CirclePicker onChange={handleEventColorChange} colors={colors} color={ eventColor } />
+                    {/* <CirclePicker onChange={handleEventColorChange} colors={colors} color={ eventColor } /> */}
+
+                    <ColorPicker selectedColor={eventColor} colors={colors} onColorChange={handleEventColorChange} />
                 </div>
                 <div className={(props.showAdminOptions ? "hidden" : "price-estimation")}>
                     {/* TODO: Show price estimation */}

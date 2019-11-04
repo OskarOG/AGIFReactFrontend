@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 
 import './AlterEventModal.css';
 
-import { CirclePicker } from "react-color";
+// import { CirclePicker } from "react-color";
 
 
 const AlterEventModal = (props) => {
@@ -76,7 +76,7 @@ const AlterEventModal = (props) => {
                 </form>
 
                 <div className="new-event-color-picker">
-                    <CirclePicker onChange={props.onEventColorChange} colors={colors} color={props.eventColor} />
+                    {/* <CirclePicker onChange={props.onEventColorChange} colors={colors} color={props.eventColor} /> */}
                 </div>
 
                 <div className="modal-buttons">

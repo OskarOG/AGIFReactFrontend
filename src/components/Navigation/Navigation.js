@@ -88,6 +88,31 @@ const Navigation = (props) => {
                     <FontAwesomeIcon className="nav-item-icon admin-icon" icon={ faUserCog } />
                     <p className={(props.drawerIsOpen ? "" : "hidden")}>Godkänn förfrågningar <strong>{ props.nonApprovedCount }</strong></p>
                 </div>
+                
+                <div className="static-nav-item">
+                    <div className="nav-color-div-container">
+                        <div className="nav-color-div agif"></div>
+                    </div>
+                    <p className={(props.drawerIsOpen ? "" : "hidden")}>AGIF bokning</p>
+                </div>
+                <div className="static-nav-item">
+                    <div className="nav-color-div-container">
+                        <div className="nav-color-div external"></div>
+                    </div>
+                    <p className={(props.drawerIsOpen ? "" : "hidden")}>Extern bokning</p>
+                </div>
+                <div className="static-nav-item">
+                    <div className="nav-color-div-container">
+                        <div className="nav-color-div special-booking"></div>
+                    </div>
+                    <p className={(props.drawerIsOpen ? "" : "hidden")}>Specialbokning</p>
+                </div>
+                <div className="static-nav-item">
+                    <div className="nav-color-div-container">
+                        <div className="nav-color-div awaiting-approval"></div>
+                    </div>
+                    <p className={(props.drawerIsOpen ? "" : "hidden")}>Väntar på godkännande</p>
+                </div>
             </div>
         </div>
     );

@@ -58,6 +58,54 @@
     float: left;
 }
 
+.static-nav-item {
+    height: 40px;
+    display: block;
+    padding: 5px;
+    padding-left: 8px;
+}
+
+.static-nav-item p {
+    margin-top: 10px;
+    margin-left: 10px;
+    float:left;
+}
+
+.nav-color-div-container {
+    width: 40px;
+    height: 40px;
+    border-radius: 100px;
+    float: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+}
+
+.nav-color-div {
+    width: 30px;
+    height: 30px;
+    border-radius: 100px;
+    margin: auto;
+    float: left;
+}
+
+.agif {
+    background-color: #009b62;
+}
+
+.external {
+    background-color: #d5cb72;
+}
+
+.special-booking {
+    background-color: #9c83c3;
+}
+
+.awaiting-approval {
+    background-color: #d96d6d;
+}
+
 .nav-item {
     height: 40px;
     display: block;

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import "./NonApprovedEvent.css";
 
-import { CirclePicker } from "react-color";
+// import { CirclePicker } from "react-color";
 
 const NonApprovedEvent = (props) => {
     const weekDays = ["Söndag", "Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag"];
@@ -49,7 +49,7 @@ const NonApprovedEvent = (props) => {
             <p>Kommentar: { props.Comment }</p>
 
             <div className="non-approved-color-picker-container">
-                <CirclePicker colors={colors} color={ eventColor } onChange={handleColorChange} />
+                {/* <CirclePicker colors={colors} color={ eventColor } onChange={handleColorChange} /> */}
                 {/* <button className="btn specific-color-btn">Välj specifik färg</button> */}
             </div>
 

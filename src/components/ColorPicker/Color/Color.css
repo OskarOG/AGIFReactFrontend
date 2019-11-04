@@ -1,0 +1,35 @@
+.color-container {
+
+}
+
+.color-content {
+    width: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin-left: 2px;
+}
+
+.color-div-container {
+    width: 40px;
+    height: 40px;
+    border-radius: 100px;
+    float: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.color-div {
+    width: 30px;
+    height: 30px;
+    border-radius: 100px;
+    margin: auto;
+    float: left;
+    background-color: #fff;
+}
+
+.color-container p {
+    display: block;
+}
