@@ -19,6 +19,9 @@ const Color = (props) => {
                     <div className={props.isSelected ? "color-div" : ""}></div>
                 </div>
             </div>
+            <div className="color-text-container">
+                {props.text}
+            </div>
         </div>
     );
 };

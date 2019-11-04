@@ -4,15 +4,24 @@ import './AlterEventModal.css';
 
 // import { CirclePicker } from "react-color";
 
+import ColorPicker from "../../ColorPicker/ColorPicker";
 
 const AlterEventModal = (props) => {
-    const colors = ["#009b62" /* AGIF Green */, "#d5cb72" /* External club */, "#9c83c3" /* Special event */, "#d96d6d" /* NonApproved */];
+    const colors = [
+        { color: "#009b62", text: "AGIF bokning" }, 
+        { color: "#d5cb72", text: "Extern bokning" }, 
+        { color: "#9c83c3", text: "Speciell bokning" }, 
+        { color: "#d96d6d", text: "Preliminär bokning" }];
 
     let fieldOpts = props.fields.map((field) => <option key={field.Id} value={field.Id}>{field.Name}</option>);
     fieldOpts.unshift(<option key={0} value={0}>Välj plan</option>);
 
     let fieldSizesOpts = props.fieldSizesOpts.map((fieldSize) => <option key={fieldSize.Id} value={fieldSize.Id}>{fieldSize.Size}</option>);
     fieldSizesOpts.unshift(<option key={0} value={0}>Välj planstorlek</option>);
+
+    const handleColorChange = (color) => {
+        props.onEventColorChange(color);
+    };
 
     return (
         <div className={"modal-overlay " + (props.isHidden ? "hidden" : "")}>
@@ -76,7 +85,7 @@ const AlterEventModal = (props) => {
                 </form>
 
                 <div className="new-event-color-picker">
-                    {/* <CirclePicker onChange={props.onEventColorChange} colors={colors} color={props.eventColor} /> */}
+                    <ColorPicker selectedColor={props.eventColor} colors={colors} onColorChange={handleColorChange} />
                 </div>
 
                 <div className="modal-buttons">

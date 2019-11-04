@@ -2,13 +2,17 @@ import React, { useState } from "react";
 
 import "./NonApprovedEvent.css";
 
-// import { CirclePicker } from "react-color";
+import ColorPicker from "../../ColorPicker/ColorPicker";
 
 const NonApprovedEvent = (props) => {
     const weekDays = ["Söndag", "Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag"];
     const fieldName = props.FieldName.split("-")[0];
 
-    const colors = ["#009b62" /* AGIF Green */, "#d5cb72" /* External club */, "#9c83c3" /* Special event */, "#d96d6d" /* NonApproved */];
+    const colors = [
+        { color: "#009b62", text: "AGIF bokning" }, 
+        { color: "#d5cb72", text: "Extern bokning" }, 
+        { color: "#9c83c3", text: "Speciell bokning" }, 
+        { color: "#d96d6d", text: "Preliminär bokning" }];
 
     const [isApproveSelected, setApproveSelected] = useState(false);
     const [isDenySelected, setDenySelected] = useState(false);
@@ -30,7 +34,7 @@ const NonApprovedEvent = (props) => {
     };
 
     const handleColorChange = (color) => {
-        setEventColor(color.hex);
+        setEventColor(color);
     };
 
     return (
@@ -49,8 +53,7 @@ const NonApprovedEvent = (props) => {
             <p>Kommentar: { props.Comment }</p>
 
             <div className="non-approved-color-picker-container">
-                {/* <CirclePicker colors={colors} color={ eventColor } onChange={handleColorChange} /> */}
-                {/* <button className="btn specific-color-btn">Välj specifik färg</button> */}
+                <ColorPicker selectedColor={eventColor} colors={colors} onColorChange={handleColorChange} />
             </div>
 
             <div className="decision-buttons">

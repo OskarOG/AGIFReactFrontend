@@ -1,21 +1,20 @@
 .color-container {
-
+    float: left;
+    cursor: pointer;
 }
 
 .color-content {
     width: 80px;
+    margin-left: 2px;
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
-    margin-left: 2px;
 }
 
 .color-div-container {
     width: 40px;
     height: 40px;
     border-radius: 100px;
-    float: left;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -32,4 +31,10 @@
 
 .color-container p {
     display: block;
+}
+
+.color-text-container {
+    width: 80px;
+    padding-top: 10px;
+    text-align: center;
 }

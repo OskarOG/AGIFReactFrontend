@@ -171,8 +171,8 @@ const CalendarWeek = (props) => {
         setAlterEventComment(event.target.value);
     };
 
-    const handleAlterEventColorChange = () => {
-        setAlterEventColor(event.target.value);
+    const handleAlterEventColorChange = (color) => {
+        setAlterEventColor(color);
     };
 
     const updateFieldSizes = (selectedDate, selectedTimeFrom, selectedTimeTo, fieldId) => {

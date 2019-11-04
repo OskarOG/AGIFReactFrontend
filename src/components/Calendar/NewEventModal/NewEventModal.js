@@ -9,7 +9,11 @@ import './NewEventModal.css';
 import ColorPicker from "../../ColorPicker/ColorPicker.js";
 
 const NewEventModal = (props) => {
-    const colors = ["#009b62" /* AGIF Green */, "#d5cb72" /* External club */, "#9c83c3" /* Special event */, "#d96d6d" /* NonApproved */];
+    const colors = [
+        { color: "#009b62", text: "AGIF bokning" }, 
+        { color: "#d5cb72", text: "Extern bokning" }, 
+        { color: "#9c83c3", text: "Speciell bokning" }, 
+        { color: "#d96d6d", text: "Preliminär bokning" }];
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -164,7 +168,7 @@ const NewEventModal = (props) => {
             });
 
             handleCloseButton();
-        }
+        };
         
         clearFieldInfo();
     };
@@ -237,9 +241,7 @@ const NewEventModal = (props) => {
                     </div>
                 </form>
 
-                <div className={(props.showAdminOptions ? "new-event-color-picker" : "hidden")}>
-                    {/* <CirclePicker onChange={handleEventColorChange} colors={colors} color={ eventColor } /> */}
-
+                <div className="new-event-color-picker">
                     <ColorPicker selectedColor={eventColor} colors={colors} onColorChange={handleEventColorChange} />
                 </div>
                 <div className={(props.showAdminOptions ? "hidden" : "price-estimation")}>

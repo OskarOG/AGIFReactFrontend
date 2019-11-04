@@ -12,12 +12,12 @@ const ColorPicker = (props) => {
 
     var colorList = props.colors.map(color => {
         return (
-            <Color key={color} color={color} onClick={handleColorClick} isSelected={(props.selectedColor === color)} />
+            <Color key={color.color} color={color.color} onClick={handleColorClick} isSelected={(props.selectedColor === color.color)} text={color.text} />
         );
     });
 
     return (
-        <div className="">
+        <div>
             {colorList}
         </div>
     );
