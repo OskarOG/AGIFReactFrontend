@@ -90,6 +90,7 @@ const AlterEventModal = (props) => {
 
                 <div className="modal-buttons">
                     <button type="button" className="btn close-btn" onClick={props.onClose}>Stäng</button>
+                    <button type="button" className="btn delete-btn" onClick={props.onDelete}>Ta bort bokning</button>
                     <button type="button" className="btn send-btn" onClick={props.onUpdateBookingClick}>Uppdatera bokning</button>
                 </div>
             </div>

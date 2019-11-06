@@ -1,5 +1,0 @@
-This time:
-Fixed the posting of new events.
-
-Next time:
-Get approved events and show them in the calendar

@@ -22,6 +22,7 @@ const NewEventModal = (props) => {
     const [selectedField, setSelectedField] = useState(0);
     const [selectedFieldSize, setSelectedFieldSize] = useState(0);
     const [date, setDate] = useState("");
+    const [recuringEventDateTo, setRecuringEventDateTo] = useState("");
     const [timeFrom, setTimeFrom] = useState("");
     const [timeTo, setTimeTo] = useState("");
     const [comment, setComment] = useState("");
@@ -42,7 +43,6 @@ const NewEventModal = (props) => {
             var tempDateTo = new Date(selectedDate + " " + selectedTimeTo);
 
             API.fields().getFieldSizes(fieldId, tempDateFrom.getUnixTimestamp(), tempDateTo.getUnixTimestamp()).then(res => {
-                console.log(res);
                 setFieldSizes(res.data);
 
                 setFieldSizeIsDisabled(false);
@@ -81,6 +81,10 @@ const NewEventModal = (props) => {
         setDate(event.target.value);
 
         updateFieldSizes(event.target.value, timeFrom, timeTo, selectedField);
+    };
+
+    const handleRecuringEventDateToChange = () => {
+        setRecuringEventDateTo(event.target.value);
     };
 
     const handleTimeFromChange = () => {
@@ -141,6 +145,7 @@ const NewEventModal = (props) => {
                 "Team": team,
                 "TimeFrom": new Date(date + " " + timeFrom).getUnixTimestamp(),
                 "TimeTo": new Date(date + " " + timeTo).getUnixTimestamp(),
+                "RecurringEventEnd": new Date(recuringEventDateTo).getUnixTimestamp(),
                 "Comment": comment,
                 "FieldID": selectedField,
                 "FieldSizeID": selectedFieldSize,
@@ -204,6 +209,12 @@ const NewEventModal = (props) => {
                         <label className="label">Datum*</label>
                         <input className="input" value={date} onChange={handleDateChange} type="date" />
                     </div>
+                    <div className={(props.showAdminOptions ? "" : "hidden")}>
+                        <label className="label">Återkommande bokning slut datum</label>
+                        <div>
+                            <input className="input" value={recuringEventDateTo} onChange={handleRecuringEventDateToChange} type="date" />
+                        </div>
+                    </div>
                     <div className="time-input-container">
                         <label className="label">Tid*</label>
                         <div>
@@ -222,7 +233,7 @@ const NewEventModal = (props) => {
                             </div>
                         </div>
                     </div>
-                    <div className="field-input">
+                    <div className="field-margin">
                         <label className="label">Välj plan*</label>
                         <select className="input" onChange={handleFieldChange}>
                             {fieldOpts}

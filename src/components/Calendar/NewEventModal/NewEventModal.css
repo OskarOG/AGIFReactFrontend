@@ -34,13 +34,14 @@
     display: block;
     width:100%;
     float: right;
-    margin-top: 5px;
 }
 
 .time-input {
     border-radius: 3px;
     padding: 5px;
     border: solid 1px rgb(194, 194, 194);
+    width: 92%;
+    text-align: center;
 }
 
 .label {
@@ -51,10 +52,11 @@
 
 .time-input-div {
     float:left;
+    width: 50%;
 }
 
-.field-input {
-    margin-top: 85px;
+.field-margin {
+    margin-top: 75px;
 }
 
 .modal-buttons {

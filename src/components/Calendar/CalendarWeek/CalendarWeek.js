@@ -123,6 +123,15 @@ const CalendarWeek = (props) => {
         });
     };
 
+    const handleDeleteBookingClick = () => {
+        setHideAlterEventModal(true);
+        cleanAlterModal();
+        
+        Api.events().deleteEvent(alterEventId, props.userKey).then(res => {
+            console.log(res);
+        });
+    };
+
     const handleAlterNameChange = () => {
         setAlterEventName(event.target.value);
     };
@@ -244,6 +253,7 @@ const CalendarWeek = (props) => {
                 fields={fields}
                 onClose={handleCloseAlterEventModal}
                 onUpdateBookingClick={handleUpdateBookingClick}
+                onDelete={handleDeleteBookingClick}
                 name={alterEventName}
                 email={alterEventEmail}
                 team={alterEventTeam}

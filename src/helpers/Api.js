@@ -6,7 +6,8 @@ export default {
         return {
             getForWeek: (startDate, endDate) => Axios.get(`${this.baseUrl}/event?from=${startDate}&to=${endDate}`),
             postEvent: (data) => Axios.post(`${this.baseUrl}/event`, data),
-            updateEvent: (data) => Axios.put(`${this.baseUrl}/event`, data)
+            updateEvent: (data) => Axios.put(`${this.baseUrl}/event`, data),
+            deleteEvent: (id, userKey) => Axios.delete(`${this.baseUrl}/event?userKey=${userKey}&eventId=${id}`)
         };
     },
     nonApprovedEvents() {
