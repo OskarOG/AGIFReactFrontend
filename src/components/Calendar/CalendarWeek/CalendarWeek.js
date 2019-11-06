@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+
 import "./CalendarWeek.css";
 import CalendarDay from "../CalendarDay/CalendarDay";
 import Time from "../Time/Time";
@@ -119,7 +121,7 @@ const CalendarWeek = (props) => {
             "EventColor": alterEventColor,
             "UserKey": props.userKey
         }).then(res => {
-            console.log(res);
+            toast.success("Bokningen är uppdaterad!");
         });
     };
 
@@ -128,7 +130,7 @@ const CalendarWeek = (props) => {
         cleanAlterModal();
         
         Api.events().deleteEvent(alterEventId, props.userKey).then(res => {
-            console.log(res);
+            toast.success("Bokning borttagen!");
         });
     };
 

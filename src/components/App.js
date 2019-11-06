@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "../../node_modules/react-toastify/dist/ReactToastify.min.css";
 
 import "./App.css";
 
@@ -10,7 +12,6 @@ import ApproveEventModal from "./ApproveEventModal/ApproveEventModal";
 
 const App = () => {
     const AGIF_SESSION_STORAGE_USERKEY = "AGIFSESSIONKEY_USERKEY";
-
 
     const [isLoggedIn, setLoggedIn] = useState(false);
     const [hideLoginModal, setHideLoginModal] = useState(true);
@@ -118,16 +119,24 @@ const App = () => {
     };
 
     const handleSendApprovalEvent = (events) => {
-        console.log(events);
-
         Api.nonApprovedEvents().approve(userApiKey, events).then(res => {
-            console.log(res);
-            // TODO: Show success msg.
+            toast.success("Bokningar godkända!");
         });
     };
 
     return (
         <div id="app-element" className="App">
+            <ToastContainer 
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={true}
+                newestOnTop
+                closeOnClick
+                rtl
+                draggable
+                pauseOnHover
+                pauseOnVisibilityChange />
+
             <main>
                 <LoginModal isHidden={hideLoginModal} saveUserKey={handleLoginResult} close={handleCloseLoginModal} />
 

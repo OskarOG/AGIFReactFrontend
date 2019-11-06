@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
+import { toast } from "react-toastify";
 
 import API from "../../../helpers/Api";
 
 import './NewEventModal.css';
-
-// import { CirclePicker } from "react-color";
 
 import ColorPicker from "../../ColorPicker/ColorPicker.js";
 
@@ -152,8 +151,7 @@ const NewEventModal = (props) => {
                 "EventColor": eventColor,
                 "UserKey": props.userKey
             }).then(res => {
-                // TODO: Show posted message
-                console.log(res);
+                toast.success("Bokning tillagd!");
             });
         } else {
             API.events().postEvent({
@@ -168,8 +166,7 @@ const NewEventModal = (props) => {
                 "FieldSizeID": selectedFieldSize,
                 "EventColor": eventColor
             }).then(res => {
-                // TODO: Show posted message
-                console.log(res);
+                toast.success("Bokning skickad, inväntar godkännande!");
             });
 
             handleCloseButton();
