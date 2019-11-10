@@ -26,6 +26,8 @@ const App = () => {
     const [drawerIsOpen, setDrawerOpen] = useState(true);
     const [newBookingModalIsHidden, setBookingModalHidden] = useState(true);
 
+    const [changingRooms, setChangingRooms] = useState([]);
+
     useEffect(() => {
         if (userApiKey != null && userApiKey != "") {
             setLoggedIn(true);
@@ -34,6 +36,12 @@ const App = () => {
                 setNonApprovedCount(res.data);
             });
         };
+
+        Api.changingRooms().getAll().then(res => {
+            console.log(res);
+
+            setChangingRooms(res.data);
+        });
 
         let d = new Date();
         let dayInt = d.getDay() - 1;
@@ -124,6 +132,10 @@ const App = () => {
         });
     };
 
+    const handleChangingRoomChange = (selectedValue) => {
+        console.log(selectedValue);
+    };
+
     return (
         <div id="app-element" className="App">
             <ToastContainer 
@@ -140,7 +152,7 @@ const App = () => {
             <main>
                 <LoginModal isHidden={hideLoginModal} saveUserKey={handleLoginResult} close={handleCloseLoginModal} />
 
-                <ApproveEventModal close={handleCloseApproveEventModal} isHidden={hideNonApprovedModal} nonApprovedEvents={nonApprovedEvents} send={handleSendApprovalEvent} />
+                <ApproveEventModal onChangingRoomChange={handleChangingRoomChange} changingRooms={changingRooms} close={handleCloseApproveEventModal} isHidden={hideNonApprovedModal} nonApprovedEvents={nonApprovedEvents} send={handleSendApprovalEvent} />
 
                 <Navigation 
                     drawerIsOpen={drawerIsOpen}

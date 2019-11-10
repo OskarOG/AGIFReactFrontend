@@ -9,6 +9,9 @@ const FieldContent = (props) => {
         e.TimeFrom = new Date(e.TimeFrom);
         e.TimeTo = new Date(e.TimeTo);
 
+        e.ChangingRoomTimeFrom = new Date(e.ChangingRoomTimeFrom);
+        e.ChangingRoomTimeTo = new Date(e.ChangingRoomTimeTo);
+
         const zeroDate = new Date(e.TimeFrom);
         zeroDate.setHours(0,0,0,0);
         let height = (Math.abs(e.TimeFrom - e.TimeTo) / 60 / 1000) * minPxlSize;
@@ -30,7 +33,10 @@ const FieldContent = (props) => {
                 timeTo={e.TimeTo}
                 eventColor={e.EventColor}
                 isApproved={e.IsApproved}
-                onEventClick={handleEventClick} />
+                onEventClick={handleEventClick}
+                changingRoomName={e.ChangingRoomName}
+                changingRoomTimeFrom={e.ChangingRoomTimeFrom}
+                changingRoomTimeTo={e.ChangingRoomTimeTo} />
     });
 
     return (

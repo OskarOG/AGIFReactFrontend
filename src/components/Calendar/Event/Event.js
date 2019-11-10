@@ -11,7 +11,7 @@ const Event = (props) => {
     };
 
     const headerStyle = {
-        backgroundColor: props.eventColor
+        backgroundColor: props.isApproved ? props.eventColor : "rgb(217, 109, 109)"
     };
 
     return (
@@ -20,7 +20,9 @@ const Event = (props) => {
             <h3>{props.club}</h3>
             <p>
                 {props.fieldSize}-manna<br />
-                {props.timeFrom.toTime()}-{props.timeTo.toTime()}
+                {props.timeFrom.toTime()}-{props.timeTo.toTime()}<br />
+                {props.changingRoomName}<br />
+                {props.changingRoomTimeFrom.toTime()}-{props.changingRoomTimeTo.toTime()}
             </p>
         </div>
     );

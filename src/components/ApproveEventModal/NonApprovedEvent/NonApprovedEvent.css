@@ -35,3 +35,12 @@
 .specific-color-btn {
     background-color: #bbb;
 }
+
+.approve-input {
+    width: 91%;
+}
+
+.approve-select {
+    margin-top: 95px;
+    margin-bottom: 15px;
+}

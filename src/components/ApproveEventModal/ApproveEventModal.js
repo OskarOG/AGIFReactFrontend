@@ -6,8 +6,15 @@ import NonApprovedEvent from "./NonApprovedEvent/NonApprovedEvent";
 const ApproveEventModal = (props) => {
     const [eventMap, setEventMap] = useState(new Map());
 
-    const handleApproveSelected = (id, color) => {
-        eventMap.set(id, { approved: true, color });
+    const handleApproveSelected = (id, color, changingRoomId, changingRoomTimeFrom, changingRoomTimeTo) => {
+        eventMap.set(id, 
+            { 
+                approved: true, 
+                color,
+                changingRoomId,
+                changingRoomTimeFrom,
+                changingRoomTimeTo
+            });
     };
 
     const handleDenySelected = id => {
@@ -31,7 +38,8 @@ const ApproveEventModal = (props) => {
                 Comment={e.Comment}
                 EventColor={e.EventColor}
                 onApproveSelected={handleApproveSelected}
-                onDenySelected={handleDenySelected} />
+                onDenySelected={handleDenySelected}
+                changingRooms={props.changingRooms} />
     });
 
     const handleCloseButton = () => {
@@ -45,7 +53,10 @@ const ApproveEventModal = (props) => {
             eventList.push({
                 Id: key,
                 IsApproved: value.approved,
-                Color: value.color
+                Color: value.color,
+                ChangingRoomId: value.changingRoomId,
+                ChangingRoomTimeFrom: value.changingRoomTimeFrom,
+                ChangingRoomTimeTo: value.changingRoomTimeTo
             });
         });
 

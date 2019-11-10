@@ -33,5 +33,10 @@ export default {
             signin: (username, password) => Axios.get(`${this.baseUrl}/login?email=${username}&password=${password}`),
             signout: (userkey) => Axios.delete(`${this.baseUrl}/login?userkey=${userkey}`)
         };
+    },
+    changingRooms() {
+        return {
+            getAll: () => Axios.get(`${this.baseUrl}/ChangingRoom`)
+        }
     }
 }
