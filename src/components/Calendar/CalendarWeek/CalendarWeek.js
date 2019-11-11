@@ -41,6 +41,8 @@ const CalendarWeek = (props) => {
     const [alterEventSelectedField, setAlterEventSelectedField] = useState(0);
     const [alterEventSelectedFieldSize, setAlterEventSelectedFieldSize] = useState(0);
     const [alterEventComment, setAlterEventComment] = useState("");
+    const [alterChangingRoomTimeFrom, setAlterChangingRoomTimeFrom] = useState("");
+    const [alterChangingRoomTimeTo, setAlterChangingRoomTimeTo] = useState("");
     const [alterEventColor, setAlterEventColor] = useState("");
 
 
@@ -182,6 +184,18 @@ const CalendarWeek = (props) => {
         setAlterEventComment(event.target.value);
     };
 
+    const handleAlterChangingRoomTimeFrom = () => {
+        setAlterChangingRoomTimeFrom(event.target.value);
+    };
+
+    const handleAlterChangingRoomTimeTo = () => {
+        setAlterChangingRoomTimeTo(event.target.value);
+    };
+
+    const handleChangingRoomChange = (selectedValue) => {
+        console.log(selectedValue);
+    };
+
     const handleAlterEventColorChange = (color) => {
         setAlterEventColor(color);
     };
@@ -251,6 +265,7 @@ const CalendarWeek = (props) => {
             <Timeline shiftRight={props.shiftRight} top={timelinePos} />
 
             <NewEventModal userKey={props.userKey} showAdminOptions={props.adminLoggedIn} fields={fields} isHidden={props.newBookingModalIsHidden} close={handleCloseNewBookingClick}/>
+            
             <AlterEventModal isHidden={hideAlterEventModal}
                 fields={fields}
                 onClose={handleCloseAlterEventModal}
@@ -267,6 +282,11 @@ const CalendarWeek = (props) => {
                 selectedField={alterEventSelectedField}
                 selectedFieldSize={alterEventSelectedFieldSize}
                 comment={alterEventComment}
+                
+                changingRoomTimeFrom={alterChangingRoomTimeFrom}
+                changingRoomTimeTo={alterChangingRoomTimeTo}
+                changingRooms={props.changingRooms}
+
                 eventColor={alterEventColor}
                 onNameChange={handleAlterNameChange}
                 onEmailChange={handleAlterEmailChange}
@@ -279,6 +299,11 @@ const CalendarWeek = (props) => {
                 onSelectedFieldChange={handleAlterFieldChange}
                 onSelectedFieldSizeChange={handleAlterFieldSizeChange}
                 onCommentChange={handleAlterCommentChange}
+
+                onChangingRoomTimeFromChange={handleAlterChangingRoomTimeFrom}
+                onChangingRoomTimeToChange={handleAlterChangingRoomTimeTo}
+                onChangingRoomChange={handleChangingRoomChange}
+
                 onEventColorChange={handleAlterEventColorChange} />
         </div>
     );

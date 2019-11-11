@@ -1,8 +1,6 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 
 import './AlterEventModal.css';
-
-// import { CirclePicker } from "react-color";
 
 import ColorPicker from "../../ColorPicker/ColorPicker";
 
@@ -18,6 +16,8 @@ const AlterEventModal = (props) => {
 
     let fieldSizesOpts = props.fieldSizesOpts.map((fieldSize) => <option key={fieldSize.Id} value={fieldSize.Id}>{fieldSize.Size}</option>);
     fieldSizesOpts.unshift(<option key={0} value={0}>Välj planstorlek</option>);
+
+    const changingRoomOpts = props.changingRooms.map((ch) => <option key={ch.Id} value={ch.Id}>{ch.Name} - {ch.Size}</option>)
 
     const handleColorChange = (color) => {
         props.onEventColorChange(color);
@@ -81,6 +81,33 @@ const AlterEventModal = (props) => {
                     <div className="input-comment-div">
                         <label className="label">Annan kommentar:</label>
                         <textarea className="input" value={props.comment} onChange={props.onCommentChange} rows="2"></textarea>
+                    </div>
+
+                    {/* <div className="time-input-container">
+                        <label className="label">Tid för omklädningsrum:</label>
+                        <div>
+                            <div className="time-input-div">
+                                <div>
+                                    <div>Från</div>
+                                    <input className="time-input approve-input" value={props.changingRoomTimeFrom} onChange={props.onChangingRoomTimeFromChange} type="time" />
+                                    <span>-</span>
+                                </div>
+                            </div>
+                            <div className="time-input-div">
+                                <div>
+                                    <div>Till</div>
+                                    <input className="time-input approve-input" value={props.changingRoomTimeTo} onChange={props.onChangingRoomTimeToChange} type="time" />
+                                </div>
+                            </div>
+                        </div>
+                    </div> */}
+
+                    <div>
+                        Omklädningsrum:
+                        <select className="input" onChange={props.onChangingRoomChange} defaultValue="-1">
+                            <option disabled value="-1">Välj omklädningsrum</option>
+                            {changingRoomOpts}
+                        </select>
                     </div>
                 </form>
 

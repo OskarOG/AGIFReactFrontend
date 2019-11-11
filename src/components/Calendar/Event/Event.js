@@ -22,7 +22,6 @@ const Event = (props) => {
                 {props.fieldSize}-manna<br />
                 {props.timeFrom.toTime()}-{props.timeTo.toTime()}<br />
                 {props.changingRoomName}<br />
-                {props.changingRoomTimeFrom.toTime()}-{props.changingRoomTimeTo.toTime()}
             </p>
         </div>
     );

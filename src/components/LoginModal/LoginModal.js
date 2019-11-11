@@ -35,12 +35,7 @@ const LoginModal = (props) => {
     const handleEnterPress = (ev) => {
         if (ev.key === 'Enter') {
             if (email != "" && password != "") {
-                API.login().signin(email, password).then(res => {
-                    props.saveUserKey(res.data);
-                });
-        
-                setEmail("");
-                setPassword("");
+                handleSignIn();
             }
         }
     };

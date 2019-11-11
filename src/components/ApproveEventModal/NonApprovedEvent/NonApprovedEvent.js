@@ -69,8 +69,7 @@ const NonApprovedEvent = (props) => {
             </p>
             <p>Kommentar: { props.Comment }</p>
 
-
-            <div className="time-input-container">
+            {/* <div className="time-input-container">
                 <label className="label">Tid för omklädningsrum:</label>
                 <div>
                     <div className="time-input-div">
@@ -87,9 +86,9 @@ const NonApprovedEvent = (props) => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
-            <div className="approve-select">
+            <div className="non-approved-changingroom-select">
                 Omklädningsrum:
                 <select className="input" onChange={handleChangingRoomIdChange} defaultValue="-1">
                     <option disabled value="-1">Välj omklädningsrum</option>
