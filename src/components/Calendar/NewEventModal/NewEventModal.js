@@ -25,6 +25,7 @@ const NewEventModal = (props) => {
     const [timeFrom, setTimeFrom] = useState("");
     const [timeTo, setTimeTo] = useState("");
     const [comment, setComment] = useState("");
+    const [selectedChangingRoom, setSelectedChangingRoom] = useState(-1);
     const [currentPrice, setCurrentPrice] = useState(0);
     const [eventColor, setEventColor] = useState("");
 
@@ -106,6 +107,10 @@ const NewEventModal = (props) => {
         setComment(event.target.value);
     };
 
+    const handleChangingRoomChange = () => {
+        setSelectedChangingRoom(event.target.value);
+    };
+
     const clearFieldInfo = () => {
         setSelectedField(0);
         setSelectedFieldSize(0);
@@ -149,9 +154,14 @@ const NewEventModal = (props) => {
                 "FieldID": selectedField,
                 "FieldSizeID": selectedFieldSize,
                 "EventColor": eventColor,
+                "ChangingRoomID": selectedChangingRoom,
                 "UserKey": props.userKey
             }).then(res => {
-                toast.success("Bokning tillagd!");
+                toast.success("Bokning tillagd");
+
+                API.events().getForWeek(props.weekDate.startDate.getUnixTimestamp(), props.weekDate.endDate.getUnixTimestamp()).then(res => {
+                    props.setEvents(res.data);
+                });
             });
         } else {
             API.events().postEvent({
@@ -166,7 +176,11 @@ const NewEventModal = (props) => {
                 "FieldSizeID": selectedFieldSize,
                 "EventColor": eventColor
             }).then(res => {
-                toast.success("Bokning skickad, inväntar godkännande!");
+                toast.success("Bokning skickad, inväntar godkännande");
+
+                API.events().getForWeek(props.weekDate.startDate.getUnixTimestamp(), props.weekDate.endDate.getUnixTimestamp()).then(res => {
+                    props.setEvents(res.data);
+                });
             });
 
             handleCloseButton();
@@ -180,6 +194,8 @@ const NewEventModal = (props) => {
 
     let fieldSizesOpts = fieldSizes.map((fieldSize) => <option key={fieldSize.Id} value={fieldSize.Id}>{fieldSize.Size}</option>);
     fieldSizesOpts.unshift(<option key={0} value={0}>Välj planstorlek</option>);
+
+    const changingRoomOpts = props.changingRooms.map((ch) => <option key={ch.Id} value={ch.Id}>{ch.Name} - {ch.Size}</option>);
 
     return (
         <div className={"modal-overlay " + (props.isHidden ? "hidden" : "")}>
@@ -246,6 +262,33 @@ const NewEventModal = (props) => {
                     <div className="input-comment-div">
                         <label className="label">Annan kommentar:</label>
                         <textarea className="input" value={comment} onChange={handleCommentChange} rows="2"></textarea>
+                    </div>
+
+                    {/* <div className="time-input-container">
+                        <label className="label">Tid för omklädningsrum:</label>
+                        <div>
+                            <div className="time-input-div">
+                                <div>
+                                    <div>Från</div>
+                                    <input className="time-input approve-input" value={props.changingRoomTimeFrom} onChange={props.onChangingRoomTimeFromChange} type="time" />
+                                    <span>-</span>
+                                </div>
+                            </div>
+                            <div className="time-input-div">
+                                <div>
+                                    <div>Till</div>
+                                    <input className="time-input approve-input" value={props.changingRoomTimeTo} onChange={props.onChangingRoomTimeToChange} type="time" />
+                                </div>
+                            </div>
+                        </div>
+                    </div> */}
+
+                    <div className={(props.showAdminOptions ? "" : "hidden")}>
+                        Omklädningsrum:
+                        <select className="input" onChange={handleChangingRoomChange} defaultValue="-1">
+                            <option disabled value="-1">Välj omklädningsrum</option>
+                            {changingRoomOpts}
+                        </select>
                     </div>
                 </form>
 

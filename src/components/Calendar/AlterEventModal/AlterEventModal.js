@@ -17,7 +17,7 @@ const AlterEventModal = (props) => {
     let fieldSizesOpts = props.fieldSizesOpts.map((fieldSize) => <option key={fieldSize.Id} value={fieldSize.Id}>{fieldSize.Size}</option>);
     fieldSizesOpts.unshift(<option key={0} value={0}>Välj planstorlek</option>);
 
-    const changingRoomOpts = props.changingRooms.map((ch) => <option key={ch.Id} value={ch.Id}>{ch.Name} - {ch.Size}</option>)
+    const changingRoomOpts = props.changingRooms.map((ch) => <option key={ch.Id} value={ch.Id}>{ch.Name} - {ch.Size}</option>);
 
     const handleColorChange = (color) => {
         props.onEventColorChange(color);

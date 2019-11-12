@@ -43,6 +43,7 @@ const CalendarWeek = (props) => {
     const [alterEventComment, setAlterEventComment] = useState("");
     const [alterChangingRoomTimeFrom, setAlterChangingRoomTimeFrom] = useState("");
     const [alterChangingRoomTimeTo, setAlterChangingRoomTimeTo] = useState("");
+    const [alterSelectedChangingRoom, setAlterSelectedChangingRoom] = useState(-1);
     const [alterEventColor, setAlterEventColor] = useState("");
 
 
@@ -121,9 +122,14 @@ const CalendarWeek = (props) => {
             "FieldID": alterEventSelectedField,
             "FieldSizeID": alterEventSelectedFieldSize,
             "EventColor": alterEventColor,
+            "ChangingRoomID": alterSelectedChangingRoom,
             "UserKey": props.userKey
         }).then(res => {
             toast.success("Bokningen är uppdaterad!");
+
+            API.events().getForWeek(props.weekDate.startDate.getUnixTimestamp(), props.weekDate.endDate.getUnixTimestamp()).then(res => {
+                setEvents(res.data);
+            });
         });
     };
 
@@ -133,6 +139,10 @@ const CalendarWeek = (props) => {
         
         Api.events().deleteEvent(alterEventId, props.userKey).then(res => {
             toast.success("Bokning borttagen!");
+
+            API.events().getForWeek(props.weekDate.startDate.getUnixTimestamp(), props.weekDate.endDate.getUnixTimestamp()).then(res => {
+                setEvents(res.data);
+            });
         });
     };
 
@@ -192,8 +202,8 @@ const CalendarWeek = (props) => {
         setAlterChangingRoomTimeTo(event.target.value);
     };
 
-    const handleChangingRoomChange = (selectedValue) => {
-        console.log(selectedValue);
+    const handleChangingRoomChange = () => {
+        setAlterSelectedChangingRoom(event.target.value);
     };
 
     const handleAlterEventColorChange = (color) => {
@@ -264,7 +274,7 @@ const CalendarWeek = (props) => {
             
             <Timeline shiftRight={props.shiftRight} top={timelinePos} />
 
-            <NewEventModal userKey={props.userKey} showAdminOptions={props.adminLoggedIn} fields={fields} isHidden={props.newBookingModalIsHidden} close={handleCloseNewBookingClick}/>
+            <NewEventModal changingRooms={props.changingRooms} weekDate={props.weekDate} setEvents={setEvents} userKey={props.userKey} showAdminOptions={props.adminLoggedIn} fields={fields} isHidden={props.newBookingModalIsHidden} close={handleCloseNewBookingClick}/>
             
             <AlterEventModal isHidden={hideAlterEventModal}
                 fields={fields}

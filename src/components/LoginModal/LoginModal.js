@@ -32,14 +32,6 @@ const LoginModal = (props) => {
         setPassword("");
     };
 
-    const handleEnterPress = (ev) => {
-        if (ev.key === 'Enter') {
-            if (email != "" && password != "") {
-                handleSignIn();
-            }
-        }
-    };
-
     return (
         <div className={"login-modal-overlay " + (props.isHidden ? "hidden" : "")}>
             <div className="login-modal-box">
@@ -51,7 +43,7 @@ const LoginModal = (props) => {
                     </div>
                     <div>
                         <label className="label">Lösenord</label>
-                        <input className="input" value={password} onKeyUp={handleEnterPress} onChange={handlePasswordChange} type="password" />
+                        <input className="input" value={password} onChange={handlePasswordChange} type="password" />
                     </div>
                 </form>
                 

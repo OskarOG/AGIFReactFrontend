@@ -126,7 +126,7 @@ const App = () => {
 
     const handleSendApprovalEvent = (events) => {
         Api.nonApprovedEvents().approve(userApiKey, events).then(res => {
-            toast.success("Bokningar godkända!");
+            toast.success("Bokningar godkända");
         });
     };
 
