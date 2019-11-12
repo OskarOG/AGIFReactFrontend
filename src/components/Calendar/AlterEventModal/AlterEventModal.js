@@ -104,8 +104,7 @@ const AlterEventModal = (props) => {
 
                     <div>
                         Omklädningsrum:
-                        <select className="input" onChange={props.onChangingRoomChange} defaultValue="-1">
-                            <option disabled value="-1">Välj omklädningsrum</option>
+                        <select className="input" onChange={props.onChangingRoomChange} value={props.selectedChangingRoom}>
                             {changingRoomOpts}
                         </select>
                     </div>

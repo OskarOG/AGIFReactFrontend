@@ -71,6 +71,8 @@ const App = () => {
                 Api.login().signout(userApiKey).then((res) => {
                     setLoggedIn(false);
                     sessionStorage.removeItem(AGIF_SESSION_STORAGE_USERKEY);
+
+                    location.reload();
                 });
                 break;
         };
@@ -127,11 +129,21 @@ const App = () => {
     const handleSendApprovalEvent = (events) => {
         Api.nonApprovedEvents().approve(userApiKey, events).then(res => {
             toast.success("Bokningar godkända");
-        });
-    };
 
-    const handleChangingRoomChange = (selectedValue) => {
-        console.log(selectedValue);
+            if (userApiKey != null && userApiKey != "") {
+                setLoggedIn(true);
+    
+                Api.nonApprovedEvents().getCount(userApiKey).then(res => {
+                    setNonApprovedCount(res.data);
+                });
+
+                Api.nonApprovedEvents().get(userApiKey).then(res => {
+                    setHideNonApprovedModal(false);
+                    
+                    setNonApprovedEvents(res.data);
+                });
+            };
+        });
     };
 
     return (
@@ -150,7 +162,7 @@ const App = () => {
             <main>
                 <LoginModal isHidden={hideLoginModal} saveUserKey={handleLoginResult} close={handleCloseLoginModal} />
 
-                <ApproveEventModal onChangingRoomChange={handleChangingRoomChange} changingRooms={changingRooms} close={handleCloseApproveEventModal} isHidden={hideNonApprovedModal} nonApprovedEvents={nonApprovedEvents} send={handleSendApprovalEvent} />
+                <ApproveEventModal changingRooms={changingRooms} close={handleCloseApproveEventModal} isHidden={hideNonApprovedModal} nonApprovedEvents={nonApprovedEvents} send={handleSendApprovalEvent} />
 
                 <Navigation 
                     drawerIsOpen={drawerIsOpen}

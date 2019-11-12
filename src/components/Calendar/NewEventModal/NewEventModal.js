@@ -149,7 +149,7 @@ const NewEventModal = (props) => {
                 "Team": team,
                 "TimeFrom": new Date(date + " " + timeFrom).getUnixTimestamp(),
                 "TimeTo": new Date(date + " " + timeTo).getUnixTimestamp(),
-                "RecurringEventEnd": new Date(recuringEventDateTo).getUnixTimestamp(),
+                "RecurringEventEnd": new Date(recuringEventDateTo + " " + timeTo).getUnixTimestamp(),
                 "Comment": comment,
                 "FieldID": selectedField,
                 "FieldSizeID": selectedFieldSize,
