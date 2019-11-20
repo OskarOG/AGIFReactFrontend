@@ -1,13 +1,14 @@
 import React from "react";
 import "./FieldContent.css";
 import Event from "../Event/Event";
+import moment from "moment";
 
 const FieldContent = (props) => {
     const minPxlSize = 2.5; // If change timeline li height must change as well.
 
     const eventItems = props.events.map((e) => {
-        e.TimeFrom = new Date(e.TimeFrom);
-        e.TimeTo = new Date(e.TimeTo);
+        e.TimeFrom = moment.utc(e.TimeFrom).local().toDate();
+        e.TimeTo = moment.utc(e.TimeTo).local().toDate();
 
         e.ChangingRoomTimeFrom = new Date(e.ChangingRoomTimeFrom);
         e.ChangingRoomTimeTo = new Date(e.ChangingRoomTimeTo);

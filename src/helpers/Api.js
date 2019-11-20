@@ -1,7 +1,7 @@
 import Axios from "axios";
 
 export default {
-    baseUrl: "/api",
+    baseUrl: "https://localhost:44387/api",
     events() {
         return {
             getForWeek: (startDate, endDate) => Axios.get(`${this.baseUrl}/event?from=${startDate}&to=${endDate}`),

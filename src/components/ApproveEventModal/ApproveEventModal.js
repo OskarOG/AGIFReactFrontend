@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import "./ApproveEventModal.css";
 import NonApprovedEvent from "./NonApprovedEvent/NonApprovedEvent";
+import moment from "moment";
 
 const ApproveEventModal = (props) => {
     const [eventMap, setEventMap] = useState(new Map());
@@ -22,8 +23,8 @@ const ApproveEventModal = (props) => {
     };
     
     const events = props.nonApprovedEvents.map((e) => {
-        e.TimeFrom = new Date(e.TimeFrom);
-        e.TimeTo = new Date(e.TimeTo);
+        e.TimeFrom = moment.utc(e.TimeFrom).local().toDate();
+        e.TimeTo = moment.utc(e.TimeTo).local().toDate();
 
         return <NonApprovedEvent key={e.Id}
                 Id={e.Id}
