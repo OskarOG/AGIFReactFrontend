@@ -24,8 +24,15 @@ const NewEventModal = (props) => {
     const [recuringEventDateTo, setRecuringEventDateTo] = useState("");
     const [timeFrom, setTimeFrom] = useState("");
     const [timeTo, setTimeTo] = useState("");
-    const [comment, setComment] = useState("");
+    
+    const [changingRoomTimeFrom, setChangingRoomTimeFrom] = useState("");
+    const [changingRoomTimeTo, setChangingRoomTimeTo] = useState("");
     const [selectedChangingRoom, setSelectedChangingRoom] = useState(-1);
+    const [changingRoomSelectIsDisabled, setChangingRoomSelectIsDisabled] = useState(true);
+    const [availableChangingRooms, setAvailableChangingRooms] = useState([]);
+
+    const [comment, setComment] = useState("");
+    
     const [currentPrice, setCurrentPrice] = useState(0);
     const [eventColor, setEventColor] = useState("");
 
@@ -39,8 +46,8 @@ const NewEventModal = (props) => {
         setSubmitButtonDisabled(true);
 
         if (selectedDate != "" && selectedTimeFrom != "" && selectedTimeTo != "" && fieldId != 0) {
-            var tempDateFrom = new Date(selectedDate + " " + selectedTimeFrom);
-            var tempDateTo = new Date(selectedDate + " " + selectedTimeTo);
+            let tempDateFrom = new Date(selectedDate + " " + selectedTimeFrom);
+            let tempDateTo = new Date(selectedDate + " " + selectedTimeTo);
 
             API.fields().getFieldSizes(fieldId, tempDateFrom.getUnixTimestamp(), tempDateTo.getUnixTimestamp()).then(res => {
                 setFieldSizes(res.data);
@@ -49,6 +56,23 @@ const NewEventModal = (props) => {
                 setSubmitButtonDisabled(false);
             });
         }
+    };
+
+    const updateAvailableChangingRooms = () => {
+        setChangingRoomSelectIsDisabled(true);
+        setSubmitButtonDisabled(true);
+
+        if (date != "" && changingRoomTimeFrom != "" && changingRoomTimeTo != "") {
+            let tempChangingRoomDateFrom = new Date(date + " " + changingRoomTimeFrom);
+            let tempChangingRoomDateTo = new Date(date + " " + changingRoomTimeTo);
+
+            API.changingRooms().get(tempChangingRoomDateFrom.getUnixTimestamp(), tempChangingRoomDateTo.getUnixTimestamp()).then(res => {
+                setAvailableChangingRooms(res.data.map((ch) => <option key={ch.Id} value={ch.Id}>{ch.Name} - {ch.Size}</option>));
+
+                setChangingRoomSelectIsDisabled(false);
+                setSubmitButtonDisabled(false);
+            });
+        };
     };
 
     const handleNameChange = () => {
@@ -103,6 +127,22 @@ const NewEventModal = (props) => {
         setEventColor(color);
     };
 
+    const handleChangingRoomTimeFromChange = () => {
+        setChangingRoomTimeFrom(event.target.value);
+
+        updateAvailableChangingRooms();
+    };
+
+    const handleChangingRoomTimeToChange = () => {
+        setChangingRoomTimeTo(event.target.value);
+
+        updateAvailableChangingRooms();
+    };
+
+    const handleChangingRoomTimeLeave = () => {
+        updateAvailableChangingRooms();
+    };
+
     const handleCommentChange = () => {
         setComment(event.target.value);
     };
@@ -132,6 +172,11 @@ const NewEventModal = (props) => {
         setDate("");
         setTimeFrom("");
         setTimeTo("");
+        setChangingRoomTimeFrom("");
+        setChangingRoomTimeTo("");
+        setSelectedChangingRoom(-1);
+        setChangingRoomSelectIsDisabled(true);
+        setAvailableChangingRooms([]);
         setComment("");
         setCurrentPrice(0);
         setFieldSizes([]);
@@ -155,6 +200,8 @@ const NewEventModal = (props) => {
                 "FieldSizeID": selectedFieldSize,
                 "EventColor": eventColor,
                 "ChangingRoomID": selectedChangingRoom,
+                "ChangingRoomTimeFrom": new Date(date + " " + changingRoomTimeFrom).getUnixTimestamp(),
+                "ChangingRoomTimeTo": new Date(date + " " + changingRoomTimeTo).getUnixTimestamp(),
                 "UserKey": props.userKey
             }).then(res => {
                 toast.success("Bokning tillagd");
@@ -190,12 +237,7 @@ const NewEventModal = (props) => {
     };
 
     let fieldOpts = props.fields.map((field) => <option key={field.Id} value={field.Id}>{field.Name}</option>);
-    fieldOpts.unshift(<option key={0} value={0}>Välj plan</option>);
-
     let fieldSizesOpts = fieldSizes.map((fieldSize) => <option key={fieldSize.Id} value={fieldSize.Id}>{fieldSize.Size}</option>);
-    fieldSizesOpts.unshift(<option key={0} value={0}>Välj planstorlek</option>);
-
-    const changingRoomOpts = props.changingRooms.map((ch) => <option key={ch.Id} value={ch.Id}>{ch.Name} - {ch.Size}</option>);
 
     return (
         <div className={"modal-overlay " + (props.isHidden ? "hidden" : "")}>
@@ -248,47 +290,52 @@ const NewEventModal = (props) => {
                     </div>
                     <div className="field-margin">
                         <label className="label">Välj plan*</label>
-                        <select className="input" onChange={handleFieldChange}>
+                        <select className="input" onChange={handleFieldChange} defaultValue="-1">
+                            <option disabled value="-1">Välj plan</option>
                             {fieldOpts}
                         </select>
                     </div>
                     <div>
                         <label className="label">Välj storlek*</label>
-                        <select disabled={fieldSizeIsDisabled} className="input" onChange={handleFieldSizeChange}>
+                        <select disabled={fieldSizeIsDisabled} className="input" onChange={handleFieldSizeChange} defaultValue="-1">
+                            <option disabled value="-1">Välj planstorlek</option>
                             {fieldSizesOpts}
                         </select>
                     </div>
-                    
-                    <div className="input-comment-div">
-                        <label className="label">Annan kommentar:</label>
-                        <textarea className="input" value={comment} onChange={handleCommentChange} rows="2"></textarea>
-                    </div>
-
-                    {/* <div className="time-input-container">
+                    <div className={"time-input-container " + (props.showAdminOptions ? "" : "hidden")}>
                         <label className="label">Tid för omklädningsrum:</label>
                         <div>
                             <div className="time-input-div">
                                 <div>
                                     <div>Från</div>
-                                    <input className="time-input approve-input" value={props.changingRoomTimeFrom} onChange={props.onChangingRoomTimeFromChange} type="time" />
+                                    <input className="time-input approve-input" type="time"
+                                        value={changingRoomTimeFrom}
+                                        onChange={handleChangingRoomTimeFromChange}
+                                        onBlur={handleChangingRoomTimeLeave} />
                                     <span>-</span>
                                 </div>
                             </div>
                             <div className="time-input-div">
                                 <div>
                                     <div>Till</div>
-                                    <input className="time-input approve-input" value={props.changingRoomTimeTo} onChange={props.onChangingRoomTimeToChange} type="time" />
+                                    <input className="time-input approve-input" type="time"
+                                        value={changingRoomTimeTo} 
+                                        onChange={handleChangingRoomTimeToChange} 
+                                        onBlur={handleChangingRoomTimeLeave} />
                                 </div>
                             </div>
                         </div>
-                    </div> */}
-
+                    </div>
                     <div className={(props.showAdminOptions ? "" : "hidden")}>
                         Omklädningsrum:
-                        <select className="input" onChange={handleChangingRoomChange} defaultValue="-1">
+                        <select disabled={changingRoomSelectIsDisabled} className="input" onChange={handleChangingRoomChange} defaultValue="-1">
                             <option disabled value="-1">Välj omklädningsrum</option>
-                            {changingRoomOpts}
+                            {availableChangingRooms}
                         </select>
+                    </div>
+                    <div className="input-comment-div">
+                        <label className="label">Annan kommentar:</label>
+                        <textarea className="input" value={comment} onChange={handleCommentChange} rows="2"></textarea>
                     </div>
                 </form>
 

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import './AlterEventModal.css';
 
 import ColorPicker from "../../ColorPicker/ColorPicker";
+import Api from '../../../helpers/Api';
 
 const AlterEventModal = (props) => {
     const colors = [
@@ -11,17 +12,44 @@ const AlterEventModal = (props) => {
         { color: "#9c83c3", text: "Speciell bokning" }, 
         { color: "#d96d6d", text: "Preliminär bokning" }];
 
+    // const [hoursFrom, setHoursFrom] = useState();
+    // const [minutesFrom, setMinutesFrom] = useState();
+    // const [hoursTo, setHoursTo] = useState();
+    // const [minutesTo, setMinutesTo] = useState();
+
+    // const [crHoursFrom, setCrHoursFrom] = useState();
+    // const [crMinutesFrom, setCrMinutesFrom] = useState();
+    // const [crHoursTo, setCrHoursTo] = useState();
+    // const [crMinutesTo, setCrMinutesTo] = useState();
+    console.log(props.timeFrom);
+    
+    const hoursFrom = props.timeFrom != "" ? props.timeFrom.getHours() : "";
+    const minutesFrom = props.timeFrom != "" ? props.timeFrom.getMinutes() : "";
+    const hoursTo = props.timeTo != "" ? props.timeTo.getHours() : "";
+    const minutesTo = props.timeTo != "" ? props.timeTo.getMinutes() : "";
+
+    const crHoursFrom = props.changingRoomTimeFrom != "" ? props.changingRoomTimeFrom.getHours() : "";
+    const crMinutesFrom = props.changingRoomTimeFrom != "" ? props.changingRoomTimeFrom.getMinutes() : "";
+    const crHoursTo = props.changingRoomTimeFrom != "" ? props.changingRoomTimeTo.getHours() : "";
+    const crMinutesTo = props.changingRoomTimeFrom != "" ? props.changingRoomTimeTo.getMinutes() : "";
+
+
     let fieldOpts = props.fields.map((field) => <option key={field.Id} value={field.Id}>{field.Name}</option>);
-    fieldOpts.unshift(<option key={0} value={0}>Välj plan</option>);
-
     let fieldSizesOpts = props.fieldSizesOpts.map((fieldSize) => <option key={fieldSize.Id} value={fieldSize.Id}>{fieldSize.Size}</option>);
-    fieldSizesOpts.unshift(<option key={0} value={0}>Välj planstorlek</option>);
-
+    
     const changingRoomOpts = props.changingRooms.map((ch) => <option key={ch.Id} value={ch.Id}>{ch.Name} - {ch.Size}</option>);
 
     const handleColorChange = (color) => {
         props.onEventColorChange(color);
     };
+
+    useEffect(() => {
+        console.log(props.changingRoomTimeFrom);
+        console.log(props.changingRoomTimeTo);
+        // Api.changingRooms().get(props.changingRoomTimeFrom, props.changingRoomTimeTo).then(res => {
+        //     console.log(res);
+        // });
+    }, [props.changingRoomTimeFrom, props.changingRoomTimeTo]);
 
     return (
         <div className={"modal-overlay " + (props.isHidden ? "hidden" : "")}>
@@ -54,14 +82,14 @@ const AlterEventModal = (props) => {
                             <div className="time-input-div">
                                 <div>
                                     <div>Från</div>
-                                    <input className="time-input" value={props.timeFrom} onChange={props.onTimeFromChange} onBlur={props.onTimeLeave} type="time" />
+                                    <input className="time-input" value={(hoursFrom < 10 ? "0" + hoursFrom : hoursFrom) + ":" + (minutesFrom < 10 ? "0" + minutesFrom : minutesFrom)} onChange={props.onTimeFromChange} onBlur={props.onTimeLeave} type="time" />
                                     <span>-</span>
                                 </div>
                             </div>
                             <div className="time-input-div">
                                 <div>
                                     <div>Till</div>
-                                    <input className="time-input" value={props.timeTo} onChange={props.onTimeToChange} onBlur={props.onTimeLeave} type="time" />
+                                    <input className="time-input" value={(hoursTo < 10 ? "0" + hoursTo : hoursTo) + ":" + (minutesTo < 10 ? "0" + minutesTo : minutesTo)} onChange={props.onTimeToChange} onBlur={props.onTimeLeave} type="time" />
                                 </div>
                             </div>
                         </div>
@@ -69,27 +97,27 @@ const AlterEventModal = (props) => {
                     <div className="field-input">
                         <label className="label">Välj plan*</label>
                         <select className="input" value={props.selectedField} onChange={props.onSelectedFieldChange}>
+                            <option disabled value="-1">Välj plan</option>
                             {fieldOpts}
                         </select>
                     </div>
                     <div>
                         <label className="label">Välj storlek*</label>
                         <select value={props.selectedFieldSize} className="input" onChange={props.onSelectedFieldSizeChange}>
+                            <option disabled value="-1">Välj planstorlek</option>
                             {fieldSizesOpts}
                         </select>
                     </div>
-                    <div className="input-comment-div">
-                        <label className="label">Annan kommentar:</label>
-                        <textarea className="input" value={props.comment} onChange={props.onCommentChange} rows="2"></textarea>
-                    </div>
-
-                    {/* <div className="time-input-container">
+                    <div className="time-input-container">
                         <label className="label">Tid för omklädningsrum:</label>
                         <div>
                             <div className="time-input-div">
                                 <div>
                                     <div>Från</div>
-                                    <input className="time-input approve-input" value={props.changingRoomTimeFrom} onChange={props.onChangingRoomTimeFromChange} type="time" />
+                                    <input className="time-input approve-input" 
+                                        value={(changingRoomHourFrom < 10 ? "0" + changingRoomHourFrom : changingRoomHourFrom) + ":" +
+                                                (changingRoomMinFrom < 10 ? "0" + changingRoomMinFrom : changingRoomMinFrom)}
+                                                onChange={props.onChangingRoomTimeFromChange} type="time" />
                                     <span>-</span>
                                 </div>
                             </div>
@@ -100,13 +128,16 @@ const AlterEventModal = (props) => {
                                 </div>
                             </div>
                         </div>
-                    </div> */}
-
+                    </div>
                     <div>
                         Omklädningsrum:
                         <select className="input" onChange={props.onChangingRoomChange} value={props.selectedChangingRoom}>
                             {changingRoomOpts}
                         </select>
+                    </div>
+                    <div className="input-comment-div">
+                        <label className="label">Annan kommentar:</label>
+                        <textarea className="input" value={props.comment} onChange={props.onCommentChange} rows="2"></textarea>
                     </div>
                 </form>
 

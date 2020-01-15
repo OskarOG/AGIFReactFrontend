@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import "./ApproveEventModal.css";
 import NonApprovedEvent from "./NonApprovedEvent/NonApprovedEvent";
 import moment from "moment";
+import Api from "../../helpers/Api";
 
 const ApproveEventModal = (props) => {
     const [eventMap, setEventMap] = useState(new Map());
@@ -25,6 +26,10 @@ const ApproveEventModal = (props) => {
     const events = props.nonApprovedEvents.map((e) => {
         e.TimeFrom = moment.utc(e.TimeFrom).local().toDate();
         e.TimeTo = moment.utc(e.TimeTo).local().toDate();
+
+        Api.changingRooms().getAll(e.TimeFrom.getUnixTimestamp(), e.TimeTo.getUnixTimestamp()).then(res => {
+            console.log(res);
+        });
 
         return <NonApprovedEvent key={e.Id}
                 Id={e.Id}

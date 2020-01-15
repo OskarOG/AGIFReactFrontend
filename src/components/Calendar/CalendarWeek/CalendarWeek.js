@@ -65,13 +65,15 @@ const CalendarWeek = (props) => {
             const day = event.TimeFrom.getDate();
             setAlterEventDate(event.TimeFrom.getFullYear() + "-" + (month < 10 ? "0" + month : month) + "-" + (day < 10 ? "0" + day : day));
 
-            const hourFrom = event.TimeFrom.getHours();
-            const minFrom = event.TimeFrom.getMinutes();
-            setAlterEventTimeFrom((hourFrom < 10 ? "0" + hourFrom : hourFrom) + ":" + (minFrom < 10 ? "0" + minFrom : minFrom));
+            // const hourFrom = event.TimeFrom.getHours();
+            // const minFrom = event.TimeFrom.getMinutes();
+            // (hourFrom < 10 ? "0" + hourFrom : hourFrom) + ":" + (minFrom < 10 ? "0" + minFrom : minFrom)
+            setAlterEventTimeFrom(event.TimeFrom);
 
-            const hourTo = event.TimeTo.getHours();
-            const minTo = event.TimeTo.getMinutes();
-            setAlterEventTimeTo((hourTo < 10 ? "0" + hourTo : hourTo) + ":" + (minTo < 10 ? "0" + minTo : minTo));
+            // const hourTo = event.TimeTo.getHours();
+            // const minTo = event.TimeTo.getMinutes();
+            // (hourTo < 10 ? "0" + hourTo : hourTo) + ":" + (minTo < 10 ? "0" + minTo : minTo)
+            setAlterEventTimeTo(event.TimeTo);
 
             setAlterEventSelectedField(event.FieldID);
             setAlterEventSelectedFieldSize(event.FieldSizeID);
@@ -80,10 +82,22 @@ const CalendarWeek = (props) => {
 
             setAlterSelectedChangingRoom(event.ChangingRoomID);
 
-            updateFieldSizes(event.TimeFrom.getFullYear() + "-" + (month < 10 ? "0" + month : month) + "-" + (day < 10 ? "0" + day : day),
-                            (hourFrom < 10 ? "0" + hourFrom : hourFrom) + ":" + (minFrom < 10 ? "0" + minFrom : minFrom),
-                            (hourTo < 10 ? "0" + hourTo : hourTo) + ":" + (minTo < 10 ? "0" + minTo : minTo),
-                            event.FieldID);
+            // const changingRoomHourFrom = event.ChangingRoomTimeFrom.getHours();
+            // const changingRoomMinFrom = event.ChangingRoomTimeFrom.getMinutes();
+            // (changingRoomHourFrom < 10 ? "0" + changingRoomHourFrom : changingRoomHourFrom) + ":" +
+                                        // (changingRoomMinFrom < 10 ? "0" + changingRoomMinFrom : changingRoomMinFrom)
+            setAlterChangingRoomTimeFrom(event.ChangingRoomTimeFrom);
+
+            // const changingRoomHourTo = event.ChangingRoomTimeTo.getHours();
+            // const changingRoomMinTo = event.ChangingRoomTimeTo.getMinutes();
+            // (changingRoomHourTo < 10 ? "0" + changingRoomHourTo : changingRoomHourTo) + ":" +
+            //                             (changingRoomMinTo < 10 ? "0" + changingRoomMinTo : changingRoomMinTo)
+            setAlterChangingRoomTimeTo(event.ChangingRoomTimeTo);
+
+            // updateFieldSizes(event.TimeFrom.getFullYear() + "-" + (month < 10 ? "0" + month : month) + "-" + (day < 10 ? "0" + day : day),
+            //                 (hourFrom < 10 ? "0" + hourFrom : hourFrom) + ":" + (minFrom < 10 ? "0" + minFrom : minFrom),
+            //                 (hourTo < 10 ? "0" + hourTo : hourTo) + ":" + (minTo < 10 ? "0" + minTo : minTo),
+            //                 event.FieldID);
 
             setHideAlterEventModal(false);
         }
@@ -101,6 +115,7 @@ const CalendarWeek = (props) => {
         setAlterEventSelectedFieldSize(0);
         setAlterEventComment("");
         setAlterEventColor("");
+
     };
 
     const handleCloseAlterEventModal = () => {
