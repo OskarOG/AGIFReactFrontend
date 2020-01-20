@@ -49,12 +49,15 @@ const CalendarWeek = (props) => {
 
     useEffect(() => {
         API.events().getForWeek(props.weekDate.startDate.getUnixTimestamp(), props.weekDate.endDate.getUnixTimestamp()).then(res => {
+            console.log(res.data);
             setEvents(res.data);
         });
     }, [props.weekDate]);
 
     const handleOpenAlterEventModal = (event) => {
         if (props.userKey != null) {
+            console.log(event);
+
             setAlterEventId(event.Id);
             setAlterEventName(event.Name);
             setAlterEventEmail(event.Email);
@@ -115,7 +118,6 @@ const CalendarWeek = (props) => {
         setAlterEventSelectedFieldSize(0);
         setAlterEventComment("");
         setAlterEventColor("");
-
     };
 
     const handleCloseAlterEventModal = () => {

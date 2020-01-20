@@ -22,6 +22,7 @@ const AlterEventModal = (props) => {
     // const [crHoursTo, setCrHoursTo] = useState();
     // const [crMinutesTo, setCrMinutesTo] = useState();
     console.log(props.timeFrom);
+    console.log(props.timeTo);
     
     const hoursFrom = props.timeFrom != "" ? props.timeFrom.getHours() : "";
     const minutesFrom = props.timeFrom != "" ? props.timeFrom.getMinutes() : "";
@@ -115,8 +116,8 @@ const AlterEventModal = (props) => {
                                 <div>
                                     <div>Från</div>
                                     <input className="time-input approve-input" 
-                                        value={(changingRoomHourFrom < 10 ? "0" + changingRoomHourFrom : changingRoomHourFrom) + ":" +
-                                                (changingRoomMinFrom < 10 ? "0" + changingRoomMinFrom : changingRoomMinFrom)}
+                                        value={(crHoursFrom < 10 ? "0" + crHoursFrom : crHoursFrom) + ":" +
+                                                (crMinutesFrom < 10 ? "0" + crMinutesFrom : crMinutesFrom)}
                                                 onChange={props.onChangingRoomTimeFromChange} type="time" />
                                     <span>-</span>
                                 </div>

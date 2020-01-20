@@ -3,19 +3,28 @@ import React, { useState } from "react";
 import "./ApproveEventModal.css";
 import NonApprovedEvent from "./NonApprovedEvent/NonApprovedEvent";
 import moment from "moment";
-import Api from "../../helpers/Api";
 
 const ApproveEventModal = (props) => {
     const [eventMap, setEventMap] = useState(new Map());
 
-    const handleApproveSelected = (id, color, changingRoomId, changingRoomTimeFrom, changingRoomTimeTo) => {
+    const handleApproveSelected = (id, color, changingRoomId, changingRoomTimeFrom, changingRoomTimeTo, date) => {
+        const crTimeFrom = new Date(date.getFullYear() + "-" + ((date.getMonth() + 1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1)) + "-" + date.getDate());
+        crTimeFrom.setHours(changingRoomTimeFrom.split(':')[0]);
+        crTimeFrom.setMinutes(changingRoomTimeFrom.split(':')[1]);
+        crTimeFrom.setSeconds(0);
+
+        const crTimeTo = new Date(date.getFullYear() + "-" + ((date.getMonth() + 1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1)) + "-" + date.getDate());
+        crTimeTo.setHours(changingRoomTimeTo.split(':')[0]);
+        crTimeTo.setMinutes(changingRoomTimeTo.split(':')[1]);
+        crTimeTo.setSeconds(0); 
+
         eventMap.set(id, 
             { 
                 approved: true, 
                 color,
                 changingRoomId,
-                changingRoomTimeFrom,
-                changingRoomTimeTo
+                changingRoomTimeFrom: crTimeFrom.getUnixTimestamp(),
+                changingRoomTimeTo: crTimeTo.getUnixTimestamp()
             });
     };
 
@@ -27,25 +36,20 @@ const ApproveEventModal = (props) => {
         e.TimeFrom = moment.utc(e.TimeFrom).local().toDate();
         e.TimeTo = moment.utc(e.TimeTo).local().toDate();
 
-        Api.changingRooms().getAll(e.TimeFrom.getUnixTimestamp(), e.TimeTo.getUnixTimestamp()).then(res => {
-            console.log(res);
-        });
-
         return <NonApprovedEvent key={e.Id}
-                Id={e.Id}
-                Team={e.Team}
-                Club={e.Club}
-                Name={e.Name}
-                Email={e.Email}
-                FieldName={e.FieldName}
-                FieldSize={e.FieldSize}
-                TimeFrom={e.TimeFrom}
-                TimeTo={e.TimeTo}
-                Comment={e.Comment}
-                EventColor={e.EventColor}
-                onApproveSelected={handleApproveSelected}
-                onDenySelected={handleDenySelected}
-                changingRooms={props.changingRooms} />
+                    Id={e.Id}
+                    Team={e.Team}
+                    Club={e.Club}
+                    Name={e.Name}
+                    Email={e.Email}
+                    FieldName={e.FieldName}
+                    FieldSize={e.FieldSize}
+                    TimeFrom={e.TimeFrom}
+                    TimeTo={e.TimeTo}
+                    Comment={e.Comment}
+                    EventColor={e.EventColor}
+                    onApproveSelected={handleApproveSelected}
+                    onDenySelected={handleDenySelected} />
     });
 
     const handleCloseButton = () => {
