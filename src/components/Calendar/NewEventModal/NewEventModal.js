@@ -17,8 +17,8 @@ const NewEventModal = (props) => {
     const [email, setEmail] = useState("");
     const [team, setTeam] = useState("");
     const [club, setClub] = useState("");
-    const [selectedField, setSelectedField] = useState(0);
-    const [selectedFieldSize, setSelectedFieldSize] = useState(0);
+    const [selectedField, setSelectedField] = useState(-1);
+    const [selectedFieldSize, setSelectedFieldSize] = useState(-1);
     const [date, setDate] = useState("");
     const [recuringEventDateTo, setRecuringEventDateTo] = useState("");
     const [timeFrom, setTimeFrom] = useState("");
@@ -97,6 +97,7 @@ const NewEventModal = (props) => {
     };
 
     const handleFieldSizeChange = () => {
+        console.log(event.target.value);
         setSelectedFieldSize(event.target.value);
     };
 
@@ -151,12 +152,14 @@ const NewEventModal = (props) => {
     };
 
     const clearFieldInfo = () => {
-        setSelectedField(0);
-        setSelectedFieldSize(0);
+        setSelectedField(-1);
+        setSelectedFieldSize(-1);
         setCurrentPrice(0);
         setFieldSizes([]);
         setFieldSizeIsDisabled(true);
         setSubmitButtonDisabled(true);
+        setSelectedChangingRoom(-1);
+        setChangingRoomSelectIsDisabled(true);
     };
 
     const handleCloseButton = () => {
@@ -289,15 +292,15 @@ const NewEventModal = (props) => {
                     </div>
                     <div className="field-margin">
                         <label className="label">Välj plan*</label>
-                        <select className="input" onChange={handleFieldChange} defaultValue="-1">
-                            <option disabled value="-1">Välj plan</option>
+                        <select className="input" onChange={handleFieldChange} value={selectedField}>
+                            <option value={-1}>Välj plan</option>
                             {fieldOpts}
                         </select>
                     </div>
                     <div>
                         <label className="label">Välj storlek*</label>
-                        <select disabled={fieldSizeIsDisabled} className="input" onChange={handleFieldSizeChange} defaultValue="-1">
-                            <option disabled value="-1">Välj planstorlek</option>
+                        <select disabled={fieldSizeIsDisabled} className="input" onChange={handleFieldSizeChange} value={selectedFieldSize}>
+                            <option value={-1}>Välj planstorlek</option>
                             {fieldSizesOpts}
                         </select>
                     </div>
@@ -327,8 +330,8 @@ const NewEventModal = (props) => {
                     </div>
                     <div className={(props.showAdminOptions ? "" : "hidden")}>
                         Omklädningsrum:
-                        <select disabled={changingRoomSelectIsDisabled} className="input" onChange={handleChangingRoomChange} defaultValue="-1">
-                            <option disabled value="-1">Välj omklädningsrum</option>
+                        <select disabled={changingRoomSelectIsDisabled} className="input" onChange={handleChangingRoomChange} value={selectedChangingRoom}>
+                            <option value={-1}>Välj omklädningsrum</option>
                             {availableChangingRooms}
                         </select>
                     </div>

@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import './AlterEventModal.css';
 
 import ColorPicker from "../../ColorPicker/ColorPicker";
-import Api from '../../../helpers/Api';
 
 const AlterEventModal = (props) => {
     const colors = [
@@ -11,18 +10,6 @@ const AlterEventModal = (props) => {
         { color: "#d5cb72", text: "Extern bokning" }, 
         { color: "#9c83c3", text: "Speciell bokning" }, 
         { color: "#d96d6d", text: "Preliminär bokning" }];
-
-    // const [hoursFrom, setHoursFrom] = useState();
-    // const [minutesFrom, setMinutesFrom] = useState();
-    // const [hoursTo, setHoursTo] = useState();
-    // const [minutesTo, setMinutesTo] = useState();
-
-    // const [crHoursFrom, setCrHoursFrom] = useState();
-    // const [crMinutesFrom, setCrMinutesFrom] = useState();
-    // const [crHoursTo, setCrHoursTo] = useState();
-    // const [crMinutesTo, setCrMinutesTo] = useState();
-    console.log(props.timeFrom);
-    console.log(props.timeTo);
     
     const hoursFrom = props.timeFrom != "" ? props.timeFrom.getHours() : "";
     const minutesFrom = props.timeFrom != "" ? props.timeFrom.getMinutes() : "";
@@ -34,7 +21,6 @@ const AlterEventModal = (props) => {
     const crHoursTo = props.changingRoomTimeFrom != "" ? props.changingRoomTimeTo.getHours() : "";
     const crMinutesTo = props.changingRoomTimeFrom != "" ? props.changingRoomTimeTo.getMinutes() : "";
 
-
     let fieldOpts = props.fields.map((field) => <option key={field.Id} value={field.Id}>{field.Name}</option>);
     let fieldSizesOpts = props.fieldSizesOpts.map((fieldSize) => <option key={fieldSize.Id} value={fieldSize.Id}>{fieldSize.Size}</option>);
     
@@ -43,14 +29,6 @@ const AlterEventModal = (props) => {
     const handleColorChange = (color) => {
         props.onEventColorChange(color);
     };
-
-    useEffect(() => {
-        console.log(props.changingRoomTimeFrom);
-        console.log(props.changingRoomTimeTo);
-        // Api.changingRooms().get(props.changingRoomTimeFrom, props.changingRoomTimeTo).then(res => {
-        //     console.log(res);
-        // });
-    }, [props.changingRoomTimeFrom, props.changingRoomTimeTo]);
 
     return (
         <div className={"modal-overlay " + (props.isHidden ? "hidden" : "")}>
@@ -98,14 +76,14 @@ const AlterEventModal = (props) => {
                     <div className="field-input">
                         <label className="label">Välj plan*</label>
                         <select className="input" value={props.selectedField} onChange={props.onSelectedFieldChange}>
-                            <option disabled value="-1">Välj plan</option>
+                            <option disabled value={-1}>Välj plan</option>
                             {fieldOpts}
                         </select>
                     </div>
                     <div>
                         <label className="label">Välj storlek*</label>
                         <select value={props.selectedFieldSize} className="input" onChange={props.onSelectedFieldSizeChange}>
-                            <option disabled value="-1">Välj planstorlek</option>
+                            <option disabled value={-1}>Välj planstorlek</option>
                             {fieldSizesOpts}
                         </select>
                     </div>
@@ -125,7 +103,10 @@ const AlterEventModal = (props) => {
                             <div className="time-input-div">
                                 <div>
                                     <div>Till</div>
-                                    <input className="time-input approve-input" value={props.changingRoomTimeTo} onChange={props.onChangingRoomTimeToChange} type="time" />
+                                    <input className="time-input approve-input" 
+                                        value={(crHoursTo < 10 ? "0" + crHoursTo : crHoursTo) + ":" +
+                                                (crMinutesTo < 10 ? "0" + crMinutesTo : crMinutesTo)}
+                                        onChange={props.onChangingRoomTimeToChange} type="time" />
                                 </div>
                             </div>
                         </div>
