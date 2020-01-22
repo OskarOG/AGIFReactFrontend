@@ -12,11 +12,8 @@ const AlterEventModal = (props) => {
         { color: "#d96d6d", text: "Preliminär bokning" }];
 
     let fieldOpts = props.fields.map((field) => <option key={field.Id} value={field.Id}>{field.Name}</option>);
-    fieldOpts.unshift(<option key={0} value={0}>Välj plan</option>);
-
     let fieldSizesOpts = props.fieldSizesOpts.map((fieldSize) => <option key={fieldSize.Id} value={fieldSize.Id}>{fieldSize.Size}</option>);
-    fieldSizesOpts.unshift(<option key={0} value={0}>Välj planstorlek</option>);
-
+    
     const changingRoomOpts = props.changingRooms.map((ch) => <option key={ch.Id} value={ch.Id}>{ch.Name} - {ch.Size}</option>);
 
     const handleColorChange = (color) => {
@@ -69,44 +66,46 @@ const AlterEventModal = (props) => {
                     <div className="field-input">
                         <label className="label">Välj plan*</label>
                         <select className="input" value={props.selectedField} onChange={props.onSelectedFieldChange}>
+                            <option disabled value={-1}>Välj plan</option>
                             {fieldOpts}
                         </select>
                     </div>
                     <div>
                         <label className="label">Välj storlek*</label>
                         <select value={props.selectedFieldSize} className="input" onChange={props.onSelectedFieldSizeChange}>
+                            <option disabled value={-1}>Välj planstorlek</option>
                             {fieldSizesOpts}
                         </select>
                     </div>
-                    <div className="input-comment-div">
-                        <label className="label">Annan kommentar:</label>
-                        <textarea className="input" value={props.comment} onChange={props.onCommentChange} rows="2"></textarea>
-                    </div>
-
-                    {/* <div className="time-input-container">
+                    <div className="time-input-container">
                         <label className="label">Tid för omklädningsrum:</label>
                         <div>
                             <div className="time-input-div">
                                 <div>
                                     <div>Från</div>
-                                    <input className="time-input approve-input" value={props.changingRoomTimeFrom} onChange={props.onChangingRoomTimeFromChange} type="time" />
+                                    <input className="time-input approve-input" 
+                                        value={props.changingRoomTimeFrom} onChange={props.onChangingRoomTimeFromChange} type="time" />
                                     <span>-</span>
                                 </div>
                             </div>
                             <div className="time-input-div">
                                 <div>
                                     <div>Till</div>
-                                    <input className="time-input approve-input" value={props.changingRoomTimeTo} onChange={props.onChangingRoomTimeToChange} type="time" />
+                                    <input className="time-input approve-input" 
+                                        value={props.changingRoomTimeTo} onChange={props.onChangingRoomTimeToChange} type="time" />
                                 </div>
                             </div>
                         </div>
-                    </div> */}
-
+                    </div>
                     <div>
                         Omklädningsrum:
                         <select className="input" onChange={props.onChangingRoomChange} value={props.selectedChangingRoom}>
                             {changingRoomOpts}
                         </select>
+                    </div>
+                    <div className="input-comment-div">
+                        <label className="label">Annan kommentar:</label>
+                        <textarea className="input" value={props.comment} onChange={props.onCommentChange} rows="2"></textarea>
                     </div>
                 </form>
 

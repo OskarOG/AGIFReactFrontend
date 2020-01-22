@@ -10,8 +10,8 @@ const FieldContent = (props) => {
         e.TimeFrom = moment.utc(e.TimeFrom).local().toDate();
         e.TimeTo = moment.utc(e.TimeTo).local().toDate();
 
-        e.ChangingRoomTimeFrom = new Date(e.ChangingRoomTimeFrom);
-        e.ChangingRoomTimeTo = new Date(e.ChangingRoomTimeTo);
+        e.ChangingRoomTimeFrom = moment.utc(e.ChangingRoomTimeFrom).local().toDate();
+        e.ChangingRoomTimeTo = moment.utc(e.ChangingRoomTimeTo).local().toDate();
 
         const zeroDate = new Date(e.TimeFrom);
         zeroDate.setHours(0,0,0,0);

@@ -45,6 +45,7 @@ const CalendarWeek = (props) => {
     const [alterChangingRoomTimeTo, setAlterChangingRoomTimeTo] = useState("");
     const [alterSelectedChangingRoom, setAlterSelectedChangingRoom] = useState(-1);
     const [alterEventColor, setAlterEventColor] = useState("");
+    const [alterChangingRoomOpts, setAlterChangingRoomOpts] = useState([]);
 
 
     useEffect(() => {
@@ -55,6 +56,10 @@ const CalendarWeek = (props) => {
 
     const handleOpenAlterEventModal = (event) => {
         if (props.userKey != null) {
+            API.changingRooms().get(event.ChangingRoomTimeFrom.getUnixTimestamp(), event.ChangingRoomTimeTo.getUnixTimestamp()).then(res => {
+                setAlterChangingRoomOpts(res.data);
+            });
+
             setAlterEventId(event.Id);
             setAlterEventName(event.Name);
             setAlterEventEmail(event.Email);
@@ -65,13 +70,13 @@ const CalendarWeek = (props) => {
             const day = event.TimeFrom.getDate();
             setAlterEventDate(event.TimeFrom.getFullYear() + "-" + (month < 10 ? "0" + month : month) + "-" + (day < 10 ? "0" + day : day));
 
-            const hourFrom = event.TimeFrom.getHours();
+            const hoursFrom = event.TimeFrom.getHours();
             const minFrom = event.TimeFrom.getMinutes();
-            setAlterEventTimeFrom((hourFrom < 10 ? "0" + hourFrom : hourFrom) + ":" + (minFrom < 10 ? "0" + minFrom : minFrom));
+            setAlterEventTimeFrom((hoursFrom < 10 ? "0" + hoursFrom : hoursFrom) + ":" + (minFrom < 10 ? "0" + minFrom : minFrom));
 
-            const hourTo = event.TimeTo.getHours();
+            const hoursTo = event.TimeTo.getHours();
             const minTo = event.TimeTo.getMinutes();
-            setAlterEventTimeTo((hourTo < 10 ? "0" + hourTo : hourTo) + ":" + (minTo < 10 ? "0" + minTo : minTo));
+            setAlterEventTimeTo((hoursTo < 10 ? "0" + hoursTo : hoursTo) + ":" + (minTo < 10 ? "0" + minTo : minTo));
 
             setAlterEventSelectedField(event.FieldID);
             setAlterEventSelectedFieldSize(event.FieldSizeID);
@@ -80,13 +85,16 @@ const CalendarWeek = (props) => {
 
             setAlterSelectedChangingRoom(event.ChangingRoomID);
 
-            updateFieldSizes(event.TimeFrom.getFullYear() + "-" + (month < 10 ? "0" + month : month) + "-" + (day < 10 ? "0" + day : day),
-                            (hourFrom < 10 ? "0" + hourFrom : hourFrom) + ":" + (minFrom < 10 ? "0" + minFrom : minFrom),
-                            (hourTo < 10 ? "0" + hourTo : hourTo) + ":" + (minTo < 10 ? "0" + minTo : minTo),
-                            event.FieldID);
+            const crHoursFrom = event.ChangingRoomTimeFrom.getHours();
+            const crMinFrom = event.ChangingRoomTimeFrom.getMinutes();
+            setAlterChangingRoomTimeFrom((crHoursFrom < 10 ? "0" + crHoursFrom : crHoursFrom) + ":" + (crMinFrom < 10 ? "0" + crMinFrom : crMinFrom));
+
+            const crHoursTo = event.ChangingRoomTimeTo.getHours();
+            const crMinTo = event.ChangingRoomTimeTo.getMinutes();
+            setAlterChangingRoomTimeTo((crHoursTo < 10 ? "0" + crHoursTo : crHoursTo) + ":" + (crMinTo < 10 ? "0" + crMinTo : crMinTo));
 
             setHideAlterEventModal(false);
-        }
+        };
     };
 
     const cleanAlterModal = () => {
@@ -110,24 +118,26 @@ const CalendarWeek = (props) => {
 
     const handleUpdateBookingClick = () => {
         setHideAlterEventModal(true);
-        cleanAlterModal();
-        
+
         Api.events().updateEvent({
             "Id": alterEventId,
             "Name": alterEventName,
             "Email": alterEventEmail,
-            "Club": alterEventClub,
             "Team": alterEventTeam,
+            "Club": alterEventClub,
             "TimeFrom": new Date(alterEventDate + " " + alterEventTimeFrom).getUnixTimestamp(),
             "TimeTo": new Date(alterEventDate + " " + alterEventTimeTo).getUnixTimestamp(),
-            "Comment": alterEventComment,
             "FieldID": alterEventSelectedField,
             "FieldSizeID": alterEventSelectedFieldSize,
-            "EventColor": alterEventColor,
+            "ChangingRoomTimeFrom": new Date(alterEventDate + " " + alterChangingRoomTimeFrom).getUnixTimestamp(),
+            "ChangingRoomTimeTo": new Date(alterEventDate + " " + alterChangingRoomTimeTo).getUnixTimestamp(),
             "ChangingRoomID": alterSelectedChangingRoom,
+            "Comment": alterEventComment,
+            "EventColor": alterEventColor,
             "UserKey": props.userKey
         }).then(res => {
             toast.success("Bokningen är uppdaterad");
+            cleanAlterModal();
 
             API.events().getForWeek(props.weekDate.startDate.getUnixTimestamp(), props.weekDate.endDate.getUnixTimestamp()).then(res => {
                 setEvents(res.data);
@@ -235,7 +245,6 @@ const CalendarWeek = (props) => {
                                     openAlterEventModal={handleOpenAlterEventModal} />);
     };
 
-    // TODO: Possible refactor into their own components instead of here.
     const scrollVert = (pxls) => {
         document.querySelectorAll(".day-header").forEach((e) => e.style = "top:" + pxls + "px");
         document.querySelectorAll(".field-header").forEach((e) => e.style = "top:" + pxls + "px");
@@ -297,7 +306,7 @@ const CalendarWeek = (props) => {
                 
                 changingRoomTimeFrom={alterChangingRoomTimeFrom}
                 changingRoomTimeTo={alterChangingRoomTimeTo}
-                changingRooms={props.changingRooms}
+                changingRooms={alterChangingRoomOpts}
                 selectedChangingRoom={alterSelectedChangingRoom}
 
                 eventColor={alterEventColor}

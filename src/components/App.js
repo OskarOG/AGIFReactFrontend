@@ -37,9 +37,9 @@ const App = () => {
             });
         };
 
-        Api.changingRooms().getAll().then(res => {
-            setChangingRooms(res.data);
-        });
+        // Api.changingRooms().getAll().then(res => {
+        //     setChangingRooms(res.data);
+        // });
 
         let d = new Date();
         let dayInt = d.getDay() - 1;

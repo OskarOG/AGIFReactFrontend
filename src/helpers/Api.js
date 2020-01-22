@@ -36,7 +36,8 @@ export default {
     },
     changingRooms() {
         return {
-            getAll: () => Axios.get(`${this.baseUrl}/ChangingRoom`)
+            getAll: () => Axios.get(`${this.baseUrl}/ChangingRoom`),
+            get: (timeFrom, timeTo) => Axios.get(`${this.baseUrl}/ChangingRoom?from=${timeFrom}&to=${timeTo}`)
         }
     }
 }

@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import "./NonApprovedEvent.css";
 
 import ColorPicker from "../../ColorPicker/ColorPicker";
+import Api from "../../../helpers/Api";
 
 const NonApprovedEvent = (props) => {
     const weekDays = ["Söndag", "Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag"];
@@ -21,12 +22,35 @@ const NonApprovedEvent = (props) => {
     const [changingRoomId, setChangingRoomId] = useState(-1);
     const [changingRoomTimeFrom, setChangingRoomTimeFrom] = useState("");
     const [changingRoomTimeTo, setChangingRoomTimeTo] = useState("");
+    const [changingRoomOpts, setChangingRoomOpts] = useState([]);
+    const [changingRoomOptsDisabled, setChangingRoomOptsDisabled] = useState(true);
+
+    const updateChangingRooms = () => {
+        if (changingRoomTimeFrom != "" && changingRoomTimeTo != "") {
+            const crFromSplitted = changingRoomTimeFrom.split(':');
+            const crToSplitted = changingRoomTimeTo.split(':');
+
+            const crTimeFrom = new Date(props.TimeFrom);
+            crTimeFrom.setHours(crFromSplitted[0]);
+            crTimeFrom.setMinutes(crFromSplitted[1]);
+
+            const crTimeTo = new Date(props.TimeTo);
+            crTimeTo.setHours(crToSplitted[0]);
+            crTimeTo.setMinutes(crToSplitted[1]);
+
+            Api.changingRooms().get(crTimeFrom.getUnixTimestamp(), crTimeTo.getUnixTimestamp()).then(res => {
+                setChangingRoomOpts(res.data.map((ch) => <option key={ch.Id} value={ch.Id}>{ch.Name} - {ch.Size}</option>)); 
+
+                setChangingRoomOptsDisabled(false);
+            });
+        }
+    };
 
     const handleApproveClick = () => {
         setDenySelected(false);
         setApproveSelected(true);
 
-        props.onApproveSelected(props.Id, eventColor, changingRoomId, changingRoomTimeFrom, changingRoomTimeTo);
+        props.onApproveSelected(props.Id, eventColor, changingRoomId, changingRoomTimeFrom, changingRoomTimeTo, props.TimeFrom);
     };
 
     const handleDenyClick = () => {
@@ -48,11 +72,17 @@ const NonApprovedEvent = (props) => {
         setChangingRoomTimeFrom(event.target.value);
     };
 
+    const handleChangingRoomTimeFromLeave = () => {
+        updateChangingRooms();
+    };
+
     const handleChangingRoomTimeToChange = () => {
         setChangingRoomTimeTo(event.target.value);
     };
 
-    const changingRoomOpts = props.changingRooms.map((ch) => <option key={ch.Id} value={ch.Id}>{ch.Name} - {ch.Size}</option>)
+    const handleChangingRoomTimeToLeave = () => {
+        updateChangingRooms();
+    };
 
     return (
         <div className="non-approved-event-box">
@@ -69,28 +99,36 @@ const NonApprovedEvent = (props) => {
             </p>
             <p>Kommentar: { props.Comment }</p>
 
-            {/* <div className="time-input-container">
+            <div className="time-input-container">
                 <label className="label">Tid för omklädningsrum:</label>
                 <div>
                     <div className="time-input-div">
                         <div>
                             <div>Från</div>
-                            <input className="time-input approve-input" value={changingRoomTimeFrom} onChange={handleChangingRoomTimeFromChange} type="time" />
+                            <input className="time-input approve-input" 
+                                value={changingRoomTimeFrom} 
+                                onChange={handleChangingRoomTimeFromChange} 
+                                onBlur={handleChangingRoomTimeFromLeave} 
+                                type="time" />
                             <span>-</span>
                         </div>
                     </div>
                     <div className="time-input-div">
                         <div>
                             <div>Till</div>
-                            <input className="time-input approve-input" value={changingRoomTimeTo} onChange={handleChangingRoomTimeToChange} type="time" />
+                            <input className="time-input approve-input"
+                                value={changingRoomTimeTo} 
+                                onChange={handleChangingRoomTimeToChange} 
+                                onBlur={handleChangingRoomTimeToLeave} 
+                                type="time" />
                         </div>
                     </div>
                 </div>
-            </div> */}
+            </div>
 
             <div className="non-approved-changingroom-select">
                 Omklädningsrum:
-                <select className="input" onChange={handleChangingRoomIdChange} defaultValue="-1">
+                <select disabled={changingRoomOptsDisabled} className="input" onChange={handleChangingRoomIdChange} defaultValue="-1">
                     <option disabled value="-1">Välj omklädningsrum</option>
                     {changingRoomOpts}
                 </select>
