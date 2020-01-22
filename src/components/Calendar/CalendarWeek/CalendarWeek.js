@@ -70,8 +70,13 @@ const CalendarWeek = (props) => {
             const day = event.TimeFrom.getDate();
             setAlterEventDate(event.TimeFrom.getFullYear() + "-" + (month < 10 ? "0" + month : month) + "-" + (day < 10 ? "0" + day : day));
 
-            setAlterEventTimeFrom(event.TimeFrom);
-            setAlterEventTimeTo(event.TimeTo);
+            const hoursFrom = event.TimeFrom.getHours();
+            const minFrom = event.TimeFrom.getMinutes();
+            setAlterEventTimeFrom((hoursFrom < 10 ? "0" + hoursFrom : hoursFrom) + ":" + (minFrom < 10 ? "0" + minFrom : minFrom));
+
+            const hoursTo = event.TimeTo.getHours();
+            const minTo = event.TimeTo.getMinutes();
+            setAlterEventTimeTo((hoursTo < 10 ? "0" + hoursTo : hoursTo) + ":" + (minTo < 10 ? "0" + minTo : minTo));
 
             setAlterEventSelectedField(event.FieldID);
             setAlterEventSelectedFieldSize(event.FieldSizeID);
@@ -80,8 +85,13 @@ const CalendarWeek = (props) => {
 
             setAlterSelectedChangingRoom(event.ChangingRoomID);
 
-            setAlterChangingRoomTimeFrom(event.ChangingRoomTimeFrom);
-            setAlterChangingRoomTimeTo(event.ChangingRoomTimeTo);
+            const crHoursFrom = event.ChangingRoomTimeFrom.getHours();
+            const crMinFrom = event.ChangingRoomTimeFrom.getMinutes();
+            setAlterChangingRoomTimeFrom((crHoursFrom < 10 ? "0" + crHoursFrom : crHoursFrom) + ":" + (crMinFrom < 10 ? "0" + crMinFrom : crMinFrom));
+
+            const crHoursTo = event.ChangingRoomTimeTo.getHours();
+            const crMinTo = event.ChangingRoomTimeTo.getMinutes();
+            setAlterChangingRoomTimeTo((crHoursTo < 10 ? "0" + crHoursTo : crHoursTo) + ":" + (crMinTo < 10 ? "0" + crMinTo : crMinTo));
 
             setHideAlterEventModal(false);
         };
@@ -113,15 +123,17 @@ const CalendarWeek = (props) => {
             "Id": alterEventId,
             "Name": alterEventName,
             "Email": alterEventEmail,
-            "Club": alterEventClub,
             "Team": alterEventTeam,
+            "Club": alterEventClub,
             "TimeFrom": new Date(alterEventDate + " " + alterEventTimeFrom).getUnixTimestamp(),
             "TimeTo": new Date(alterEventDate + " " + alterEventTimeTo).getUnixTimestamp(),
-            "Comment": alterEventComment,
             "FieldID": alterEventSelectedField,
             "FieldSizeID": alterEventSelectedFieldSize,
-            "EventColor": alterEventColor,
+            "ChangingRoomTimeFrom": new Date(alterEventDate + " " + alterChangingRoomTimeFrom).getUnixTimestamp(),
+            "ChangingRoomTimeTo": new Date(alterEventDate + " " + alterChangingRoomTimeTo).getUnixTimestamp(),
             "ChangingRoomID": alterSelectedChangingRoom,
+            "Comment": alterEventComment,
+            "EventColor": alterEventColor,
             "UserKey": props.userKey
         }).then(res => {
             toast.success("Bokningen är uppdaterad");

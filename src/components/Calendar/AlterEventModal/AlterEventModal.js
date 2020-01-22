@@ -10,16 +10,6 @@ const AlterEventModal = (props) => {
         { color: "#d5cb72", text: "Extern bokning" }, 
         { color: "#9c83c3", text: "Speciell bokning" }, 
         { color: "#d96d6d", text: "Preliminär bokning" }];
-    
-    const hoursFrom = props.timeFrom != "" ? props.timeFrom.getHours() : "";
-    const minutesFrom = props.timeFrom != "" ? props.timeFrom.getMinutes() : "";
-    const hoursTo = props.timeTo != "" ? props.timeTo.getHours() : "";
-    const minutesTo = props.timeTo != "" ? props.timeTo.getMinutes() : "";
-
-    const crHoursFrom = props.changingRoomTimeFrom != "" ? props.changingRoomTimeFrom.getHours() : "";
-    const crMinutesFrom = props.changingRoomTimeFrom != "" ? props.changingRoomTimeFrom.getMinutes() : "";
-    const crHoursTo = props.changingRoomTimeFrom != "" ? props.changingRoomTimeTo.getHours() : "";
-    const crMinutesTo = props.changingRoomTimeFrom != "" ? props.changingRoomTimeTo.getMinutes() : "";
 
     let fieldOpts = props.fields.map((field) => <option key={field.Id} value={field.Id}>{field.Name}</option>);
     let fieldSizesOpts = props.fieldSizesOpts.map((fieldSize) => <option key={fieldSize.Id} value={fieldSize.Id}>{fieldSize.Size}</option>);
@@ -61,14 +51,14 @@ const AlterEventModal = (props) => {
                             <div className="time-input-div">
                                 <div>
                                     <div>Från</div>
-                                    <input className="time-input" value={(hoursFrom < 10 ? "0" + hoursFrom : hoursFrom) + ":" + (minutesFrom < 10 ? "0" + minutesFrom : minutesFrom)} onChange={props.onTimeFromChange} onBlur={props.onTimeLeave} type="time" />
+                                    <input className="time-input" value={props.timeFrom} onChange={props.onTimeFromChange} onBlur={props.onTimeLeave} type="time" />
                                     <span>-</span>
                                 </div>
                             </div>
                             <div className="time-input-div">
                                 <div>
                                     <div>Till</div>
-                                    <input className="time-input" value={(hoursTo < 10 ? "0" + hoursTo : hoursTo) + ":" + (minutesTo < 10 ? "0" + minutesTo : minutesTo)} onChange={props.onTimeToChange} onBlur={props.onTimeLeave} type="time" />
+                                    <input className="time-input" value={props.timeTo} onChange={props.onTimeToChange} onBlur={props.onTimeLeave} type="time" />
                                 </div>
                             </div>
                         </div>
@@ -94,9 +84,7 @@ const AlterEventModal = (props) => {
                                 <div>
                                     <div>Från</div>
                                     <input className="time-input approve-input" 
-                                        value={(crHoursFrom < 10 ? "0" + crHoursFrom : crHoursFrom) + ":" +
-                                                (crMinutesFrom < 10 ? "0" + crMinutesFrom : crMinutesFrom)}
-                                                onChange={props.onChangingRoomTimeFromChange} type="time" />
+                                        value={props.changingRoomTimeFrom} onChange={props.onChangingRoomTimeFromChange} type="time" />
                                     <span>-</span>
                                 </div>
                             </div>
@@ -104,9 +92,7 @@ const AlterEventModal = (props) => {
                                 <div>
                                     <div>Till</div>
                                     <input className="time-input approve-input" 
-                                        value={(crHoursTo < 10 ? "0" + crHoursTo : crHoursTo) + ":" +
-                                                (crMinutesTo < 10 ? "0" + crMinutesTo : crMinutesTo)}
-                                        onChange={props.onChangingRoomTimeToChange} type="time" />
+                                        value={props.changingRoomTimeTo} onChange={props.onChangingRoomTimeToChange} type="time" />
                                 </div>
                             </div>
                         </div>
