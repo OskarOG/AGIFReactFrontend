@@ -17,14 +17,8 @@ export default {
             approve: (userKey, events) => Axios.put(`${this.baseUrl}/nonapprovedevent?userKey=${userKey}`, events)
         };
     },
-    eventTypes() {
-        return {
-            getAll: () => Axios.get(`${this.baseUrl}/eventtype`)
-        };
-    },
     fields() {
         return {
-            getFields: () => Axios.get(`${this.baseUrl}/field`),
             getFieldSizes: (fieldId, timeFrom, timeTo) => Axios.get(`${this.baseUrl}/fieldsize?fieldId=${fieldId}&from=${timeFrom}&to=${timeTo}`)
         };
     },

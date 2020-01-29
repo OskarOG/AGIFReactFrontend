@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 import API from "../../helpers/Api";
 
@@ -26,6 +27,8 @@ const LoginModal = (props) => {
     const handleSignIn = () => {
         API.login().signin(email, password).then(res => {
             props.saveUserKey(res.data);
+        }).catch((err) => {
+            toast.error("Felaktiga inloggningsuppgifter");
         });
 
         setEmail("");

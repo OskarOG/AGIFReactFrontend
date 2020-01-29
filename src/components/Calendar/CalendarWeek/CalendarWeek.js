@@ -51,6 +51,8 @@ const CalendarWeek = (props) => {
     useEffect(() => {
         API.events().getForWeek(props.weekDate.startDate.getUnixTimestamp(), props.weekDate.endDate.getUnixTimestamp()).then(res => {
             setEvents(res.data);
+        }).catch(err => {
+            toast.error("Det gick inte hämta veckans evenemang");
         });
     }, [props.weekDate]);
 
@@ -58,6 +60,8 @@ const CalendarWeek = (props) => {
         if (props.userKey != null) {
             API.changingRooms().get(event.ChangingRoomTimeFrom.getUnixTimestamp(), event.ChangingRoomTimeTo.getUnixTimestamp()).then(res => {
                 setAlterChangingRoomOpts(res.data);
+            }).catch(err => {
+                toast.error("Kunde inte hämta omklädningsrum");
             });
 
             setAlterEventId(event.Id);
@@ -141,7 +145,11 @@ const CalendarWeek = (props) => {
 
             API.events().getForWeek(props.weekDate.startDate.getUnixTimestamp(), props.weekDate.endDate.getUnixTimestamp()).then(res => {
                 setEvents(res.data);
+            }).catch(err => {
+                toast.error("Det gick inte hämta veckans evenemang");
             });
+        }).catch(err => {
+            toast.error("Det gick inte uppdatera bokningen");
         });
     };
 
@@ -154,7 +162,11 @@ const CalendarWeek = (props) => {
 
             API.events().getForWeek(props.weekDate.startDate.getUnixTimestamp(), props.weekDate.endDate.getUnixTimestamp()).then(res => {
                 setEvents(res.data);
+            }).catch(err => {
+                toast.error("Det gick inte hämta veckans evenemang");
             });
+        }).catch(err => {
+            toast.error("Det gick inte ta bort bokningen");
         });
     };
 
@@ -229,6 +241,8 @@ const CalendarWeek = (props) => {
 
             API.fields().getFieldSizes(fieldId, tempDateFrom.getUnixTimestamp(), tempDateTo.getUnixTimestamp()).then(res => {
                 setAlterEventFieldSizesOpts(res.data);
+            }).catch(err => {
+                toast.error("Kunde inte hämta tillgängliga planstorlekar");
             });
         }
     };

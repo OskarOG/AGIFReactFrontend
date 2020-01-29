@@ -34,12 +34,10 @@ const App = () => {
 
             Api.nonApprovedEvents().getCount(userApiKey).then(res => {
                 setNonApprovedCount(res.data);
+            }).catch(err => {
+                toast.error("Det gick inte hämta antalet ej godkända bokningar");
             });
         };
-
-        // Api.changingRooms().getAll().then(res => {
-        //     setChangingRooms(res.data);
-        // });
 
         let d = new Date();
         let dayInt = d.getDay() - 1;
@@ -73,6 +71,8 @@ const App = () => {
                     sessionStorage.removeItem(AGIF_SESSION_STORAGE_USERKEY);
 
                     location.reload();
+                }).catch(err => {
+                    toast.error("Kunde inte logga ut");
                 });
                 break;
         };
@@ -87,6 +87,8 @@ const App = () => {
 
         Api.nonApprovedEvents().getCount(userKey).then(res => {
             setNonApprovedCount(res.data);
+        }).catch(err => {
+            toast.error("Det gick inte hämta antalet ej godkända bokningar");
         });
     };
 
@@ -119,6 +121,8 @@ const App = () => {
             setHideNonApprovedModal(false);
             
             setNonApprovedEvents(res.data);
+        }).catch(err => {
+            toast.error("Det gick inte hämta ej godkända bokningar");
         });
     };
 
@@ -135,14 +139,20 @@ const App = () => {
     
                 Api.nonApprovedEvents().getCount(userApiKey).then(res => {
                     setNonApprovedCount(res.data);
+                }).catch(err => {
+                    toast.error("Det gick inte hämta antalet ej godkända bokningar");
                 });
 
                 Api.nonApprovedEvents().get(userApiKey).then(res => {
                     setHideNonApprovedModal(false);
                     
                     setNonApprovedEvents(res.data);
+                }).catch(err => {
+                    toast.error("Det gick inte hämta ej godkända bokningar");
                 });
             };
+        }).catch(err => {
+            toast.error("Det gick inte godkänna bokningar");
         });
     };
 
@@ -154,7 +164,7 @@ const App = () => {
                 hideProgressBar={true}
                 newestOnTop
                 closeOnClick
-                rtl
+                rtl={false}
                 draggable
                 pauseOnHover
                 pauseOnVisibilityChange />

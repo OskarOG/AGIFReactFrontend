@@ -4,6 +4,7 @@ import "./NonApprovedEvent.css";
 
 import ColorPicker from "../../ColorPicker/ColorPicker";
 import Api from "../../../helpers/Api";
+import { toast } from "react-toastify";
 
 const NonApprovedEvent = (props) => {
     const weekDays = ["Söndag", "Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag"];
@@ -42,6 +43,8 @@ const NonApprovedEvent = (props) => {
                 setChangingRoomOpts(res.data.map((ch) => <option key={ch.Id} value={ch.Id}>{ch.Name} - {ch.Size}</option>)); 
 
                 setChangingRoomOptsDisabled(false);
+            }).catch(err => {
+                toast.error("Kunde inte hämta omklädningsrum");
             });
         }
     };

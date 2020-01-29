@@ -53,6 +53,8 @@ const NewEventModal = (props) => {
 
                 setFieldSizeIsDisabled(false);
                 setSubmitButtonDisabled(false);
+            }).catch(err => {
+                toast.error("Kunde inte hämta tillgängliga planstorlekar");
             });
         }
     };
@@ -70,6 +72,8 @@ const NewEventModal = (props) => {
 
                 setChangingRoomSelectIsDisabled(false);
                 setSubmitButtonDisabled(false);
+            }).catch(err => {
+                toast.error("Kunde inte hämta omklädningsrum");
             });
         };
     };
@@ -210,7 +214,11 @@ const NewEventModal = (props) => {
 
                 API.events().getForWeek(props.weekDate.startDate.getUnixTimestamp(), props.weekDate.endDate.getUnixTimestamp()).then(res => {
                     props.setEvents(res.data);
+                }).catch(err => {
+                    toast.error("Det gick inte hämta veckans evenemang");
                 });
+            }).catch(err => {
+                toast.error("Det gick inte lägga till bokning, försök igen")
             });
         } else {
             API.events().postEvent({
@@ -229,7 +237,11 @@ const NewEventModal = (props) => {
 
                 API.events().getForWeek(props.weekDate.startDate.getUnixTimestamp(), props.weekDate.endDate.getUnixTimestamp()).then(res => {
                     props.setEvents(res.data);
+                }).catch(err => {
+                    toast.error("Det gick inte hämta veckans evenemang");
                 });
+            }).catch(err => {
+                toast.error("Det gick inte lägga till bokning, försök igen")
             });
 
             handleCloseButton();
