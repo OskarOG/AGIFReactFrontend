@@ -2,7 +2,7 @@ import React from "react";
 
 import "./ColorPicker.css";
 
-import Color from "./Color/Color";
+import Color from "../Color/Color";
 
 const ColorPicker = (props) => {
 

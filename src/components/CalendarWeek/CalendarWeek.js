@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 
 import "./CalendarWeek.css";
+
 import CalendarDay from "../CalendarDay/CalendarDay";
 import Time from "../Time/Time";
 import Timeline from "../Timeline/Timeline";
 import NewEventModal from "../NewEventModal/NewEventModal";
-
-import API from "../../../helpers/Api";
 import AlterEventModal from "../AlterEventModal/AlterEventModal";
-import Api from "../../../helpers/Api";
+
+import API from "../../helpers/Api";
 
 const CalendarWeek = (props) => {
     const days = ["Söndag", "Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag"];
@@ -123,7 +123,7 @@ const CalendarWeek = (props) => {
     const handleUpdateBookingClick = () => {
         setHideAlterEventModal(true);
 
-        Api.events().updateEvent({
+        API.events().updateEvent({
             "Id": alterEventId,
             "Name": alterEventName,
             "Email": alterEventEmail,
@@ -157,7 +157,7 @@ const CalendarWeek = (props) => {
         setHideAlterEventModal(true);
         cleanAlterModal();
         
-        Api.events().deleteEvent(alterEventId, props.userKey).then(res => {
+        API.events().deleteEvent(alterEventId, props.userKey).then(res => {
             toast.success("Bokning borttagen");
 
             API.events().getForWeek(props.weekDate.startDate.getUnixTimestamp(), props.weekDate.endDate.getUnixTimestamp()).then(res => {

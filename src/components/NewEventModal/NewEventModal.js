@@ -3,8 +3,8 @@ import { toast } from "react-toastify";
 
 import './NewEventModal.css';
 
-import API from "../../../helpers/Api";
-import ColorPicker from "../../ColorPicker/ColorPicker.js";
+import API from "../../helpers/Api";
+import ColorPicker from "../ColorPicker/ColorPicker.js";
 
 const NewEventModal = (props) => {
     const colors = [

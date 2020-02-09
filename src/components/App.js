@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+
 import "../../node_modules/react-toastify/dist/ReactToastify.min.css";
+import { ToastContainer, toast } from "react-toastify";
 
 import "./App.css";
 
-import CalendarWeek from "./Calendar/CalendarWeek/CalendarWeek";
+import CalendarWeek from "./CalendarWeek/CalendarWeek";
 import Navigation from "./Navigation/Navigation";
 import LoginModal from "./LoginModal/LoginModal";
-import Api from "../helpers/Api";
+import API from "../helpers/Api";
 import ApproveEventModal from "./ApproveEventModal/ApproveEventModal";
 
 const App = () => {
@@ -32,7 +33,7 @@ const App = () => {
         if (userApiKey != null && userApiKey != "") {
             setLoggedIn(true);
 
-            Api.nonApprovedEvents().getCount(userApiKey).then(res => {
+            API.nonApprovedEvents().getCount(userApiKey).then(res => {
                 setNonApprovedCount(res.data);
             }).catch(err => {
                 toast.error("Det gick inte hämta antalet ej godkända bokningar");
@@ -66,7 +67,7 @@ const App = () => {
                 setHideLoginModal(false);
                 break;
             case "logout" :
-                Api.login().signout(userApiKey).then((res) => {
+                API.login().signout(userApiKey).then((res) => {
                     setLoggedIn(false);
                     sessionStorage.removeItem(AGIF_SESSION_STORAGE_USERKEY);
 
@@ -85,7 +86,7 @@ const App = () => {
         sessionStorage.setItem(AGIF_SESSION_STORAGE_USERKEY, userKey);
         setApiKey(userKey);
 
-        Api.nonApprovedEvents().getCount(userKey).then(res => {
+        API.nonApprovedEvents().getCount(userKey).then(res => {
             setNonApprovedCount(res.data);
         }).catch(err => {
             toast.error("Det gick inte hämta antalet ej godkända bokningar");
@@ -117,7 +118,7 @@ const App = () => {
     };
 
     const handleShowApproveEventModal = () => {
-        Api.nonApprovedEvents().get(userApiKey).then(res => {
+        API.nonApprovedEvents().get(userApiKey).then(res => {
             setHideNonApprovedModal(false);
             
             setNonApprovedEvents(res.data);
@@ -131,19 +132,19 @@ const App = () => {
     };
 
     const handleSendApprovalEvent = (events) => {
-        Api.nonApprovedEvents().approve(userApiKey, events).then(res => {
+        API.nonApprovedEvents().approve(userApiKey, events).then(res => {
             toast.success("Bokningar godkända");
 
             if (userApiKey != null && userApiKey != "") {
                 setLoggedIn(true);
     
-                Api.nonApprovedEvents().getCount(userApiKey).then(res => {
+                API.nonApprovedEvents().getCount(userApiKey).then(res => {
                     setNonApprovedCount(res.data);
                 }).catch(err => {
                     toast.error("Det gick inte hämta antalet ej godkända bokningar");
                 });
 
-                Api.nonApprovedEvents().get(userApiKey).then(res => {
+                API.nonApprovedEvents().get(userApiKey).then(res => {
                     setHideNonApprovedModal(false);
                     
                     setNonApprovedEvents(res.data);

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 
 import "./NonApprovedEvent.css";
 
-import ColorPicker from "../../ColorPicker/ColorPicker";
-import Api from "../../../helpers/Api";
-import { toast } from "react-toastify";
+import ColorPicker from "../ColorPicker/ColorPicker";
+import Api from "../../helpers/Api";
 
 const NonApprovedEvent = (props) => {
     const weekDays = ["Söndag", "Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag"];

@@ -1,7 +1,9 @@
 import React from "react";
-import "./FieldContent.css";
-import Event from "../Event/Event";
 import moment from "moment";
+
+import "./FieldContent.css";
+
+import Event from "../Event/Event";
 
 const FieldContent = (props) => {
     const minPxlSize = 2.5; // If change timeline li height must change as well.
