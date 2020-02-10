@@ -1,8 +1,0 @@
-.field {
-    width:150px;
-    float: left;
-}
-
-.field:nth-child(2) {
-    border-right: dashed 1px #c2c1a549;
-}

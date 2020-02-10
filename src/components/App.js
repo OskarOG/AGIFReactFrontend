@@ -3,13 +3,12 @@ import React, { useEffect, useState } from "react";
 import "../../node_modules/react-toastify/dist/ReactToastify.min.css";
 import { ToastContainer, toast } from "react-toastify";
 
-import "./App.css";
+import CalendarWeek from "./CalendarWeek";
+import Navigation from "./Navigation";
+import LoginModal from "./LoginModal";
+import ApproveEventModal from "./ApproveEventModal";
 
-import CalendarWeek from "./CalendarWeek/CalendarWeek";
-import Navigation from "./Navigation/Navigation";
-import LoginModal from "./LoginModal/LoginModal";
 import API from "../helpers/Api";
-import ApproveEventModal from "./ApproveEventModal/ApproveEventModal";
 
 const App = () => {
     const AGIF_SESSION_STORAGE_USERKEY = "AGIFSESSIONKEY_USERKEY";
