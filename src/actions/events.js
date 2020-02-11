@@ -3,7 +3,7 @@ import ApiUrls from "../helpers/ApiUrls";
 
 export const fetchEvents = (startDate, endDate) => {
     return apiAction({
-        url: ApiUrls.events().getForWeek(startDate, endDate),
+        url: ApiUrls.events.getForWeek(startDate, endDate),
         lable: FETCH_EVENTS,
         onSuccess: setEvents,
         onFailure: () => console.log("Error when fetching events")

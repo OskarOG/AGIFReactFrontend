@@ -1,21 +1,21 @@
 import { API_START, API_END, API_DENIED, API_ERROR } from "../constants/actionTypes";
 
-export const apiStart = lable => ({
+export const apiStart = label => ({
     type: API_START,
-    payload: lable
+    payload: label
 });
 
-export const apiEnd = lable => ({
+export const apiEnd = label => ({
     type: API_END,
-    payload: lable
+    payload: label
 });
 
-export const apiDenied = lable => ({
+export const apiDenied = label => ({
     type: API_DENIED,
-    payload: lable
+    payload: label
 });
 
-export const apiError = lable => ({
+export const apiError = label => ({
     type: API_ERROR,
-    payload: lable
+    payload: label
 });
