@@ -1,4 +1,4 @@
-import { API_START, API_END, API_DENIED, API_ERROR } from "../constants/actionTypes";
+import { API, API_START, API_END, API_DENIED, API_ERROR } from "../constants/actionTypes";
 
 export const apiStart = label => ({
     type: API_START,
@@ -19,3 +19,28 @@ export const apiError = label => ({
     type: API_ERROR,
     payload: label
 });
+
+export const apiAction = ({
+    url = "",
+    method = "GET",
+    data = null,
+    accessToken = null,
+    onSuccess = () => null,
+    onFailure = () => null,
+    label = "",
+    headersOverride = null
+}) => {
+    return {
+        type: API,
+        payload: {
+            url,
+            method,
+            data,
+            accessToken,
+            onSuccess,
+            onFailure,
+            label,
+            headersOverride
+        }
+    };
+};
