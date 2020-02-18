@@ -1,7 +1,7 @@
 import React from "react";
 import { render } from "react-dom";
 
-import "./helpers/Prototypes";
+import "./prototypes/DatePrototypes";
 import "./style.css";
 
 import { Provider } from "react-redux";

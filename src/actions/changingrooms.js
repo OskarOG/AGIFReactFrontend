@@ -4,11 +4,11 @@ import {
     SET_CHANGINGROOMS
 } from "../constants/actionTypes";
 import { apiAction } from "./api";
-import ApiUrls from "../helpers/ApiUrls";
+import ApiUrlFactory from "../factories/ApiUrlFactory";
 
 export const getAllChangingrooms = () => {
     return apiAction({
-        url: ApiUrls.changingRooms.getAll(),
+        url: ApiUrlFactory.changingRooms.getAll(),
         label: GET_ALL_CHANGINGROOMS,
         onSuccess: setChangingrooms,
         onFailure: () => console.log("Error when fetching all changingrooms")
@@ -17,7 +17,7 @@ export const getAllChangingrooms = () => {
 
 export const getChangingroomsInbetween = (timeFrom, timeTo) => {
     return apiAction({
-        url: ApiUrls.changingRooms.get(timeFrom, timeTo),
+        url: ApiUrlFactory.changingRooms.get(timeFrom, timeTo),
         label: GET_CHANGINGROOMS_INBETWEEN,
         onSuccess: setChangingrooms,
         onFailure: () => console.log("Error when fetching changingrooms")

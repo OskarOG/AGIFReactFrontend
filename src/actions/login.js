@@ -4,11 +4,11 @@ import {
     SET_IS_SIGNED_IN
 } from "../constants/actionTypes";
 import { apiAction } from "./api";
-import ApiUrls from "../helpers/ApiUrls";
+import ApiUrlFactory from "../factories/ApiUrlFactory";
 
 export const signin = (username, password) => {
     return apiAction({
-        url: ApiUrls.login.signin(username, password),
+        url: ApiUrlFactory.login.signin(username, password),
         label: SIGN_IN,
         onSuccess: () => setIsSignedin(true),
         onFailure: () => console.log("Error when signing in")
@@ -17,7 +17,7 @@ export const signin = (username, password) => {
 
 export const signout = userKey => {
     return apiAction({
-        url: ApiUrls.login.signout(userKey),
+        url: ApiUrlFactory.login.signout(userKey),
         method: "DELETE",
         label: SIGN_OUT,
         onSuccess: () => setIsSignedin(false),

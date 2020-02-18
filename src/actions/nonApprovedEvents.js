@@ -6,11 +6,11 @@ import {
     SET_NON_APPROVED_EVENTS_COUNT
 } from "../constants/actionTypes";
 import { apiAction } from "./api";
-import ApiUrls from "../helpers/ApiUrls";
+import ApiUrlFactory from "../factories/ApiUrlFactory";
 
 export const getNonApprovedEvents = userKey => {
     return apiAction({
-        url: ApiUrls.nonApprovedEvents.get(userKey),
+        url: ApiUrlFactory.nonApprovedEvents.get(userKey),
         label: GET_NON_APPROVED_EVENTS,
         onSuccess: setNonApprovedEvents,
         onFailure: () => console.log("Error when fetching non approved events")
@@ -19,7 +19,7 @@ export const getNonApprovedEvents = userKey => {
 
 export const getNonApprovedEventsCount = userKey => {
     return apiAction({
-        url: ApiUrls.nonApprovedEvents.getCount(userKey),
+        url: ApiUrlFactory.nonApprovedEvents.getCount(userKey),
         label: GET_NON_APPROVED_EVENTS_COUNT,
         onSuccess: setNonApprovedEventsCount,
         onFailure: () => console.log("Error when fetching non approved events count")
@@ -28,7 +28,7 @@ export const getNonApprovedEventsCount = userKey => {
 
 export const approveEvent = (userKey, events) => {
     return apiAction({
-        url: ApiUrls.nonApprovedEvents.approve(userKey),
+        url: ApiUrlFactory.nonApprovedEvents.approve(userKey),
         method: "PUT",
         label: APPROVE_EVENT,
         data: events,
