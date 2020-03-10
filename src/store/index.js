@@ -7,6 +7,7 @@ import events from "../reducers/events";
 import fieldSizes from "../reducers/fieldSizes";
 import login from "../reducers/login";
 import nonApprovedEvents from "../reducers/nonApprovedEvents";
+import modals from "../reducers/modals";
 
 const store = createStore(combineReducers({
     apiStatuses: apiStatuses,
@@ -14,7 +15,8 @@ const store = createStore(combineReducers({
     events: events,
     fieldSizes: fieldSizes,
     login: login,
-    nonApprovedEvents: nonApprovedEvents
+    nonApprovedEvents: nonApprovedEvents,
+    modals: modals
 }), applyMiddleware(apiMiddleware));
 
 export default store;

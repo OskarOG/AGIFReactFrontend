@@ -2,9 +2,9 @@ import React from "react";
 
 const ApproveEventModalPresenter = ({
     isHidden = true,
-    events = null,
-    onClose = null,
-    onSend = null
+    events,
+    onClose,
+    onSend
 }) => {
     return (
         <div className={"approval-modal-overlay " + (isHidden ? "hidden" : "")}>

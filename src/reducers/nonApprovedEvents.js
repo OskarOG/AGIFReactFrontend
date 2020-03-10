@@ -24,12 +24,14 @@ export default function (state = {
             break;
 
         case SET_NON_APPROVED_EVENTS:
+            console.log(SET_NON_APPROVED_EVENTS);
             return {
                 ...state,
                 nonApprovedEvents: action.payload
             };
 
         case SET_NON_APPROVED_EVENTS_COUNT:
+            console.log(SET_NON_APPROVED_EVENTS_COUNT);
             return {
                 ...state,
                 nonApprovedEventsCount: action.payload
