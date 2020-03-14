@@ -1,25 +1,33 @@
 import { 
-    GET_ALL_CHANGINGROOMS,
-    GET_CHANGINGROOMS_INBETWEEN,
-    SET_CHANGINGROOMS
+    FETCH_CHANGINGROOMS,
+    FETCH_AVAILABLE_CHANGINGROOMS,
+    SET_CHANGINGROOMS,
+    SET_AVAILABLE_CHANGINGROOMS
 } from "../constants/actionTypes";
 
 export default function(state = {
-    changingrooms: []
+    changingrooms: [],
+    availableChangingRooms: []
 }, action) {
     switch (action.type) {
-        case GET_ALL_CHANGINGROOMS:
-            console.log("GET_ALL_CHANGINGROOMS");
+        case FETCH_CHANGINGROOMS:
+            console.log(FETCH_CHANGINGROOMS);
             break;
 
-        case GET_CHANGINGROOMS_INBETWEEN:
-            console.log("GET_CHANGINGROOMS_INBETWEEN");
+        case FETCH_AVAILABLE_CHANGINGROOMS:
+            console.log(FETCH_AVAILABLE_CHANGINGROOMS);
             break;
 
         case SET_CHANGINGROOMS:
             return {
                 ...state,
                 changingrooms: action.payload
+            };
+
+        case SET_AVAILABLE_CHANGINGROOMS:
+            return {
+                ...state,
+                availableChangingRooms: action.payload
             };
     };
     return state;

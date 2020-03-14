@@ -1,45 +1,50 @@
 import React from "react";
 
 const AlterEventModalPresenter = ({
+    COLORS,
     isHidden = true,
-    name = "",
-    onNameChange = null,
-    email = "",
-    onEmailChange = null,
-    team = "",
-    onTeamChange = null,
-    club = "",
-    onClubChange = null,
-    date = "",
-    onDateChange = null,
-    timeFrom = "",
-    onTimeFromChange = null,
-    onTimeFromLeave = null,
-    timeTo = "",
-    onTimeToChange = null,
-    onTimeToLeave = null,
+    name,
+    onNameChange,
+    email,
+    onEmailChange,
+    team,
+    onTeamChange,
+    club,
+    onClubChange,
+    date,
+    onDateChange,
+    timeFrom,
+    onTimeFromChange,
+    onTimeFromLeave,
+    timeTo,
+    onTimeToChange,
+    onTimeToLeave,
     selectedField = -1,
-    onSelectedFieldChange = null,
-    fieldOpts = "",
+    onSelectedFieldChange,
+    availableFields,
     selectedFieldSize = -1,
-    onSelectedFieldSizeChange = null,
-    fieldSizesOpts = "",
-    changingRoomTimeFrom = "",
-    onChangingRoomTimeFromChange = null,
-    changingRoomTimeTo = "",
-    onChangingRoomTimeToChange = null,
-    selectedChangingRoom = "",
-    onChangingRoomChange = null,
-    changingRoomOpts = "",
-    comment = "",
-    onCommentChange = null,
-    selectedEventColor = "",
-    colors = [],
-    onColorChange = null,
-    onClose = null,
-    onDelete = null,
-    onUpdateBookingClick = null
+    onSelectedFieldSizeChange,
+    availableFieldSizes,
+    changingRoomTimeFrom,
+    onChangingRoomTimeFromChange,
+    changingRoomTimeTo,
+    onChangingRoomTimeToChange,
+    selectedChangingRoom,
+    onChangingRoomChange,
+    availableChangingRooms,
+    comment,
+    onCommentChange,
+    selectedEventColor,
+    onColorChange,
+    onClose,
+    onDelete,
+    onUpdateBookingClick
 }) => {
+
+    const fieldOpts = availableFields.map(f => <option></option>);
+    const fieldSizesOpts = availableFieldSizes.map(f => <option></option>);
+    const changingRoomOpts = availableChangingRooms.map(f => <option></option>);
+
     return (
         <div className={"modal-overlay " + (isHidden ? "hidden" : "")}>
             <div className="modal-box">
@@ -130,7 +135,7 @@ const AlterEventModalPresenter = ({
                 </form>
 
                 <div className="new-event-color-picker">
-                    <ColorPicker selectedColor={selectedEventColor} colors={colors} onColorChange={onColorChange} />
+                    <ColorPicker selectedColor={selectedEventColor} colors={COLORS} onColorChange={onColorChange} />
                 </div>
 
                 <div className="modal-buttons">

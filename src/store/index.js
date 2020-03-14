@@ -4,6 +4,7 @@ import apiMiddleware from "../middleware/apiMiddleware";
 import apiStatuses from "../reducers/apiStatuses";
 import changingrooms from "../reducers/changingrooms";
 import events from "../reducers/events";
+import fields from "../reducers/fields";
 import fieldSizes from "../reducers/fieldSizes";
 import login from "../reducers/login";
 import nonApprovedEvents from "../reducers/nonApprovedEvents";
@@ -13,6 +14,7 @@ const store = createStore(combineReducers({
     apiStatuses: apiStatuses,
     changingrooms: changingrooms,
     events: events,
+    fields: fields,
     fieldSizes: fieldSizes,
     login: login,
     nonApprovedEvents: nonApprovedEvents,

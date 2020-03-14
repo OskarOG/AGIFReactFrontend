@@ -7,7 +7,8 @@ import {
 } from "../constants/actionTypes";
 
 export default function (state = {
-    events: []
+    events: [],
+    selectedEvent: undefined
 }, action) {
     switch (action.type) {
         case GET_EVENTS:
