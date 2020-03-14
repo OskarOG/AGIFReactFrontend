@@ -40,10 +40,10 @@ const AlterEventModalPresenter = ({
     onDelete,
     onUpdateBookingClick
 }) => {
-
-    const fieldOpts = availableFields.map(f => <option></option>);
-    const fieldSizesOpts = availableFieldSizes.map(f => <option></option>);
-    const changingRoomOpts = availableChangingRooms.map(f => <option></option>);
+    
+    const fieldOpts = availableFields.map(f => <option key={f.Id} value={f.Id}>{f.Name}</option>);
+    const fieldSizesOpts = availableFieldSizes.map(fs => <option key={fs.Id} value={fs.Id}>{fs.Size}</option>);
+    const changingRoomOpts = availableChangingRooms.map(ch => <option key={ch.Id} value={ch.Id}>{ch.Name} - {ch.Size}</option>);
 
     return (
         <div className={"modal-overlay " + (isHidden ? "hidden" : "")}>
@@ -88,7 +88,7 @@ const AlterEventModalPresenter = ({
                             </div>
                         </div>
                     </div>
-                    <div className="field-input">
+                    <div className="f-input">
                         <label className="label">Välj plan*</label>
                         <select className="input" value={selectedField} onChange={onSelectedFieldChange}>
                             <option disabled value={-1}>Välj plan</option>
