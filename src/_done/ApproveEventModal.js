@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import NonApprovedEvent from "./NonApprovedEvent";
+import NonApprovedEvent from "./zzzNonApprovedEvent";
 import moment from "moment";
 
 const ApproveEventModal = (props) => {

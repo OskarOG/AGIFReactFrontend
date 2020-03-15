@@ -9,16 +9,18 @@ import fieldSizes from "../reducers/fieldSizes";
 import login from "../reducers/login";
 import nonApprovedEvents from "../reducers/nonApprovedEvents";
 import modals from "../reducers/modals";
+import admins from "../reducers/admins";
 
 const store = createStore(combineReducers({
-    apiStatuses: apiStatuses,
-    changingrooms: changingrooms,
-    events: events,
-    fields: fields,
-    fieldSizes: fieldSizes,
+    apiStatus: apiStatuses,
+    changingroom: changingrooms,
+    event: events,
+    field: fields,
+    fieldSize: fieldSizes,
     login: login,
-    nonApprovedEvents: nonApprovedEvents,
-    modals: modals
+    nonApprovedEvent: nonApprovedEvents,
+    modal: modals,
+    admin: admins,
 }), applyMiddleware(apiMiddleware));
 
 export default store;

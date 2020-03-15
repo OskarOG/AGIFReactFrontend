@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 
-import ColorPicker from "./ColorPicker";
+import ColorPicker from "../components/ColorPicker";
 import Api from "../helpers/Api";
 
 const NonApprovedEvent = (props) => {

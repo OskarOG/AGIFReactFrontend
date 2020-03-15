@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ColorPicker from "./ColorPicker";
+import ColorPicker from "../components/ColorPicker";
 
 const AlterEventModal = (props) => {
     const colors = [
