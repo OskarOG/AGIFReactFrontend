@@ -1,5 +1,7 @@
 import React from "react";
 
+import ColorPicker from "../ColorPicker";
+
 const AlterEventModalPresenter = ({
     COLORS,
     isHidden = true,

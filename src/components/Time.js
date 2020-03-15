@@ -1,6 +1,6 @@
 import React from "react";
 
-const Time = (props) => {
+const Time = () => {
     const timeList = [];
     for (let i = 0; i < 24; i++) {
         timeList.push(<li key={i+":00"}>{i}:00</li>);

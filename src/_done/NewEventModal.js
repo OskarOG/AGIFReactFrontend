@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { toast } from "react-toastify";
 
 import API from "../helpers/Api";
-import ColorPicker from "./ColorPicker";
+import ColorPicker from "../components/ColorPicker";
 
 const NewEventModal = (props) => {
     const colors = [
