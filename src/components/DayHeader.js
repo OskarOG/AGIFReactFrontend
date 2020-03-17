@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 
 const DayHeader = (props) => {
     useEffect(() => {
-        document.querySelectorAll(".day-header").forEach((e) => e.style = "top:" + window.scrollY + "px");  
+        document.querySelectorAll(".day-header").forEach((e) => e.style = "top:" + window.scrollY + "px");
     });
 
     return (
