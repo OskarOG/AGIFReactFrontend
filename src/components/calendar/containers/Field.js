@@ -4,12 +4,14 @@ import FieldHeaderPresenter from "../presenters/FieldHeader";
 import FieldContentContainer from "./FieldContent";
 
 const Field = ({
-    fieldTitle
+    fieldTitle,
+    date,
+    fieldId
 }) => {
     return (
         <div className="field">
             <FieldHeaderPresenter fieldTitle={fieldTitle} />
-            <FieldContentContainer />
+            <FieldContentContainer date={date} fieldId={fieldId} />
         </div>
     );
 };
