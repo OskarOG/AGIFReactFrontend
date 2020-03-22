@@ -1,5 +1,11 @@
 import React from "react";
 
+import "react-day-picker/lib/style.css";
+import DayPicker from "react-day-picker";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserCog, faSignOutAlt, faSignInAlt, faBars, faTimes, faStepForward, faStepBackward, faPlus } from "@fortawesome/free-solid-svg-icons";
+
 const NavigationPresenter = ({
     drawerIsOpen,
     onOpenClick,

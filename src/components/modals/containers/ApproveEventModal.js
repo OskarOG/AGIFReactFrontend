@@ -4,9 +4,7 @@ import { useSelector } from "react-redux";
 import NonApprovedEventContainer from "./NonApprovedEvent";
 import ApproveEventModalPresenter from "../presenters/ApproveEventModal";
 
-const ApproveEventModalContainer = ({
-
-}) => {
+const ApproveEventModalContainer = () => {
     approveEventModalIsHidden = useSelector(state => state.approveEventModalIsHidden);
     events = useSelector(state => state.events);
 
