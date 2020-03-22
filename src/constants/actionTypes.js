@@ -49,3 +49,10 @@ export const SET_NEW_EVENT_MODAL_IS_HIDDEN = "SET_NEW_EVENT_MODAL_IS_HIDDEN";
 
 // Admins
 export const SET_IS_ADMIN = "SET_IS_ADMIN";
+
+// Dates
+export const SET_SELECTED_DATE = "SET_SELECTED_DATE";
+
+// Menu
+export const SET_IS_MENU_OPEN = "SET_IS_MENU_OPEN";
+export const TOGGLE_IS_MENU_OPEN = "TOGGLE_IS_MENU_OPEN";

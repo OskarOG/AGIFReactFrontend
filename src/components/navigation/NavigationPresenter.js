@@ -1,77 +1,40 @@
-import React, { useState } from "react";
+import React from "react";
 
-import "react-day-picker/lib/style.css";
-import DayPicker from "react-day-picker";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserCog, faSignOutAlt, faSignInAlt, faBars, faTimes, faStepForward, faStepBackward, faPlus } from "@fortawesome/free-solid-svg-icons";
-
-const Navigation = ({
-    toggleDrawer,
-    onNewBookingClick,
-    onLoginClick,
-    onNextClick,
-    onPrevClick,
-    onShowApproveEventModal,
+const NavigationPresenter = ({
     drawerIsOpen,
+    onOpenClick,
+    onCloseClick,
     selectedDate,
-    onChange,
+    onSelectedDateChange,
+    onNextWeekClick,
+    onPrevWeekClick,
+    nonApprovedCount,
+    onShowApproveModalClick,
+    onNewBookingClick,
     isLoggedIn,
-    nonApprovedCount
+    onLoginClick,
+    onLogoutClick
 }) => {
-
-    const handleBarClick = () => {
-        toggleDrawer(true);
-    }
-
-    const handleCloseClick = () => {
-        toggleDrawer(false);
-    }
-
-    const handleNewBookingClick = () => {
-        onNewBookingClick();
-    }
-
-    const handleLoginClick = () => {
-        onLoginClick("login");
-    }
-
-    const handleLogoutClick = () => {
-        onLoginClick("logout");
-    }
-
-    const handleNextWeekClick = () => {
-        onNextClick();
-    }
-
-    const handlePrevWeekClick = () => {
-        onPrevClick();
-    }
-
-    const handleShowApproveModalClick = () => {
-        onShowApproveEventModal();
-    };
-
     return (
         <div className={"navigation " + (drawerIsOpen ? "" : "nav-closed")}>
             <div className="nav-slide-controlls">
-                <FontAwesomeIcon onClick={handleBarClick} className={"bar-icon " + (drawerIsOpen ? "hidden" : "")} icon={ faBars } />
-                <FontAwesomeIcon onClick={handleCloseClick} className={"close-icon " + (drawerIsOpen ? "" : "hidden")} icon={ faTimes } />
+                <FontAwesomeIcon onClick={onOpenClick} className={"bar-icon " + (drawerIsOpen ? "hidden" : "")} icon={ faBars } />
+                <FontAwesomeIcon onClick={onCloseClick} className={"close-icon " + (drawerIsOpen ? "" : "hidden")} icon={ faTimes } />
             </div>
             <div className="nav-title title">
                 <img src="./imgs/agif-logo-small.png" height="42" widht="42" />
                 <h1 className={drawerIsOpen ? "" : "hidden"}>Alvesta GIF Planbokning</h1>
             </div>
             <div className="nav-content">
-                <div onClick={handleNewBookingClick} className="nav-item">
+                <div onClick={onNewBookingClick} className="nav-item">
                     <FontAwesomeIcon className="nav-item-icon" icon={ faPlus } />
                     <p className={(drawerIsOpen ? "" : "hidden")}>Ny bokning</p>
                 </div>
-                <div onClick={handleNextWeekClick} className="nav-item">
+                <div onClick={onNextWeekClick} className="nav-item">
                     <FontAwesomeIcon className="nav-item-icon" icon={ faStepForward } />
                     <p className={(drawerIsOpen ? "" : "hidden")}>Nästa vecka</p>
                 </div>
-                <div onClick={handlePrevWeekClick} className="nav-item">
+                <div onClick={onPrevWeekClick} className="nav-item">
                     <FontAwesomeIcon className="nav-item-icon" icon={ faStepBackward } />
                     <p className={(drawerIsOpen ? "" : "hidden")}>Föregående vecka</p>
                 </div>
@@ -82,19 +45,19 @@ const Navigation = ({
                     showOutsideDays
                     firstDayOfWeek={1}
                     selectedDays={selectedDate}
-                    onDayClick={onChange} />
+                    onDayClick={onSelectedDateChange} />
 
-                <div onClick={handleLoginClick} className={"nav-item " + (isLoggedIn ? "hidden" : "")}>
+                <div onClick={onLoginClick} className={"nav-item " + (isLoggedIn ? "hidden" : "")}>
                     <FontAwesomeIcon className="nav-item-icon sign-in-icon" icon={ faSignInAlt } />
                     <p className={(drawerIsOpen ? "" : "hidden")}>Logga in</p>
                 </div>
 
-                <div onClick={handleLogoutClick} className={"nav-item " + (isLoggedIn ? "" : "hidden")}>
+                <div onClick={onLogoutClick} className={"nav-item " + (isLoggedIn ? "" : "hidden")}>
                     <FontAwesomeIcon className="nav-item-icon" icon={ faSignOutAlt } />
                     <p className={(drawerIsOpen ? "" : "hidden")}>Logga ut</p>
                 </div>
 
-                <div onClick={handleShowApproveModalClick} className={"nav-item " + (isLoggedIn ? "" : "hidden")}>
+                <div onClick={onShowApproveModalClick} className={"nav-item " + (isLoggedIn ? "" : "hidden")}>
                     <FontAwesomeIcon className="nav-item-icon admin-icon" icon={ faUserCog } />
                     <p className={(drawerIsOpen ? "" : "hidden")}>Godkänn förfrågningar <strong>{ nonApprovedCount }</strong></p>
                 </div>
@@ -128,4 +91,4 @@ const Navigation = ({
     );
 };
 
-export default Navigation;
+export default NavigationPresenter;

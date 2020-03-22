@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import CalendarWeekPresenter from "../presenters/CalendarWeek";
@@ -6,14 +6,18 @@ import CalendarDayContainer from "./CalendarDay";
 
 const WEEK_DAYS = 7;
 
-const CalendarWeekContainer = ({
-    weekStartDate
-}) => {
+const CalendarWeekContainer = () => {
     const isMenuOpen = useSelector(state => state.isMenuOpen);
+    const selectedDate = useSelector(state => state.selectedDate);
+    const [mondayDate, setMondayDate] = useState(new Date().getMondayDate())
 
-    const weekDates = getWeekDates(weekStartDate);
+    useEffect(() => {
+        setMondayDate(selectedDate.getMondayDate());
+    }, [selectedDate]);
+
+    const weekDates = getWeekDates(mondayDate);
     const calendarDays = weekDates.map(d => <CalendarDayContainer date={d} />);
-    
+
     return <CalendarWeekPresenter
                 shiftRight={isMenuOpen}
                 calDays={calendarDays} />
