@@ -1,22 +1,28 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, connect } from "react-redux";
+
+import {
+    closeApproveEventModal
+} from "../../../actions/modals";
 
 import NonApprovedEventContainer from "./NonApprovedEvent";
 import ApproveEventModalPresenter from "../presenters/ApproveEventModal";
 
-const ApproveEventModalContainer = () => {
+const ApproveEventModalContainer = ({
+    dispatch
+}) => {
     const approveEventModalIsHidden = useSelector(state => state.approveEventModalIsHidden);
     const events = useSelector(state => state.event.events);
 
     const handleCloseModal = () => {
-        // Dispatch close to modals reducer.
+        dispatch(closeApproveEventModal());
     };
 
     const handleOnSend = () => {
         // Dispatch send to events reducer.
     };
 
-    const nonApprovedEvents = events.map((e) => <NonApprovedEventContainer event={e} />);
+    const nonApprovedEvents = events.map((e) => <NonApprovedEventContainer key={e.Id} event={e} />);
 
     return <ApproveEventModalPresenter 
                 isHidden={approveEventModalIsHidden}
@@ -25,4 +31,4 @@ const ApproveEventModalContainer = () => {
                 onSend={handleOnSend} />
 };
 
-export default ApproveEventModalContainer;
+export default connect()(ApproveEventModalContainer);

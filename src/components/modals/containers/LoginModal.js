@@ -1,9 +1,15 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, connect } from "react-redux";
+
+import {
+    closeLoginModal
+} from "../../../actions/modals";
 
 import LoginModalPresenter from "../presenters/LoginModal";
 
-const LoginModalContainer = () => {
+const LoginModalContainer = ({
+    dispatch
+}) => {
     const isHidden = useSelector(state => state.modal.loginModalIsHidden);
 
     const [email, setEmail] = useState("");
@@ -18,7 +24,7 @@ const LoginModalContainer = () => {
     };
 
     const handleOnClose = () => {
-        // TODO: Dispatch close login modal.
+        dispatch(closeLoginModal());
     };
 
     const handleOnSignIn = () => {
@@ -35,4 +41,4 @@ const LoginModalContainer = () => {
                 onSignIn={handleOnSignIn} />
 };
 
-export default LoginModalContainer;
+export default connect()(LoginModalContainer);

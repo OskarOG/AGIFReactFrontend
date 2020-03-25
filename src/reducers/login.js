@@ -9,11 +9,11 @@ export default function (state = {
 }, action) {
     switch (action.type) {
         case SIGN_IN:
-            console.log("SIGN_IN");
+            console.log(SIGN_IN);
             break;
 
         case SIGN_OUT:
-            console.log("SIGN_OUT");
+            console.log(SIGN_OUT);
             break;
 
         case SET_IS_SIGNED_IN:

@@ -1,30 +1,21 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useSelector, connect } from "react-redux";
+
+import {
+    closeAlterEventModal
+} from "../../../actions/modals";
 
 import AlterEventModalPresenter from "../presenters/AlterEventModal";
 
-const AlterEventModalContainer = () => {
+const AlterEventModalContainer = ({
+    dispatch
+}) => {
     const COLORS = useSelector(state => state.color.colors);
     const alterEventModalIsHidden = useSelector(state => state.modal.alterEventModalIsHidden);
     const selectedEvent = useSelector(state => state.event.selectedEvent);
     const availableFields = useSelector(state => state.field.availableFields);
     const availableChangingRooms = useSelector(state => state.changingroom.availableChangingRooms);
     const availableFieldSizes = useSelector(state => state.fieldSize.availableFieldSizes);
-
-    // const [name, setName] = useState(selectedEvent.Name);
-    // const [email, setEmail] = useState(selectedEvent.Email);
-    // const [team, setTeam] = useState(selectedEvent.Team);
-    // const [club, setClub] = useState(selectedEvent.Club);
-    // const [date, setDate] = useState(getDateString(selectedEvent));
-    // const [timeFrom, setTimeFrom] = useState(getTimeString(selectedEvent.TimeFrom.getHours(), selectedEvent.TimeFrom.getMinutes()));
-    // const [timeTo, setTimeTo] = useState(getTimeString(selectedEvent.TimeTo.getHours(), selectedEvent.TimeTo.getMinutes()));
-    // const [selectedFieldId, setSelectedFieldId] = useState(-1); // TODO: Show current selected
-    // const [selectedFieldSizeId, setSelectedFieldSizeId] = useState(-1); // TODO: Show current selected
-    // const [changingRoomTimeFrom, setChangingRoomTimeFrom] = useState(getTimeString(selectedEvent.ChangingRoomTimeFrom.getHours(), selectedEvent.ChangingRoomTimeFrom.getMinutes()));
-    // const [changingRoomTimeTo, setChangingRoomTimeTo] = useState(getTimeString(selectedEvent.ChangingRoomTimeTo.getHours(), selectedEvent.ChangingRoomTimeTo.getMinutes()));
-    // const [selectedChangingRoomId, setSelectedChangingRoomId] = useState(-1); // TODO: Show current selected
-    // const [comment, setComment] = useState(selectedEvent.Comment);
-    // const [selectedEventColor, setSelectedEventColor] = useState(selectedEvent.EventColor);
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -41,6 +32,43 @@ const AlterEventModalContainer = () => {
     const [comment, setComment] = useState("");
     const [selectedEventColor, setSelectedEventColor] = useState("");
 
+    useEffect(() => {
+        if (alterEventModalIsHidden) {
+            return;
+        }
+
+        setName(selectedEvent.Name);
+        setEmail(selectedEvent.Email);
+        setTeam(selectedEvent.Team);
+        setClub(selectedEvent.Club);
+        setDate(getDateString(selectedEvent));
+        setTimeFrom(getTimeString(selectedEvent.TimeFrom.getHours(), selectedEvent.TimeFrom.getMinutes()));
+        setTimeTo(getTimeString(selectedEvent.TimeTo.getHours(), selectedEvent.TimeTo.getMinutes()));
+        setSelectedFieldId(-1); // TODO: Show current selected
+        setSelectedFieldSizeId(-1); // TODO: Show current selected
+        setChangingRoomTimeFrom(getTimeString(selectedEvent.ChangingRoomTimeFrom.getHours(), selectedEvent.ChangingRoomTimeFrom.getMinutes()));
+        setChangingRoomTimeTo(getTimeString(selectedEvent.ChangingRoomTimeTo.getHours(), selectedEvent.ChangingRoomTimeTo.getMinutes()));
+        setSelectedChangingRoomId(-1); // TODO: Show current selected
+        setComment(selectedEvent.Comment);
+        setSelectedEventColor(selectedEvent.EventColor);
+    }, [alterEventModalIsHidden]);
+
+    const clearInputData = () => {
+        setName("");
+        setEmail("");
+        setTeam("");
+        setClub("");
+        setDate("");
+        setTimeFrom("");
+        setTimeTo("");
+        setSelectedFieldId(-1); // TODO: Show current selected
+        setSelectedFieldSizeId(-1); // TODO: Show current selected
+        setChangingRoomTimeFrom("");
+        setChangingRoomTimeTo("");
+        setSelectedChangingRoomId(-1); // TODO: Show current selected
+        setComment("");
+        setSelectedEventColor("");
+    };
 
     const handleOnNameChange = () => {
         setName(event.target.value);
@@ -107,7 +135,8 @@ const AlterEventModalContainer = () => {
     };
 
     const handleCloseClick = () => {
-        // TODO: Dispatch hide and clear modal.
+        dispatch(closeAlterEventModal());
+        clearInputData();
     };
 
     const handleDeleteClick = () => {
@@ -170,4 +199,4 @@ const getTimeString = (hours, mins) => {
     return `${hours < 10 ? "0" + hours : hours}:${mins < 10 ? "0" + mins : mins}`;
 };
 
-export default AlterEventModalContainer;
+export default connect()(AlterEventModalContainer);
