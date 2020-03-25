@@ -3,7 +3,7 @@ import {
 } from "../constants/actionTypes";
 
 export default function (state = {
-    selectedDate = new Date()
+    selectedDate: new Date()
 }, action) {
     switch (action.type) {
         case SET_SELECTED_DATE:

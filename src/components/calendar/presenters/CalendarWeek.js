@@ -1,6 +1,6 @@
 import React from "react";
 
-import Time from "../../Time";
+import Time from "../Time";
 import Timeline from "../containers/Timeline";
 
 const CalendarWeekPresenter = ({

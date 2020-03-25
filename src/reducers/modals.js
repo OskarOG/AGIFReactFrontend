@@ -6,10 +6,10 @@ import {
 } from "../constants/actionTypes";
 
 export default function (state = {
-    alterEventModalIsHidden = true,
-    approveEventModalIsHidden = true,
-    loginModalIsHidden = true,
-    newEventModalIsHidden = true
+    alterEventModalIsHidden: true,
+    approveEventModalIsHidden: true,
+    loginModalIsHidden: true,
+    newEventModalIsHidden: true
 }, action) {
     switch (action.type) {
         case SET_ALTER_EVENT_MODAL_IS_HIDDEN:

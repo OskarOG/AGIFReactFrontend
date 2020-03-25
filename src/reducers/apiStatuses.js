@@ -5,7 +5,9 @@ import {
     API_DENIED
 } from "../constants/actionTypes";
 
-export default function (state = {}, action) {
+export default function (state = {
+    
+}, action) {
     switch (action.type) {
         case API_START:
             console.log("API_START");

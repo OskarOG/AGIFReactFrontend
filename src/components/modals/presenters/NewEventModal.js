@@ -1,6 +1,6 @@
 import React from "react";
 
-import ColorPicker from "../ColorPicker";
+import ColorPicker from "../../ColorPicker";
 
 const NewEventModalPresenter = ({
     isHidden = true,

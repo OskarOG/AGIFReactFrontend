@@ -3,7 +3,7 @@ import {
 } from "../constants/actionTypes";
 
 export default function (state = {
-    isAdmin = false
+    isAdmin: false
 }, action) {
     switch(action.type) {
         case SET_IS_ADMIN:
