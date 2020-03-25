@@ -55,4 +55,3 @@ export const SET_SELECTED_DATE = "SET_SELECTED_DATE";
 
 // Menu
 export const SET_IS_MENU_OPEN = "SET_IS_MENU_OPEN";
-export const TOGGLE_IS_MENU_OPEN = "TOGGLE_IS_MENU_OPEN";

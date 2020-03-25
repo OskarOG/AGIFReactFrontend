@@ -1,40 +1,62 @@
 import React from "react";
+import { connect } from "react-redux";
 import { useSelector } from "react-redux";
+
+import {
+    openMenu,
+    closeMenu
+} from "../../actions/menu";
+
+import {
+    setSelectedDate
+} from "../../actions/dates";
+
+import {
+    openApproveEventModal,
+    openNewEventModal,
+    openLoginModal
+} from "../../actions/modals";
 
 import NavigationPresenter from "./NavigationPresenter";
 
-const NavigationContainer = () => {
+const NavigationContainer = ({
+    dispatch
+}) => {
     const isMenuOpen = useSelector(state => state.isMenuOpen);
     const selectedDate = useSelector(state => state.selectedDate);
     const nonApprovedEventsCount = useSelector(state => state.nonApprovedEventsCount);
     const isSignedIn = useSelector(state => state.isSignedIn);
 
-    const handleToogleClick = () => {
-        // Dispatch toggle isMenuOpen.
+    const handleOpenMenuClick = () => {
+        dispatch(openMenu());
+    };
+
+    const handleCloseMenuClick = () => {
+        dispatch(closeMenu());
     };
 
     const handleSelectedDateChange = date => {
-        // Dispatch SET_SELECTED_DATE.
+        dispatch(setSelectedDate(date));
     };
 
     const handleNextWeekClick = () => {
-        // Dispatch SET_SELECTED_DATE const d = selectedDate.addDays(7);
+        dispatch(setSelectedDate(selectedDate.addDays(7)));
     };
 
     const handlePrevWeekClick = () => {
-        // Dispatch SET_SELECTED_DATE const d = selectedDate.addDays(-7);
+        dispatch(setSelectedDate(selectedDate.addDays(-7)));
     };
 
     const handleShowApproveModal = () => {
-        // Dispatch SET_APPROVE_EVENT_MODAL_IS_HIDDEN false
+        dispatch(openApproveEventModal());
     };
 
-    const handleNewBookingClick = () => {
-        // Dispatch SET_NEW_EVENT_MODAL_IS_HIDDEN false
+    const handleNewEventClick = () => {
+        dispatch(openNewEventModal());
     };
 
     const handleLoginClick = () => {
-        // Dispatch SET_LOGIN_MODAL_IS_HIDDEN false
+        dispatch(openLoginModal());
     };
 
     const handleLogoutClick = () => {
@@ -43,18 +65,18 @@ const NavigationContainer = () => {
 
     return <NavigationPresenter
                 drawerIsOpen={isMenuOpen}
-                onOpenClick={handleToogleClick}
-                onCloseClick={handleToogleClick}
+                onOpenClick={handleOpenMenuClick}
+                onCloseClick={handleCloseMenuClick}
                 selectedDate={selectedDate}
                 onSelectedDateChange={handleSelectedDateChange}
                 onNextWeekClick={handleNextWeekClick}
                 onPrevWeekClick={handlePrevWeekClick}
                 nonApprovedCount={nonApprovedEventsCount}
                 onShowApproveModalClick={handleShowApproveModal}
-                onNewBookingClick={handleNewBookingClick}
+                onNewBookingClick={handleNewEventClick}
                 isLoggedIn={isSignedIn}
                 onLoginClick={handleLoginClick}
                 onLogoutClick={handleLogoutClick} />
 };
 
-export default NavigationContainer;
+export default connect()(NavigationContainer);

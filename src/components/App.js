@@ -1,7 +1,7 @@
 import React from "react";
 
 import "../../node_modules/react-toastify/dist/ReactToastify.min.css";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 
 import CalendarWeekContainer from "./calendar/containers/CalendarWeek";
 import NavigationContainer from "./navigation/NavigationContainer";
