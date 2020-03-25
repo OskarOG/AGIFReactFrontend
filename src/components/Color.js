@@ -1,24 +1,29 @@
 import React from "react";
 
-const Color = (props) => {
+const Color = ({
+    color,
+    isSelected,
+    text,
+    onClick
+}) => {
 
     const colorStyle = {
-        backgroundColor: props.color
+        backgroundColor: color
     };
 
     const handleColorClick = () => {
-        props.onClick(props.color);
+        onClick(color);
     };
 
     return (
         <div className="color-container" onClick={handleColorClick}>
             <div className="color-content">
                 <div className="color-div-container" style={colorStyle}>
-                    <div className={props.isSelected ? "color-div" : ""}></div>
+                    <div className={isSelected ? "color-div" : ""}></div>
                 </div>
             </div>
             <div className="color-text-container">
-                {props.text}
+                {text}
             </div>
         </div>
     );

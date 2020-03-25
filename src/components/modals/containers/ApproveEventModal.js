@@ -5,8 +5,8 @@ import NonApprovedEventContainer from "./NonApprovedEvent";
 import ApproveEventModalPresenter from "../presenters/ApproveEventModal";
 
 const ApproveEventModalContainer = () => {
-    approveEventModalIsHidden = useSelector(state => state.approveEventModalIsHidden);
-    events = useSelector(state => state.events);
+    const approveEventModalIsHidden = useSelector(state => state.approveEventModalIsHidden);
+    const events = useSelector(state => state.event.events);
 
     const handleCloseModal = () => {
         // Dispatch close to modals reducer.

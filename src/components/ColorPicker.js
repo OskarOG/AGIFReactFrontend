@@ -2,15 +2,23 @@ import React from "react";
 
 import Color from "./Color";
 
-const ColorPicker = (props) => {
+const ColorPicker = ({
+    selectedColor,
+    colors,
+    onColorChange
+}) => {
 
     const handleColorClick = (color) => {
-        props.onColorChange(color);
+        onColorChange(color);
     };
 
-    var colorList = props.colors.map(color => {
+    var colorList = colors.map(color => {
         return (
-            <Color key={color.color} color={color.color} onClick={handleColorClick} isSelected={(props.selectedColor === color.color)} text={color.text} />
+            <Color key={color.color}
+                color={color.color} 
+                onClick={handleColorClick} 
+                isSelected={(selectedColor === color.color)} 
+                text={color.text} />
         );
     });
 

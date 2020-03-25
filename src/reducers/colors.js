@@ -1,5 +1,5 @@
 export default function (state = {
-    COLORS: [
+    colors: [
         { color: "#009b62", text: "AGIF bokning" }, 
         { color: "#d5cb72", text: "Extern bokning" }, 
         { color: "#9c83c3", text: "Speciell bokning" }, 

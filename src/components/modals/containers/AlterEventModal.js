@@ -4,26 +4,42 @@ import { useSelector } from "react-redux";
 import AlterEventModalPresenter from "../presenters/AlterEventModal";
 
 const AlterEventModalContainer = () => {
-    const COLORS = useSelector(state => state.colors);
-    const alterEventModalIsHidden = useSelector(state => state.alterEventModalIsHidden);
-    const selectedEvent = useSelector(state => state.selectedEvent);
-    const availableFields = useSelector(state => state.availableFields);
-    const availableChangingRooms = useSelector(state => state.availableChangingRooms);
+    const COLORS = useSelector(state => state.color.colors);
+    const alterEventModalIsHidden = useSelector(state => state.modal.alterEventModalIsHidden);
+    const selectedEvent = useSelector(state => state.event.selectedEvent);
+    const availableFields = useSelector(state => state.field.availableFields);
+    const availableChangingRooms = useSelector(state => state.changingroom.availableChangingRooms);
+    const availableFieldSizes = useSelector(state => state.fieldSize.availableFieldSizes);
 
-    const [name, setName] = useState(selectedEvent.Name);
-    const [email, setEmail] = useState(selectedEvent.Email);
-    const [team, setTeam] = useState(selectedEvent.Team);
-    const [club, setClub] = useState(selectedEvent.Club);
-    const [date, setDate] = useState(getDateString(selectedEvent));
-    const [timeFrom, setTimeFrom] = useState(getTimeString(selectedEvent.TimeFrom.getHours(), selectedEvent.TimeFrom.getMinutes()));
-    const [timeTo, setTimeTo] = useState(getTimeString(selectedEvent.TimeTo.getHours(), selectedEvent.TimeTo.getMinutes()));
+    // const [name, setName] = useState(selectedEvent.Name);
+    // const [email, setEmail] = useState(selectedEvent.Email);
+    // const [team, setTeam] = useState(selectedEvent.Team);
+    // const [club, setClub] = useState(selectedEvent.Club);
+    // const [date, setDate] = useState(getDateString(selectedEvent));
+    // const [timeFrom, setTimeFrom] = useState(getTimeString(selectedEvent.TimeFrom.getHours(), selectedEvent.TimeFrom.getMinutes()));
+    // const [timeTo, setTimeTo] = useState(getTimeString(selectedEvent.TimeTo.getHours(), selectedEvent.TimeTo.getMinutes()));
+    // const [selectedFieldId, setSelectedFieldId] = useState(-1); // TODO: Show current selected
+    // const [selectedFieldSizeId, setSelectedFieldSizeId] = useState(-1); // TODO: Show current selected
+    // const [changingRoomTimeFrom, setChangingRoomTimeFrom] = useState(getTimeString(selectedEvent.ChangingRoomTimeFrom.getHours(), selectedEvent.ChangingRoomTimeFrom.getMinutes()));
+    // const [changingRoomTimeTo, setChangingRoomTimeTo] = useState(getTimeString(selectedEvent.ChangingRoomTimeTo.getHours(), selectedEvent.ChangingRoomTimeTo.getMinutes()));
+    // const [selectedChangingRoomId, setSelectedChangingRoomId] = useState(-1); // TODO: Show current selected
+    // const [comment, setComment] = useState(selectedEvent.Comment);
+    // const [selectedEventColor, setSelectedEventColor] = useState(selectedEvent.EventColor);
+
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [team, setTeam] = useState("");
+    const [club, setClub] = useState("");
+    const [date, setDate] = useState("");
+    const [timeFrom, setTimeFrom] = useState("");
+    const [timeTo, setTimeTo] = useState("");
     const [selectedFieldId, setSelectedFieldId] = useState(-1); // TODO: Show current selected
     const [selectedFieldSizeId, setSelectedFieldSizeId] = useState(-1); // TODO: Show current selected
-    const [changingRoomTimeFrom, setChangingRoomTimeFrom] = useState(getTimeString(selectedEvent.ChangingRoomTimeFrom.getHours(), selectedEvent.ChangingRoomTimeFrom.getMinutes()));
-    const [changingRoomTimeTo, setChangingRoomTimeTo] = useState(getTimeString(selectedEvent.ChangingRoomTimeTo.getHours(), selectedEvent.ChangingRoomTimeTo.getMinutes()));
+    const [changingRoomTimeFrom, setChangingRoomTimeFrom] = useState("");
+    const [changingRoomTimeTo, setChangingRoomTimeTo] = useState("");
     const [selectedChangingRoomId, setSelectedChangingRoomId] = useState(-1); // TODO: Show current selected
-    const [comment, setComment] = useState(selectedEvent.Comment);
-    const [selectedEventColor, setSelectedEventColor] = useState(selectedEvent.EventColor);
+    const [comment, setComment] = useState("");
+    const [selectedEventColor, setSelectedEventColor] = useState("");
 
 
     const handleOnNameChange = () => {

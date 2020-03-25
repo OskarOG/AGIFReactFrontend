@@ -4,12 +4,12 @@ import { useSelector } from "react-redux";
 import NewEventModalPresenter from "../presenters/NewEventModal";
 
 const NewEventModalContainer = () => {
-    const COLORS = useSelector(state => state.COLORS);
-    const isHidden = useSelector(state => state.newEventModalIsHidden);
-    const isAdmin = useSelector(state => state.isAdmin);
-    const availableChangingRooms = useSelector(state => state.availableChangingRooms);
-    const availableFields = useSelector(state => state.availableFields);
-    const availableFieldSizes = useSelector(state => state.availableFieldSizes);
+    const COLORS = useSelector(state => state.color.colors);
+    const isHidden = useSelector(state => state.modal.newEventModalIsHidden);
+    const isAdmin = useSelector(state => state.admin.isAdmin);
+    const availableChangingRooms = useSelector(state => state.changingroom.availableChangingRooms);
+    const availableFields = useSelector(state => state.field.availableFields);
+    const availableFieldSizes = useSelector(state => state.fieldSize.availableFieldSizes);
     
     const [recurringEventDateTo, setRecurringEventDateTo] = useState("");
     const [changingRoomTimeFrom, setChangingRoomTimeFrom] = useState("");

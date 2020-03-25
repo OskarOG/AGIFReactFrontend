@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import LoginModalPresenter from "../presenters/LoginModal";
 
 const LoginModalContainer = () => {
-    const isHidden = useSelector(state => state.loginModalIsHidden);
+    const isHidden = useSelector(state => state.modal.loginModalIsHidden);
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");

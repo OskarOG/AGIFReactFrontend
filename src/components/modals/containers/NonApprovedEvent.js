@@ -6,8 +6,8 @@ import NonApprovedEventPresenter from "../presenters/NonApprovedEvent";
 const NonApprovedEventContainer = ({
     event
 }) => {
-    const COLORS = useSelector(state => state.colors);
-    const availableChangingRooms = useSelector(state => state.nonApprovedEvents);
+    const COLORS = useSelector(state => state.color.colors);
+    const availableChangingRooms = useSelector(state => state.modal.nonApprovedEvents);
 
     const [changingRoomTimeFrom, setChangingRoomTimeFrom] = useState("");
     const [changingRoomTimeTo, setChangingRoomTimeTo] = useState("");

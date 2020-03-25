@@ -8,7 +8,7 @@ import {
 
 export default function (state = {
     events: [],
-    selectedEvent: undefined
+    selectedEvent: {}
 }, action) {
     switch (action.type) {
         case GET_EVENTS:

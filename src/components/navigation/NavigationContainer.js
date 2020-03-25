@@ -22,10 +22,10 @@ import NavigationPresenter from "./NavigationPresenter";
 const NavigationContainer = ({
     dispatch
 }) => {
-    const isMenuOpen = useSelector(state => state.isMenuOpen);
-    const selectedDate = useSelector(state => state.selectedDate);
-    const nonApprovedEventsCount = useSelector(state => state.nonApprovedEventsCount);
-    const isSignedIn = useSelector(state => state.isSignedIn);
+    const isMenuOpen = useSelector(state => state.menu.isMenuOpen);
+    const selectedDate = useSelector(state => state.date.selectedDate);
+    const nonApprovedEventsCount = useSelector(state => state.nonApprovedEvent.nonApprovedEventsCount);
+    const isSignedIn = useSelector(state => state.login.isSignedIn);
 
     const handleOpenMenuClick = () => {
         dispatch(openMenu());

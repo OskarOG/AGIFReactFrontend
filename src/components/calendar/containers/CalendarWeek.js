@@ -7,8 +7,8 @@ import CalendarDayContainer from "./CalendarDay";
 const WEEK_DAYS = 7;
 
 const CalendarWeekContainer = () => {
-    const isMenuOpen = useSelector(state => state.isMenuOpen);
-    const selectedDate = useSelector(state => state.selectedDate);
+    const isMenuOpen = useSelector(state => state.menu.isMenuOpen);
+    const selectedDate = useSelector(state => state.date.selectedDate);
     const [mondayDate, setMondayDate] = useState(new Date().getMondayDate())
 
     useEffect(() => {
@@ -16,7 +16,7 @@ const CalendarWeekContainer = () => {
     }, [selectedDate]);
 
     const weekDates = getWeekDates(mondayDate);
-    const calendarDays = weekDates.map(d => <CalendarDayContainer date={d} />);
+    const calendarDays = weekDates.map(d => <CalendarDayContainer key={d.getDay()} date={d} />);
 
     return <CalendarWeekPresenter
                 shiftRight={isMenuOpen}

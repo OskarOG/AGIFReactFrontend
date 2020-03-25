@@ -8,13 +8,13 @@ const FieldContentContainer = ({
     date,
     fieldId
 }) => {
-    const events = useSelector(state => state.events);
+    const events = useSelector(state => state.event.events);
     
     const eventsOnDate = events.filter((e) =>
         new Date(e.TimeFrom).getDate() == date.getDate()
         && e.FieldId == fieldId);
 
-    const eventViews = eventsOnDate.map(e => <Event event={e} />);
+    const eventViews = eventsOnDate.map(e => <Event key={e.Id} event={e} />);
 
     return <FieldContentPresenter events={eventViews} />
 };
