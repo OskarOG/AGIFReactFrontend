@@ -1,30 +1,65 @@
+import ApiUrlFactory from "../factories/ApiUrlFactory";
+
 import {
-    GET_EVENTS,
-    POST_EVENT,
-    UPDATE_EVENT,
-    DELETE_EVENT,
     SET_EVENTS
 } from "../constants/actionTypes";
-import { apiAction } from "./api";
-import ApiUrlFactory from "../factories/ApiUrlFactory";
+
+import {
+    apiAction
+} from "./api";
+
 
 export const getEventsBetweenDates = (startDate, endDate) => {
     return apiAction({
         url: ApiUrlFactory.events.getForWeek(startDate, endDate),
-        label: GET_EVENTS,
+        label: "getEventsBetweenDates",
         onSuccess: setEvents,
         onFailure: () => console.log("Error when fetching events")
     });
 };
 
-export const postEvent = (event) => {
+export const postEvent = (
+    name,
+    email,
+    club,
+    team,
+    timeFrom,
+    timeTo,
+    recurringEventEnd,
+    comment,
+    eventColor,
+    fieldId,
+    fieldSizeId,
+    changingRoomId,
+    changingRoomTimeFrom,
+    changingRoomTimeTo
+) => {
     return apiAction({
         url: ApiUrlFactory.events.postEvent(),
         method: "POST",
-        label: POST_EVENT,
-        data: event,
+        label: "postEvent",
+        data: {
+            Name: name,
+            Email: email,
+            Club: club,
+            Team: team,
+            TimeFrom: timeFrom,
+            TimeTo: timeTo,
+            RecurringEventEnd: recurringEventEnd,
+            Comment: comment,
+            EventColor: eventColor,
+            FieldID: fieldId,
+            FieldSizeID: fieldSizeId,
+            ChangingRoomID: changingRoomId,
+            ChangingRoomTimeFrom: changingRoomTimeFrom,
+            ChangingRoomTimeTo: changingRoomTimeTo
+        },
         onSuccess: () => {
             console.log("TODO: fetch events");
+            return {
+                type: "",
+                payload: null
+            };
         },
         onFailure: () => console.log("Error when posting event")
     });
@@ -34,10 +69,14 @@ export const updateEvent = (event) => {
     return apiAction({
         url: ApiUrlFactory.events.updateEvent(),
         method: "PUT",
-        label: UPDATE_EVENT,
+        label: "updateEvent",
         data: event,
         onSuccess: () => {
             console.log("TODO: fetch events");
+            return {
+                type: "",
+                payload: null
+            };
         },
         onFailure: () => console.log("Error when updating event")
     });
@@ -47,14 +86,17 @@ export const deleteEvent = (id, userKey) => {
     return apiAction({
         url: ApiUrlFactory.events.deleteEvent(id, userKey),
         method: "DELETE",
-        label: DELETE_EVENT,
+        label: "deleteEvent",
         onSuccess: () => {
             console.log("TODO: fetch events");
+            return {
+                type: "",
+                payload: null
+            };
         },
         onFailure: () => console.log("Error when deleting event")
     });
 };
-
 
 export const setEvents = (data) => {
     return {

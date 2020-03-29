@@ -1,21 +1,30 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, connect } from "react-redux";
+
+import {
+    getEventsBetweenDates
+} from "../../../actions/events";
 
 import CalendarWeekPresenter from "../presenters/CalendarWeek";
 import CalendarDayContainer from "./CalendarDay";
 
 const WEEK_DAYS = 7;
 
-const CalendarWeekContainer = () => {
+const CalendarWeekContainer = ({
+    dispatch
+}) => {
     const isMenuOpen = useSelector(state => state.menu.isMenuOpen);
     const selectedDate = useSelector(state => state.date.selectedDate);
     const [mondayDate, setMondayDate] = useState(new Date().getMondayDate())
+    const [weekDates, setWeekDates] = useState(getWeekDates(mondayDate));
 
     useEffect(() => {
         setMondayDate(selectedDate.getMondayDate());
+        setWeekDates(getWeekDates(mondayDate));
+        
+        dispatch(getEventsBetweenDates(weekDates[0], weekDates[6]));
     }, [selectedDate]);
 
-    const weekDates = getWeekDates(mondayDate);
     const calendarDays = weekDates.map(d => <CalendarDayContainer key={d.getDay()} date={d} />);
 
     return <CalendarWeekPresenter
@@ -32,4 +41,4 @@ function getWeekDates(weekStartDate) {
     return weekDates;
 };
 
-export default CalendarWeekContainer;
+export default connect()(CalendarWeekContainer);

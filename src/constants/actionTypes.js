@@ -1,9 +1,4 @@
 // Events
-export const GET_EVENTS = "GET_EVENTS";
-export const POST_EVENT = "POST_EVENT";
-export const UPDATE_EVENT = "UPDATE_EVENT";
-export const DELETE_EVENT = "DELETE_EVENT";
-
 export const SET_EVENTS = "SET_EVENTS";
 
 // NonApprovedEvents
@@ -26,6 +21,7 @@ export const FETCH_AVAILABLE_FIELDS = "FETCH_AVAILABLE_FIELDS";
 export const SIGN_IN = "SIGN_IN";
 export const SIGN_OUT = "SIGN_OUT";
 export const SET_IS_SIGNED_IN = "SET_IS_SIGNED_IN";
+export const SET_USER_KEY = "";
 
 // Changingrooms
 export const FETCH_CHANGINGROOMS = "FETCH_CHANGINGROOMS";

@@ -24,11 +24,10 @@ export const apiAction = ({
     url = "",
     method = "GET",
     data = null,
-    accessToken = null,
-    onSuccess = () => null,
-    onFailure = () => null,
-    label = "",
-    headersOverride = null
+    accessToken = "",
+    onSuccess,
+    onFailure,
+    label = ""
 }) => {
     return {
         type: API,
@@ -39,8 +38,7 @@ export const apiAction = ({
             accessToken,
             onSuccess,
             onFailure,
-            label,
-            headersOverride
+            label
         }
     };
 };

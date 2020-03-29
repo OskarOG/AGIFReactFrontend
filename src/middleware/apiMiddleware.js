@@ -2,10 +2,9 @@ import axios from "axios";
 import { API } from "../constants/actionTypes";
 import { apiStart, apiEnd, apiError, apiDenied } from "../actions/api";
 
-const apiMiddleware  = ({dispatch}) => next => action => {
-    next(action);
-
+const apiMiddleware = ({dispatch}) => next => action => {
     if (action.type !== API) {
+        next(action);
         return;
     };
 
@@ -15,7 +14,6 @@ const apiMiddleware  = ({dispatch}) => next => action => {
         data,
         accessToken,
         label,
-        headers,
         onSuccess,
         onFailure
     } = action.payload;
@@ -33,7 +31,6 @@ const apiMiddleware  = ({dispatch}) => next => action => {
     axios.request({
         url,
         method,
-        headers,
         [dataOrParams]: data
     })
     .then(({data}) => {
@@ -41,7 +38,7 @@ const apiMiddleware  = ({dispatch}) => next => action => {
     })
     .catch(error => {
         dispatch(apiError(error));
-        dispatch(onFailure(error));
+        onFailure(error);
 
         if (error.response && error.response.status === 403) {
             dispatch(apiDenied(window.location.pathname));
