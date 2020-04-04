@@ -13,7 +13,7 @@ const AlterEventModalContainer = ({
     const COLORS = useSelector(state => state.color.colors);
     const alterEventModalIsHidden = useSelector(state => state.modal.alterEventModalIsHidden);
     const selectedEvent = useSelector(state => state.event.selectedEvent);
-    const availableFields = useSelector(state => state.field.availableFields);
+    const availableFields = useSelector(state => state.field.fields);
     const availableChangingRooms = useSelector(state => state.changingroom.availableChangingRooms);
     const availableFieldSizes = useSelector(state => state.fieldSize.availableFieldSizes);
 

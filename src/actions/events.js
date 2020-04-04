@@ -8,6 +8,10 @@ import {
     apiAction
 } from "./api";
 
+import {
+    closeNewEventModal
+} from "./modals";
+
 
 export const getEventsBetweenDates = (startDate, endDate) => {
     return apiAction({
@@ -25,6 +29,7 @@ export const postEvent = (
     team,
     timeFrom,
     timeTo,
+    date,
     recurringEventEnd,
     comment,
     eventColor,
@@ -43,23 +48,20 @@ export const postEvent = (
             Email: email,
             Club: club,
             Team: team,
-            TimeFrom: timeFrom,
-            TimeTo: timeTo,
-            RecurringEventEnd: recurringEventEnd,
+            TimeFrom: new Date(`${date} ${timeFrom}`).getUnixTimestamp(),
+            TimeTo: new Date(`${date} ${timeTo}`).getUnixTimestamp(),
+            RecurringEventEnd: new Date(recurringEventEnd).getUnixTimestamp(),
             Comment: comment,
             EventColor: eventColor,
             FieldID: fieldId,
             FieldSizeID: fieldSizeId,
             ChangingRoomID: changingRoomId,
-            ChangingRoomTimeFrom: changingRoomTimeFrom,
-            ChangingRoomTimeTo: changingRoomTimeTo
+            ChangingRoomTimeFrom: new Date(`${date} ${changingRoomTimeFrom}`).getUnixTimestamp(),
+            ChangingRoomTimeTo: new Date(`${date} ${changingRoomTimeTo}`).getUnixTimestamp()
         },
         onSuccess: () => {
             console.log("TODO: fetch events");
-            return {
-                type: "",
-                payload: null
-            };
+            return closeNewEventModal();
         },
         onFailure: () => console.log("Error when posting event")
     });

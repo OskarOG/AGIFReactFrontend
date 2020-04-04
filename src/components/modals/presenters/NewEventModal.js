@@ -50,10 +50,9 @@ const NewEventModalPresenter = ({
     submitButtonDisabled,
     onSendNewBooking
 }) => {
-
-    const fieldOpts = availableFields.map(f => <option></option>);
-    const fieldSizesOpts = availableFieldSizes.map(fs => <option></option>);
-    const availableChangingRoomsOpts = availableChangingRooms.map(cr => <option></option>);
+    const fieldOpts = availableFields.map(f => <option key={`NewEventModal-FieldId-${f.Id}`} value={f.Id}>{f.Name}</option>);
+    const fieldSizesOpts = availableFieldSizes.map(fs => <option key={`NewEventModal-FieldSizeId-${fs.Id}`} value={fs.Id}>{fs.Size}</option>);
+    const availableChangingRoomsOpts = availableChangingRooms.map(cr => <option key={`NewEventModal-ChangingRoomId-${cr.Id}`} value={cr.Id}>{cr.Name}</option>);
 
     return (
         <div className={"modal-overlay" + (isHidden ? " hidden" : "")}>

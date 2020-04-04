@@ -1,6 +1,5 @@
 import {
-    FETCH_FIELD_SIZES,
-    FETCH_AVAILABLE_FIELD_SIZES
+    SET_AVAILABLE_FIELD_SIZES
 } from "../constants/actionTypes";
 
 export default function (state = {
@@ -8,13 +7,12 @@ export default function (state = {
     availableFieldSizes: []
 }, action) {
     switch (action.type) {
-        case FETCH_FIELD_SIZES:
-            console.log(FETCH_FIELD_SIZES);
-            break;
-        
-        case FETCH_AVAILABLE_FIELD_SIZES:
-            console.log(FETCH_AVAILABLE_FIELD_SIZES);
-            break;
+        case SET_AVAILABLE_FIELD_SIZES:
+            console.log(SET_AVAILABLE_FIELD_SIZES);
+            return {
+                ...state,
+                availableFieldSizes: action.payload
+            };
     };
     return state;
 };

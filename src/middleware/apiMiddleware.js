@@ -22,13 +22,13 @@ const apiMiddleware = ({dispatch}) => next => action => {
 
     axios.defaults.baseURL = process.env.NODE_ENV === "development" ? "https://localhost:44387/api" : "/api";
     axios.defaults.headers.common["Content-Type"] = "application/json";
-    axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
-
+    axios.defaults.headers.common["Authorization"] = `${accessToken}`;
+    
     if (label) {
         dispatch(apiStart(label));
     };
 
-    axios.request({
+    axios({
         url,
         method,
         [dataOrParams]: data
