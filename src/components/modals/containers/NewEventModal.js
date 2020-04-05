@@ -6,7 +6,8 @@ import {
 } from "../../../actions/modals";
 
 import {
-    postEvent
+    postEvent, getEventsBetweenDates,
+
 } from "../../../actions/events";
 
 import {
@@ -25,6 +26,7 @@ const NewEventModalContainer = ({
     const availableChangingRooms = useSelector(state => state.changingroom.availableChangingRooms);
     const fields = useSelector(state => state.field.fields);
     const availableFieldSizes = useSelector(state => state.fieldSize.availableFieldSizes);
+    const selectedDate = useSelector(state => state.date.selectedDate);
     
     const [recurringEventDateTo, setRecurringEventDateTo] = useState("");
     const [changingRoomTimeFrom, setChangingRoomTimeFrom] = useState("");
@@ -123,6 +125,9 @@ const NewEventModalContainer = ({
     const handleOnCloseClick = () => {
         dispatch(closeNewEventModal());
         clearInputData();
+
+        const weekDateSpan = selectedDate.getWeekDateSpan();
+        dispatch(getEventsBetweenDates(weekDateSpan.startDate, weekDateSpan.endDate));
     };
 
     const handleOnSendNewBooking = () => {
