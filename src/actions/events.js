@@ -60,7 +60,6 @@ export const postEvent = (
             ChangingRoomTimeTo: new Date(`${date} ${changingRoomTimeTo}`).getUnixTimestamp()
         },
         onSuccess: () => {
-            console.log("TODO: fetch events");
             return closeNewEventModal();
         },
         onFailure: () => console.log("Error when posting event")

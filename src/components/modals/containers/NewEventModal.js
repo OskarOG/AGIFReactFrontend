@@ -6,8 +6,8 @@ import {
 } from "../../../actions/modals";
 
 import {
-    postEvent, getEventsBetweenDates,
-
+    postEvent,
+    getEventsBetweenDates
 } from "../../../actions/events";
 
 import {
@@ -47,8 +47,16 @@ const NewEventModalContainer = ({
     const [eventColor, setEventColor] = useState("");
     const [currentPrice, setCurrentPrice] = useState(0);
 
+    const [newEventIsPosted, setNewEventIsPosted] = useState(false);
+
     useEffect(() => {
         clearInputData();
+        
+        if (newEventIsPosted) {
+            const weekDateSpan = selectedDate.getWeekDateSpan();
+            dispatch(getEventsBetweenDates(weekDateSpan.startDate, weekDateSpan.endDate));
+            setNewEventIsPosted(false);
+        };
     }, [isHidden]);
     
     const getFieldSizes = (date, timeFrom, timeTo, selectedFieldId) => {
@@ -125,12 +133,11 @@ const NewEventModalContainer = ({
     const handleOnCloseClick = () => {
         dispatch(closeNewEventModal());
         clearInputData();
-
-        const weekDateSpan = selectedDate.getWeekDateSpan();
-        dispatch(getEventsBetweenDates(weekDateSpan.startDate, weekDateSpan.endDate));
     };
 
     const handleOnSendNewBooking = () => {
+        setNewEventIsPosted(true);
+        
         dispatch(postEvent(
             name,
             email,
