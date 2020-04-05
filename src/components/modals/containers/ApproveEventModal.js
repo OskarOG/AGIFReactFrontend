@@ -11,8 +11,8 @@ import ApproveEventModalPresenter from "../presenters/ApproveEventModal";
 const ApproveEventModalContainer = ({
     dispatch
 }) => {
-    const approveEventModalIsHidden = useSelector(state => state.approveEventModalIsHidden);
-    const events = useSelector(state => state.event.events);
+    const approveEventModalIsHidden = useSelector(state => state.modal.approveEventModalIsHidden);
+    const nonApprovedEvents = useSelector(state => state.nonApprovedEvent.nonApprovedEvents);
 
     const handleCloseModal = () => {
         dispatch(closeApproveEventModal());
@@ -22,11 +22,11 @@ const ApproveEventModalContainer = ({
         // Dispatch send to events reducer.
     };
 
-    const nonApprovedEvents = events.map((e) => <NonApprovedEventContainer key={e.Id} event={e} />);
+    const nonApprovedEventViews = nonApprovedEvents.map((e) => <NonApprovedEventContainer key={e.Id} event={e} />);
 
     return <ApproveEventModalPresenter 
                 isHidden={approveEventModalIsHidden}
-                events={nonApprovedEvents}
+                events={nonApprovedEventViews}
                 onClose={handleCloseModal}
                 onSend={handleOnSend} />
 };

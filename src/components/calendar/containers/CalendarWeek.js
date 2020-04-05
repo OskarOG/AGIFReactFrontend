@@ -15,14 +15,13 @@ const CalendarWeekContainer = ({
 }) => {
     const isMenuOpen = useSelector(state => state.menu.isMenuOpen);
     const selectedDate = useSelector(state => state.date.selectedDate);
-    const [mondayDate, setMondayDate] = useState(new Date().getMondayDate())
-    const [weekDates, setWeekDates] = useState(getWeekDates(mondayDate));
+    const [weekDates, setWeekDates] = useState(getWeekDates(new Date().getWeekDateSpan().startDate));
 
     useEffect(() => {
-        setMondayDate(selectedDate.getMondayDate());
-        setWeekDates(getWeekDates(mondayDate));
-        
-        dispatch(getEventsBetweenDates(weekDates[0], weekDates[6]));
+        const weekDateSpan = selectedDate.getWeekDateSpan();
+        setWeekDates(getWeekDates(weekDateSpan.startDate));
+
+        dispatch(getEventsBetweenDates(weekDateSpan.startDate, weekDateSpan.endDate));
     }, [selectedDate]);
 
     const calendarDays = weekDates.map(d => <CalendarDayContainer key={d.getDay()} date={d} />);

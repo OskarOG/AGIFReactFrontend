@@ -13,7 +13,9 @@ const EventPresenter = ({
     fieldSize,
     timeFrom,
     timeTo,
-    changingRoomName
+    changingRoomName,
+    changingRoomTimeFrom,
+    changingRoomTimeTo
 }) => {
     const divStyle = {
         width: divide ? "74px" : "150px",
@@ -27,6 +29,10 @@ const EventPresenter = ({
         backgroundColor: isApproved ? eventColor : "rgb(217, 109, 109)"
     };
 
+    const changingRoomSpanStyle = {
+        display: changingRoomTimeFrom !== null && changingRoomTimeTo !== null ? "" : "none"
+    };
+
     return (
         <div style={divStyle} className="event-content" onDoubleClick={onEventClick}>
             <h1 style={headerStyle}>{team}</h1>
@@ -34,7 +40,11 @@ const EventPresenter = ({
             <p>
                 {fieldSize}-manna<br />
                 {timeFrom.toTime()}-{timeTo.toTime()}<br />
-                {changingRoomName}<br />
+                <span style={changingRoomSpanStyle}>
+                    {changingRoomName}<br />
+                    {changingRoomTimeFrom?.toTime()}<br />
+                    {changingRoomTimeTo?.toTime()}<br />
+                </span>
             </p>
         </div>
     );
