@@ -22,7 +22,7 @@ const NewEventModalContainer = ({
 }) => {
     const COLORS = useSelector(state => state.color.colors);
     const isHidden = useSelector(state => state.modal.newEventModalIsHidden);
-    const isAdmin = useSelector(state => state.admin.isAdmin);
+    const isSignedIn = useSelector(state => state.login.isSignedIn);
     const availableChangingRooms = useSelector(state => state.changingroom.availableChangingRooms);
     const fields = useSelector(state => state.field.fields);
     const availableFieldSizes = useSelector(state => state.fieldSize.availableFieldSizes);
@@ -158,7 +158,7 @@ const NewEventModalContainer = ({
 
     return <NewEventModalPresenter
                 isHidden={isHidden}
-                showAdminOptions={isAdmin}
+                showAdminOptions={isSignedIn}
                 recurringEventDateTo={recurringEventDateTo}
                 onRecurringEventDateToChange={handleRecurringEventDateToChange}
                 changingRoomTimeFrom={changingRoomTimeFrom}

@@ -1,23 +1,17 @@
 import {
-    SIGN_IN,
-    SIGN_OUT,
     SET_IS_SIGNED_IN,
     SET_USER_KEY
 } from "../constants/actionTypes";
 
+import {
+    AGIFBOOKING_USER_KEY
+} from "../constants/sessionKeys";
+
 export default function (state = {
-    isSignedIn: false,
-    userKey: ""
+    isSignedIn: sessionStorage.getItem(AGIFBOOKING_USER_KEY) ?? false,
+    userKey: sessionStorage.getItem(AGIFBOOKING_USER_KEY) ?? ""
 }, action) {
     switch (action.type) {
-        case SIGN_IN:
-            console.log(SIGN_IN);
-            break;
-
-        case SIGN_OUT:
-            console.log(SIGN_OUT);
-            break;
-
         case SET_IS_SIGNED_IN:
             console.log(SET_IS_SIGNED_IN);
             return {

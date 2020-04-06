@@ -11,8 +11,6 @@ export const SET_NON_APPROVED_EVENTS_COUNT = "SET_NON_APPROVED_EVENTS_COUNT";
 export const SET_AVAILABLE_FIELD_SIZES = "SET_AVAILABLE_FIELD_SIZES";
 
 // Login
-export const SIGN_IN = "SIGN_IN";
-export const SIGN_OUT = "SIGN_OUT";
 export const SET_IS_SIGNED_IN = "SET_IS_SIGNED_IN";
 export const SET_USER_KEY = "SET_USER_KEY";
 
