@@ -12,7 +12,6 @@ import {
     closeNewEventModal
 } from "./modals";
 
-
 export const getEventsBetweenDates = (startDate, endDate) => {
     return apiAction({
         url: ApiUrlFactory.events.getForWeek(startDate, endDate),
@@ -59,9 +58,7 @@ export const postEvent = (
             ChangingRoomTimeFrom: new Date(`${date} ${changingRoomTimeFrom}`).getUnixTimestamp(),
             ChangingRoomTimeTo: new Date(`${date} ${changingRoomTimeTo}`).getUnixTimestamp()
         },
-        onSuccess: () => {
-            return closeNewEventModal();
-        },
+        onSuccess: () => closeNewEventModal(),
         onFailure: () => console.log("Error when posting event")
     });
 };

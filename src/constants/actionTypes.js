@@ -27,13 +27,6 @@ export const FETCH_AVAILABLE_CHANGINGROOMS = "FETCH_AVAILABLE_CHANGINGROOMS";
 export const SET_CHANGINGROOMS = "SET_CHANGINGROOMS";
 export const SET_AVAILABLE_CHANGINGROOMS = "SET_AVAILABLE_CHANGINGROOMS";
 
-// Api
-export const API = "API";
-export const API_START = "API_START";
-export const API_END = "API_END";
-export const API_ERROR = "API_ERROR";
-export const API_DENIED = "API_DENIED";
-
 // Modals
 export const SET_ALTER_EVENT_MODAL_IS_HIDDEN = "SET_ALTER_EVENT_MODAL_IS_HIDDEN";
 export const SET_APPROVE_EVENT_MODAL_IS_HIDDEN = "SET_APPROVE_EVENT_MODAL_IS_HIDDEN";
@@ -48,3 +41,13 @@ export const SET_SELECTED_DATE = "SET_SELECTED_DATE";
 
 // Menu
 export const SET_IS_MENU_OPEN = "SET_IS_MENU_OPEN";
+
+// Api
+export const API = "API";
+export const API_START = "API_START";
+export const API_END = "API_END";
+export const API_ERROR = "API_ERROR";
+export const API_DENIED = "API_DENIED";
+
+// SessionStorage
+export const SESSION_STORAGE_SET_ITEM = "SESSION_STORAGE_SET_ITEM";

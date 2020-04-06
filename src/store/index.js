@@ -1,5 +1,6 @@
 import { createStore, applyMiddleware, combineReducers } from "redux";
 import apiMiddleware from "../middleware/apiMiddleware";
+import sessionStorageMiddleware from "../middleware/sessionStorageMiddleware";
 
 import admins from "../reducers/admins";
 import apiStatuses from "../reducers/apiStatuses";
@@ -27,6 +28,6 @@ const store = createStore(combineReducers({
     menu: menu,
     modal: modals,
     nonApprovedEvent: nonApprovedEvents
-}), applyMiddleware(apiMiddleware));
+}), applyMiddleware(apiMiddleware, sessionStorageMiddleware));
 
 export default store;
