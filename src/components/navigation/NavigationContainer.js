@@ -1,20 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, connect } from "react-redux";
 
 import {
     openMenu,
     closeMenu
 } from "../../actions/menu";
-
 import {
     setSelectedDate
 } from "../../actions/dates";
-
 import {
     openApproveEventModal,
     openNewEventModal,
     openLoginModal
 } from "../../actions/modals";
+import {
+    getNonApprovedEventsCount
+} from "../../actions/nonApprovedEvents";
 
 import NavigationPresenter from "./NavigationPresenter";
 
@@ -25,6 +26,13 @@ const NavigationContainer = ({
     const selectedDate = useSelector(state => state.date.selectedDate);
     const nonApprovedEventsCount = useSelector(state => state.nonApprovedEvent.nonApprovedEventsCount);
     const isSignedIn = useSelector(state => state.login.isSignedIn);
+    const userKey = useSelector(state => state.login.userKey);
+
+    useEffect(() => {
+        if (isSignedIn) {
+            dispatch(getNonApprovedEventsCount(userKey));
+        }
+    }, [isSignedIn]);
 
     const handleOpenMenuClick = () => {
         dispatch(openMenu());

@@ -15,7 +15,7 @@ const sessionStorageMiddleware = ({dispatch}) => next => action => {
     } = action.payload;
 
     sessionStorage.setItem(sessionKey, data);
-    
+
     dispatch(onSuccess());
 };
 
