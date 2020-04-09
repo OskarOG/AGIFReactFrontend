@@ -1,6 +1,8 @@
 import axios from "axios";
 import { API } from "../constants/actionTypes";
+import { AGIFBOOKING_USER_KEY } from "../constants/sessionKeys";
 import { apiStart, apiEnd, apiError, apiDenied } from "../actions/api";
+
 
 const apiMiddleware = ({dispatch}) => next => action => {
     if (action.type !== API) {
@@ -12,7 +14,6 @@ const apiMiddleware = ({dispatch}) => next => action => {
         url,
         method,
         data,
-        accessToken,
         label,
         onSuccess,
         onFailure
@@ -22,7 +23,11 @@ const apiMiddleware = ({dispatch}) => next => action => {
 
     axios.defaults.baseURL = process.env.NODE_ENV === "development" ? "https://localhost:44387/api" : "/api";
     axios.defaults.headers.common["Content-Type"] = "application/json";
-    axios.defaults.headers.common["Authorization"] = `${accessToken}`;
+
+    const userKey = sessionStorage.getItem(AGIFBOOKING_USER_KEY);
+    if (userKey !== null) {
+        axios.defaults.headers.common["Authorization"] = `${userKey}`;
+    };
     
     if (label) {
         dispatch(apiStart(label));

@@ -7,8 +7,7 @@ import {
 
 import {
     signin,
-    saveUserKeyAndSetSignedIn,
-    setUserKey
+    saveUserKeyAndSetSignedIn
 } from "../../../actions/login";
 
 import LoginModalPresenter from "../presenters/LoginModal";
@@ -45,7 +44,6 @@ const LoginModalContainer = ({
     const handleOnSignIn = () => {
         dispatch(signin(email, password, (userKey) => {
             dispatch(closeLoginModal());
-            dispatch(setUserKey(userKey));
             return saveUserKeyAndSetSignedIn(userKey);
         }));
     };

@@ -5,27 +5,27 @@ import {
 import { apiAction } from "./api";
 import ApiUrlFactory from "../factories/ApiUrlFactory";
 
-export const getNonApprovedEvents = userKey => {
+export const getNonApprovedEvents = () => {
     return apiAction({
-        url: ApiUrlFactory.nonApprovedEvents.get(userKey),
+        url: ApiUrlFactory.nonApprovedEvents.get(),
         label: "getNonApprovedEvents",
         onSuccess: setNonApprovedEvents,
         onFailure: () => console.log("Error when fetching non approved events")
     });
 };
 
-export const getNonApprovedEventsCount = userKey => {
+export const getNonApprovedEventsCount = () => {
     return apiAction({
-        url: ApiUrlFactory.nonApprovedEvents.getCount(userKey),
+        url: ApiUrlFactory.nonApprovedEvents.getCount(),
         label: "getNonApprovedEventsCount",
         onSuccess: setNonApprovedEventsCount,
         onFailure: () => console.log("Error when fetching non approved events count")
     });
 };
 
-export const approveEvent = (userKey, events) => {
+export const approveEvent = (events) => {
     return apiAction({
-        url: ApiUrlFactory.nonApprovedEvents.approve(userKey),
+        url: ApiUrlFactory.nonApprovedEvents.approve(),
         method: "PUT",
         label: "approveEvent",
         data: events,

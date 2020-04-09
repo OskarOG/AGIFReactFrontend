@@ -26,11 +26,10 @@ const NavigationContainer = ({
     const selectedDate = useSelector(state => state.date.selectedDate);
     const nonApprovedEventsCount = useSelector(state => state.nonApprovedEvent.nonApprovedEventsCount);
     const isSignedIn = useSelector(state => state.login.isSignedIn);
-    const userKey = useSelector(state => state.login.userKey);
 
     useEffect(() => {
         if (isSignedIn) {
-            dispatch(getNonApprovedEventsCount(userKey));
+            dispatch(getNonApprovedEventsCount());
         }
     }, [isSignedIn]);
 

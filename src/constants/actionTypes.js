@@ -12,7 +12,6 @@ export const SET_AVAILABLE_FIELD_SIZES = "SET_AVAILABLE_FIELD_SIZES";
 
 // Login
 export const SET_IS_SIGNED_IN = "SET_IS_SIGNED_IN";
-export const SET_USER_KEY = "SET_USER_KEY";
 
 // Changingrooms
 export const FETCH_CHANGINGROOMS = "FETCH_CHANGINGROOMS";

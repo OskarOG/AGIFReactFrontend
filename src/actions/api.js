@@ -24,7 +24,6 @@ export const apiAction = ({
     url = "",
     method = "GET",
     data = null,
-    accessToken = "",
     onSuccess,
     onFailure,
     label = ""
@@ -35,7 +34,6 @@ export const apiAction = ({
             url,
             method,
             data,
-            accessToken,
             onSuccess,
             onFailure,
             label
