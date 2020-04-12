@@ -60,7 +60,8 @@ const NewEventModalContainer = ({
     }, [isHidden]);
     
     const getFieldSizes = (date, timeFrom, timeTo, selectedFieldId) => {
-        if (date != "" && timeFrom != "" && timeTo != "" && selectedFieldId != -1) {
+        console.log(selectedFieldId);
+        if (date != "" && timeFrom != "" && timeTo != "" && selectedFieldId != -1 && selectedFieldId != "") {
             dispatch(getAvailableFieldSizes(selectedFieldId, new Date(date + " " + timeFrom), new Date(date + " " + timeTo)));
         };
     };
