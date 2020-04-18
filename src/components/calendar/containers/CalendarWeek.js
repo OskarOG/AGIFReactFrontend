@@ -5,6 +5,11 @@ import {
     getEventsBetweenDates
 } from "../../../actions/events";
 
+import {
+    WEEK_DAY_WIDTH,
+    MINUTE_HEIGHT
+} from "../../../constants/elementSizes";
+
 import CalendarWeekPresenter from "../presenters/CalendarWeek";
 import CalendarDayContainer from "./CalendarDay";
 
@@ -16,6 +21,18 @@ const CalendarWeekContainer = ({
     const isMenuOpen = useSelector(state => state.menu.isMenuOpen);
     const selectedDate = useSelector(state => state.date.selectedDate);
     const [weekDates, setWeekDates] = useState(getWeekDates(new Date().getWeekDateSpan().startDate));
+
+    useEffect(() => {
+        const currentDate = new Date();
+        
+        const dayNumb = currentDate.getDay() - 1;
+        let dayPixels = WEEK_DAY_WIDTH * dayNumb;
+        let scrollPixels = Math.round((((currentDate.getTime() - currentDate.setHours(0,0,0,0)) / 1000) / 60) - 100) * MINUTE_HEIGHT;
+
+        window.scrollTo(dayPixels, scrollPixels);
+
+        console.log(`DayNumber: ${dayNumb}, DayPixels: ${dayPixels}, ScrollPixels: ${scrollPixels}`);
+    }, []);
 
     useEffect(() => {
         const weekDateSpan = selectedDate.getWeekDateSpan();
