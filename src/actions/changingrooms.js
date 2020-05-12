@@ -1,7 +1,8 @@
 import {
     GET_ALL_CHANGINGROOMS,
     GET_CHANGINGROOMS_INBETWEEN,
-    SET_CHANGINGROOMS
+    SET_CHANGINGROOMS,
+    SET_AVAILABLE_CHANGINGROOMS
 } from "../constants/actionTypes";
 import { apiAction } from "./api";
 import ApiUrlFactory from "../factories/ApiUrlFactory";
@@ -19,11 +20,17 @@ export const getChangingroomsInbetween = (timeFrom, timeTo) => {
     return apiAction({
         url: ApiUrlFactory.changingRooms.get(timeFrom, timeTo),
         label: GET_CHANGINGROOMS_INBETWEEN,
-        onSuccess: setChangingrooms,
+        onSuccess: setAvailableChangingrooms,
         onFailure: () => console.log("Error when fetching changingrooms")
     });
 };
 
+export const setAvailableChangingrooms = changingrooms => {
+    return {
+        type: SET_AVAILABLE_CHANGINGROOMS,
+        payload: changingrooms
+    }
+};
 
 export const setChangingrooms = changingrooms => {
     return {

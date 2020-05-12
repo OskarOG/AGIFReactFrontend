@@ -54,6 +54,8 @@ const NewEventModalPresenter = ({
     const fieldSizesOpts = availableFieldSizes.map(fs => <option key={`NewEventModal-FieldSizeId-${fs.Id}`} value={fs.Id}>{fs.Size}</option>);
     const availableChangingRoomsOpts = availableChangingRooms.map(cr => <option key={`NewEventModal-ChangingRoomId-${cr.Id}`} value={cr.Id}>{cr.Name}</option>);
 
+    console.log(availableChangingRooms);
+
     return (
         <div className={"modal-overlay" + (isHidden ? " hidden" : "")}>
             <div className="modal-box">

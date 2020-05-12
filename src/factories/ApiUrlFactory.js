@@ -19,6 +19,6 @@ export default {
     },
     changingRooms: {
         getAll: () => `/ChangingRoom`,
-        get: (timeFrom, timeTo) => `/ChangingRoom?from=${timeFrom}&to=${timeTo}`
+        get: (timeFrom, timeTo) => `/ChangingRoom?from=${timeFrom.getUnixTimestamp()}&to=${timeTo.getUnixTimestamp()}`
     }
 }
