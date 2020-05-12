@@ -15,6 +15,10 @@ import {
     clearAvailableFieldSizes
 } from "../../../actions/fieldSizes";
 
+import {
+    getChangingroomsInbetween
+} from "../../../actions/changingrooms";
+
 import NewEventModalPresenter from "../presenters/NewEventModal";
 
 const NewEventModalContainer = ({
@@ -31,7 +35,6 @@ const NewEventModalContainer = ({
     const [recurringEventDateTo, setRecurringEventDateTo] = useState("");
     const [changingRoomTimeFrom, setChangingRoomTimeFrom] = useState("");
     const [changingRoomTimeTo, setChangingRoomTimeTo] = useState("");
-    const [changingRoomSelectIsDisabled, setChangingRoomSelectIsDisabled] = useState(true);
     const [selectedChangingRoomId, setSelectedChangingRoomId] = useState(-1);
     
     const [name, setName] = useState("");
@@ -58,11 +61,16 @@ const NewEventModalContainer = ({
             setNewEventIsPosted(false);
         };
     }, [isHidden]);
-    
+
     const getFieldSizes = (date, timeFrom, timeTo, selectedFieldId) => {
-        console.log(selectedFieldId);
         if (date != "" && timeFrom != "" && timeTo != "" && selectedFieldId != -1 && selectedFieldId != "") {
             dispatch(getAvailableFieldSizes(selectedFieldId, new Date(date + " " + timeFrom), new Date(date + " " + timeTo)));
+        };
+    };
+
+    const getChangingRooms = (crTimeFrom, crTimeTo) => {
+        if (date != "" && changingRoomTimeFrom != "" && changingRoomTimeTo != "") {
+            dispatch(getChangingroomsInbetween(new Date(date + " " + crTimeFrom), new Date(date + " " + crTimeTo)));
         };
     };
 
@@ -128,7 +136,7 @@ const NewEventModalContainer = ({
     };
 
     const handleOnChangingRoomTimeLeave = () => {
-        getFieldSizes(date, timeFrom, timeTo, selectedFieldId);
+        getChangingRooms(changingRoomTimeFrom, changingRoomTimeTo);
     };
 
     const handleOnCloseClick = () => {
@@ -167,7 +175,7 @@ const NewEventModalContainer = ({
                 changingRoomTimeTo={changingRoomTimeTo}
                 onChangingRoomTimeToChange={handleOnChangingRoomTimeToChange}
                 onChangingRoomTimeLeave={handleOnChangingRoomTimeLeave}
-                changingRoomSelectIsDisabled={changingRoomSelectIsDisabled}
+                changingRoomSelectIsDisabled={availableChangingRooms == null || availableChangingRooms.length <= 0}
                 selectedChangingRoomId={selectedChangingRoomId}
                 onChangingRoomIdChange={handleOnChangingRoomIdChange}
                 availableChangingRooms={availableChangingRooms}

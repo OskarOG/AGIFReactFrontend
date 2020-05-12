@@ -1,6 +1,4 @@
-import { 
-    FETCH_CHANGINGROOMS,
-    FETCH_AVAILABLE_CHANGINGROOMS,
+import {
     SET_CHANGINGROOMS,
     SET_AVAILABLE_CHANGINGROOMS
 } from "../constants/actionTypes";
@@ -10,14 +8,6 @@ export default function(state = {
     availableChangingRooms: []
 }, action) {
     switch (action.type) {
-        case FETCH_CHANGINGROOMS:
-            console.log(FETCH_CHANGINGROOMS);
-            break;
-
-        case FETCH_AVAILABLE_CHANGINGROOMS:
-            console.log(FETCH_AVAILABLE_CHANGINGROOMS);
-            break;
-
         case SET_CHANGINGROOMS:
             return {
                 ...state,
@@ -25,6 +15,7 @@ export default function(state = {
             };
 
         case SET_AVAILABLE_CHANGINGROOMS:
+            console.log(action.payload);
             return {
                 ...state,
                 availableChangingRooms: action.payload
