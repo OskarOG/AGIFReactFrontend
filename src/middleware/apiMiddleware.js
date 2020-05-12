@@ -26,7 +26,7 @@ const apiMiddleware = ({dispatch}) => next => action => {
 
     const userKey = sessionStorage.getItem(AGIFBOOKING_USER_KEY);
     if (userKey !== null) {
-        axios.defaults.headers.common["Authorization"] = `${userKey}`;
+        axios.defaults.headers.common["Authorization"] = `AgifAuth ${userKey}`;
     };
     
     if (label) {
