@@ -1,6 +1,17 @@
-import "./helpers/Prototypes";
 import React from "react";
-import ReactDOM from "react-dom";
-import App from "./components/App.js";
+import { render } from "react-dom";
 
-ReactDOM.render(<App />, document.getElementById("root"));
+import "./prototypes/DatePrototypes";
+import "./style.css";
+
+import { Provider } from "react-redux";
+import store from "./store";
+
+import App from "./components/App";
+
+render(
+    <Provider store={store}>
+        <App />
+    </Provider>,
+    document.getElementById("root")
+);
