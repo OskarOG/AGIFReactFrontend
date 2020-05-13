@@ -15,7 +15,6 @@ export default function(state = {
             };
 
         case SET_AVAILABLE_CHANGINGROOMS:
-            console.log(action.payload);
             return {
                 ...state,
                 availableChangingRooms: action.payload
