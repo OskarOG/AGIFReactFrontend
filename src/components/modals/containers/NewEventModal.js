@@ -16,7 +16,8 @@ import {
 } from "../../../actions/fieldSizes";
 
 import {
-    getChangingroomsInbetween
+    getChangingroomsInbetween,
+    clearAvailableChangingrooms
 } from "../../../actions/changingrooms";
 
 import NewEventModalPresenter from "../presenters/NewEventModal";
@@ -92,6 +93,7 @@ const NewEventModalContainer = ({
         setEventColor("");
 
         dispatch(clearAvailableFieldSizes());
+        dispatch(clearAvailableChangingrooms());
     };
 
     const isValidNewEvent = () => {

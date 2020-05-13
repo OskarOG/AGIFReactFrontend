@@ -25,6 +25,10 @@ export const getChangingroomsInbetween = (timeFrom, timeTo) => {
     });
 };
 
+export const clearAvailableChangingrooms = () => {
+    return setAvailableChangingrooms([]);
+};
+
 export const setAvailableChangingrooms = changingrooms => {
     return {
         type: SET_AVAILABLE_CHANGINGROOMS,
