@@ -64,13 +64,13 @@ const NewEventModalContainer = ({
 
     const getFieldSizes = (date, timeFrom, timeTo, selectedFieldId) => {
         if (date != "" && timeFrom != "" && timeTo != "" && selectedFieldId != -1 && selectedFieldId != "") {
-            dispatch(getAvailableFieldSizes(selectedFieldId, new Date(date + " " + timeFrom), new Date(date + " " + timeTo)));
+            dispatch(getAvailableFieldSizes(selectedFieldId, new Date(`${date}T${timeFrom}Z`), new Date(`${date}T${timeTo}Z`)));
         };
     };
 
     const getChangingRooms = (crTimeFrom, crTimeTo) => {
         if (date != "" && changingRoomTimeFrom != "" && changingRoomTimeTo != "") {
-            dispatch(getChangingroomsInbetween(new Date(date + " " + crTimeFrom), new Date(date + " " + crTimeTo)));
+            dispatch(getChangingroomsInbetween(new Date(`${date}T${crTimeFrom}Z`), new Date(`${date}T${crTimeTo}Z`)));
         };
     };
 

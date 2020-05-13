@@ -11,11 +11,11 @@ export default function (state = {
             console.log(SET_EVENTS);
 
             action.payload.forEach(e => {
-                e.TimeFrom = new Date(`${e.TimeFrom}`);
-                e.TimeTo = new Date(`${e.TimeTo}`);
+                e.TimeFrom = new Date(`${e.TimeFrom}Z`);
+                e.TimeTo = new Date(`${e.TimeTo}Z`);
                 if (e.ChangingRoomTimeFrom !== null && e.ChangingRoomTimeTo !== null) {
-                    e.ChangingRoomTimeFrom = new Date(`${e.ChangingRoomTimeFrom}`);
-                    e.ChangingRoomTimeTo = new Date(`${e.ChangingRoomTimeTo}`);
+                    e.ChangingRoomTimeFrom = new Date(`${e.ChangingRoomTimeFrom}Z`);
+                    e.ChangingRoomTimeTo = new Date(`${e.ChangingRoomTimeTo}Z`);
                 }
             });
 
