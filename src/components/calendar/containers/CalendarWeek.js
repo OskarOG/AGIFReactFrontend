@@ -30,8 +30,6 @@ const CalendarWeekContainer = ({
         let scrollPixels = Math.round((((currentDate.getTime() - currentDate.setHours(0,0,0,0)) / 1000) / 60) - 100) * MINUTE_HEIGHT;
 
         window.scrollTo(dayPixels, scrollPixels);
-
-        console.log(`DayNumber: ${dayNumb}, DayPixels: ${dayPixels}, ScrollPixels: ${scrollPixels}`);
     }, []);
 
     useEffect(() => {
