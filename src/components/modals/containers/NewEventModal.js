@@ -69,7 +69,7 @@ const NewEventModalContainer = ({
         };
     };
 
-    const getChangingRooms = (crTimeFrom, crTimeTo) => {
+    const getChangingRooms = (date, crTimeFrom, crTimeTo) => {
         if (date != "" && changingRoomTimeFrom != "" && changingRoomTimeTo != "") {
             dispatch(getChangingroomsInbetween(new Date(`${date}T${crTimeFrom}Z`), new Date(`${date}T${crTimeTo}Z`)));
         };
@@ -126,6 +126,7 @@ const NewEventModalContainer = ({
     const handleOnDateChange = () => {
         setDate(event.target.value);
         getFieldSizes(event.target.value, timeFrom, timeTo, selectedFieldId);
+        getChangingRooms(event.target.value, changingRoomTimeFrom, changingRoomTimeTo);
     };
 
     const handleOnFieldIdChange = () => {
@@ -138,7 +139,7 @@ const NewEventModalContainer = ({
     };
 
     const handleOnChangingRoomTimeLeave = () => {
-        getChangingRooms(changingRoomTimeFrom, changingRoomTimeTo);
+        getChangingRooms(date, changingRoomTimeFrom, changingRoomTimeTo);
     };
 
     const handleOnCloseClick = () => {

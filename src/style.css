@@ -279,6 +279,7 @@ html, body {
     overflow:hidden;
     border: 1px solid rgb(189, 189, 189);
     z-index: 2600;
+    user-select: none;
 }
 
 .event-content h1 {

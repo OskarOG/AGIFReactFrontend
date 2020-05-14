@@ -1,5 +1,6 @@
 // Events
 export const SET_EVENTS = "SET_EVENTS";
+export const SET_SELECTED_EVENT = "SET_SELECTED_EVENT";
 
 // NonApprovedEvents
 export const SET_NON_APPROVED_EVENTS = "SET_NON_APPROVED_EVENTS";
