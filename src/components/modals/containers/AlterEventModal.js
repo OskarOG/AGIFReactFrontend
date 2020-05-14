@@ -14,7 +14,7 @@ import {
 } from "../../../actions/changingrooms";
 
 import AlterEventModalPresenter from "../presenters/AlterEventModal";
-import { getEventsBetweenDates, deleteEvent } from "../../../actions/events";
+import { getEventsBetweenDates, deleteEvent, updateEvent } from "../../../actions/events";
 
 const AlterEventModalContainer = ({
     dispatch
@@ -80,7 +80,7 @@ const AlterEventModalContainer = ({
         setTimeFrom(eventTimeFrom);
         setTimeTo(eventTimeTo);
         setSelectedFieldId(selectedEvent.FieldID);
-        setSelectedFieldSizeId(-1);
+        setSelectedFieldSizeId(selectedEvent.FieldSizeID);
         setComment(selectedEvent.Comment);
         setSelectedEventColor(selectedEvent.EventColor);
         
@@ -160,9 +160,23 @@ const AlterEventModalContainer = ({
     };
 
     const handleUpdateClick = () => {
-        // TODO: Dispatch update click with all the data. Then close modal.
         setEventIsUpdated(true);
-
+        dispatch(updateEvent(
+            selectedEvent.Id,
+            name,
+            email,
+            club,
+            team,
+            timeFrom,
+            timeTo,
+            date,
+            comment,
+            selectedEventColor,
+            selectedFieldId,
+            selectedFieldSizeId,
+            selectedChangingRoomId,
+            changingRoomTimeFrom,
+            changingRoomTimeTo));
     };
 
     return <AlterEventModalPresenter

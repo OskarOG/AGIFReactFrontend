@@ -64,12 +64,43 @@ export const postEvent = (
     });
 };
 
-export const updateEvent = (event) => {
+export const updateEvent = (
+    id,
+    name,
+    email,
+    club,
+    team,
+    timeFrom,
+    timeTo,
+    date,
+    comment,
+    eventColor,
+    fieldId,
+    fieldSizeId,
+    changingRoomId,
+    changingRoomTimeFrom,
+    changingRoomTimeTo
+) => {
     return apiAction({
         url: ApiUrlFactory.events.updateEvent(),
         method: "PUT",
         label: "updateEvent",
-        data: event,
+        data: {
+            Id: id,
+            Name: name,
+            Email: email,
+            Club: club,
+            Team: team,
+            TimeFrom: new Date(`${date} ${timeFrom}`).getUnixTimestamp(),
+            TimeTo: new Date(`${date} ${timeTo}`).getUnixTimestamp(),
+            Comment: comment,
+            EventColor: eventColor,
+            FieldID: fieldId,
+            FieldSizeID: fieldSizeId,
+            ChangingRoomID: changingRoomId,
+            ChangingRoomTimeFrom: new Date(`${date} ${changingRoomTimeFrom}`).getUnixTimestamp(),
+            ChangingRoomTimeTo: new Date(`${date} ${changingRoomTimeTo}`).getUnixTimestamp()
+        },
         onSuccess: () => closeAlterEventModal(),
         onFailure: () => console.log("Error when updating event")
     });
