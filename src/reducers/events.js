@@ -1,5 +1,6 @@
 import {
-    SET_EVENTS
+    SET_EVENTS,
+    SET_SELECTED_EVENT
 } from "../constants/actionTypes";
 
 export default function (state = {
@@ -22,6 +23,12 @@ export default function (state = {
             return {
                 ...state,
                 events: action.payload
+            };
+
+        case SET_SELECTED_EVENT:
+            return {
+                ...state,
+                selectedEvent: action.payload
             };
     };
     return state;

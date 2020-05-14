@@ -1,8 +1,18 @@
 import React from "react";
+import { connect } from "react-redux";
 
 import EventPresenter from "../presenters/Event";
 
+import {
+    setSelectedEvent
+} from "../../../actions/events";
+
+import {
+    openAlterEventModal
+} from "../../../actions/modals";
+
 const EventContainer = ({
+    dispatch,
     event
 }) => {
     const minPxlSize = 2.5; // If change timeline li height must change as well.
@@ -13,7 +23,8 @@ const EventContainer = ({
     let topPos = (Math.abs(zeroDate - event.TimeFrom) / 60 / 1000) * minPxlSize;
 
     const handleEventClick = () => {
-        // TODO: Dispatch show alter event modal.
+        dispatch(setSelectedEvent(event));
+        dispatch(openAlterEventModal());
     };
 
     return <EventPresenter divide={event.ShouldDivide}
@@ -33,4 +44,4 @@ const EventContainer = ({
                 changingRoomTimeTo={event.ChangingRoomTimeTo}  />
 };
 
-export default EventContainer;
+export default connect()(EventContainer);

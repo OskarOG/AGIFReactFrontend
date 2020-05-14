@@ -5,6 +5,14 @@ import {
     closeAlterEventModal
 } from "../../../actions/modals";
 
+import {
+    getAvailableFieldSizes
+} from "../../../actions/fieldSizes";
+
+import {
+    getChangingroomsInbetween
+} from "../../../actions/changingrooms";
+
 import AlterEventModalPresenter from "../presenters/AlterEventModal";
 
 const AlterEventModalContainer = ({
@@ -24,33 +32,59 @@ const AlterEventModalContainer = ({
     const [date, setDate] = useState("");
     const [timeFrom, setTimeFrom] = useState("");
     const [timeTo, setTimeTo] = useState("");
-    const [selectedFieldId, setSelectedFieldId] = useState(-1); // TODO: Show current selected
-    const [selectedFieldSizeId, setSelectedFieldSizeId] = useState(-1); // TODO: Show current selected
+    const [selectedFieldId, setSelectedFieldId] = useState(-1);
+    const [selectedFieldSizeId, setSelectedFieldSizeId] = useState(-1);
     const [changingRoomTimeFrom, setChangingRoomTimeFrom] = useState("");
     const [changingRoomTimeTo, setChangingRoomTimeTo] = useState("");
-    const [selectedChangingRoomId, setSelectedChangingRoomId] = useState(-1); // TODO: Show current selected
+    const [selectedChangingRoomId, setSelectedChangingRoomId] = useState(-1);
     const [comment, setComment] = useState("");
     const [selectedEventColor, setSelectedEventColor] = useState("");
+
+    const handleOnNameChange = () => setName(event.target.value);
+    const handleOnEmailChange = () => setEmail(event.target.value);
+    const handleOnTeamChange = () => setTeam(event.target.value);
+    const handleOnClubChange = () => setClub(event.target.value);
+    const handleOnTimeFromChange = () => setTimeFrom(event.target.value);
+    const handleOnTimeToChange = () => setTimeTo(event.target.value);
+    const handleOnSelectedFieldSizeIdChange = () => setSelectedFieldSizeId(event.target.value);
+    const handleOnChangingRoomTimeFromChange = () => setChangingRoomTimeFrom(event.target.value);
+    const handleOnChangingRoomTimeToChange = () => setChangingRoomTimeTo(event.target.value);
+    const handleOnChangingRoomIdChange = () => setSelectedChangingRoomId(event.target.value);
+    const handleOnCommentChange = () => setComment(event.target.value);
+    const handleOnColorChange = (color) => setSelectedEventColor(color);
 
     useEffect(() => {
         if (alterEventModalIsHidden) {
             return;
-        }
+        };
+        
+        const eventDateString = getDateString(selectedEvent);
+        const eventTimeFrom = getTimeString(selectedEvent.TimeFrom.getHours(), selectedEvent.TimeFrom.getMinutes());
+        const eventTimeTo = getTimeString(selectedEvent.TimeTo.getHours(), selectedEvent.TimeTo.getMinutes());
 
         setName(selectedEvent.Name);
         setEmail(selectedEvent.Email);
         setTeam(selectedEvent.Team);
         setClub(selectedEvent.Club);
-        setDate(getDateString(selectedEvent));
-        setTimeFrom(getTimeString(selectedEvent.TimeFrom.getHours(), selectedEvent.TimeFrom.getMinutes()));
-        setTimeTo(getTimeString(selectedEvent.TimeTo.getHours(), selectedEvent.TimeTo.getMinutes()));
-        setSelectedFieldId(-1); // TODO: Show current selected
+        setDate(eventDateString);
+        setTimeFrom(eventTimeFrom);
+        setTimeTo(eventTimeTo);
+        setSelectedFieldId(selectedEvent.FieldID); // TODO: Show current selected
         setSelectedFieldSizeId(-1); // TODO: Show current selected
-        setChangingRoomTimeFrom(getTimeString(selectedEvent.ChangingRoomTimeFrom.getHours(), selectedEvent.ChangingRoomTimeFrom.getMinutes()));
-        setChangingRoomTimeTo(getTimeString(selectedEvent.ChangingRoomTimeTo.getHours(), selectedEvent.ChangingRoomTimeTo.getMinutes()));
-        setSelectedChangingRoomId(-1); // TODO: Show current selected
         setComment(selectedEvent.Comment);
         setSelectedEventColor(selectedEvent.EventColor);
+        
+        if (selectedEvent.changingRoomTimeFrom != null && selectedEvent.changingRoomTimeTo != null) {
+            const eventCRTimeFrom = getTimeString(selectedEvent.ChangingRoomTimeFrom.getHours(), selectedEvent.ChangingRoomTimeFrom.getMinutes());
+            const eventCRTimeTo = getTimeString(selectedEvent.ChangingRoomTimeTo.getHours(), selectedEvent.ChangingRoomTimeTo.getMinutes());
+
+            setChangingRoomTimeFrom(eventCRTimeFrom);
+            setChangingRoomTimeTo(eventCRTimeTo);
+            setSelectedChangingRoomId(selectedEvent.ChangingRoomID);
+            getChangingRooms(eventDateString, eventCRTimeFrom, eventCRTimeTo);
+        };
+
+        getFieldSizes(eventDateString, eventTimeFrom, eventTimeTo, selectedEvent.FieldID);
     }, [alterEventModalIsHidden]);
 
     const clearInputData = () => {
@@ -61,77 +95,48 @@ const AlterEventModalContainer = ({
         setDate("");
         setTimeFrom("");
         setTimeTo("");
-        setSelectedFieldId(-1); // TODO: Show current selected
-        setSelectedFieldSizeId(-1); // TODO: Show current selected
+        setSelectedFieldId(-1);
+        setSelectedFieldSizeId(-1);
         setChangingRoomTimeFrom("");
         setChangingRoomTimeTo("");
-        setSelectedChangingRoomId(-1); // TODO: Show current selected
+        setSelectedChangingRoomId(-1);
         setComment("");
         setSelectedEventColor("");
+
+        // dispatch clear changingrooms
+        // dispatch clear field sizes
+        // dispatch clear selectedEvent
     };
 
-    const handleOnNameChange = () => {
-        setName(event.target.value);
+    const getFieldSizes = (date, timeFrom, timeTo, selectedFieldId) => {
+        if (date != "" && timeFrom != "" && timeTo != "" && selectedFieldId != -1 && selectedFieldId != "") {
+            dispatch(getAvailableFieldSizes(selectedFieldId, new Date(`${date}T${timeFrom}Z`), new Date(`${date}T${timeTo}Z`)));
+        };
     };
 
-    const handleOnEmailChange = () => {
-        setEmail(event.target.value);
-    };
-
-    const handleOnTeamChange = () => {
-        setTeam(event.target.value);
-    };
-
-    const handleOnClubChange = () => {
-        setClub(event.target.value);
-    };
-
-    const handleOnDateChange = () => {
-        setDate(event.target.value);
-    };
-
-    const handleOnTimeFromChange = () => {
-        setTimeFrom(event.target.value);
-    };
-
-    const handleOnTimeFromLeave = () => {
-        // TODO: Get available field and changingrooms.
-    };
-
-    const handleOnTimeToChange = () => {
-        setTimeTo(event.target.value);
-    };
-
-    const handleOnTimeToLeave = () => {
-        // TODO: Get available field and changingrooms.
+    const getChangingRooms = (date, crTimeFrom, crTimeTo) => {
+        if (date != "" && changingRoomTimeFrom != "" && changingRoomTimeTo != "") {
+            dispatch(getChangingroomsInbetween(new Date(`${date}T${crTimeFrom}Z`), new Date(`${date}T${crTimeTo}Z`)));
+        };
     };
 
     const handleOnSelectedFieldIdChange = () => {
         setSelectedFieldId(event.target.value);
+        getFieldSizes(date, timeFrom, timeTo, event.target.value);
     };
 
-    const handleOnSelectedFieldSizeIdChange = () => {
-        setSelectedFieldSizeId(event.target.value);
+    const handleOnDateChange = () => {
+        setDate(event.target.value);
+        getFieldSizes(event.target.value, timeFrom, timeTo, selectedFieldId);
+        getChangingRooms(event.target.value, changingRoomTimeFrom, changingRoomTimeTo);
     };
 
-    const handleOnChangingRoomTimeFromChange = () => {
-        setChangingRoomTimeFrom(event.target.value);
+    const handleOnTimeLeave = () => {
+        getFieldSizes(date, timeFrom, timeTo, selectedFieldId);
     };
 
-    const handleOnChangingRoomTimeToChange = () => {
-        setChangingRoomTimeTo(event.target.value);
-    };
-
-    const handleOnChangingRoomIdChange = () => {
-        setSelectedChangingRoomId(event.target.value);
-    };
-
-    const handleOnCommentChange = () => {
-        setComment(event.target.value);
-    };
-
-    const handleOnColorChange = (color) => {
-        setSelectedEventColor(color);
+    const handleOnChangingRoomTimeLeave = () => {
+        getChangingRooms(date, changingRoomTimeFrom, changingRoomTimeTo);
     };
 
     const handleCloseClick = () => {
@@ -162,10 +167,9 @@ const AlterEventModalContainer = ({
                 onDateChange={handleOnDateChange}
                 timeFrom={timeFrom}
                 onTimeFromChange={handleOnTimeFromChange}
-                onTimeFromLeave={handleOnTimeFromLeave}
                 timeTo={timeTo}
                 onTimeToChange={handleOnTimeToChange}
-                onTimeToLeave={handleOnTimeToLeave}
+                onTimeLeave={handleOnTimeLeave}
                 selectedField={selectedFieldId}
                 onSelectedFieldChange={handleOnSelectedFieldIdChange}
                 availableFields={availableFields}
@@ -176,6 +180,7 @@ const AlterEventModalContainer = ({
                 onChangingRoomTimeFromChange={handleOnChangingRoomTimeFromChange}
                 changingRoomTimeTo={changingRoomTimeTo}
                 onChangingRoomTimeToChange={handleOnChangingRoomTimeToChange}
+                onChangingRoomTimeLeave={handleOnChangingRoomTimeLeave}
                 selectedChangingRoom={selectedChangingRoomId}
                 onChangingRoomChange={handleOnChangingRoomIdChange}
                 availableChangingRooms={availableChangingRooms}

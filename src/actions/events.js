@@ -1,7 +1,8 @@
 import ApiUrlFactory from "../factories/ApiUrlFactory";
 
 import {
-    SET_EVENTS
+    SET_EVENTS,
+    SET_SELECTED_EVENT
 } from "../constants/actionTypes";
 
 import {
@@ -100,5 +101,12 @@ export const setEvents = (data) => {
     return {
         type: SET_EVENTS,
         payload: data
+    };
+};
+
+export const setSelectedEvent = event => {
+    return {
+        type: SET_SELECTED_EVENT,
+        payload: event
     };
 };
