@@ -10,7 +10,7 @@ import {
 } from "./api";
 
 import {
-    closeNewEventModal
+    closeNewEventModal, closeAlterEventModal
 } from "./modals";
 
 export const getEventsBetweenDates = (startDate, endDate) => {
@@ -70,29 +70,17 @@ export const updateEvent = (event) => {
         method: "PUT",
         label: "updateEvent",
         data: event,
-        onSuccess: () => {
-            console.log("TODO: fetch events");
-            return {
-                type: "",
-                payload: null
-            };
-        },
+        onSuccess: () => closeAlterEventModal(),
         onFailure: () => console.log("Error when updating event")
     });
 };
 
-export const deleteEvent = (id, userKey) => {
+export const deleteEvent = (id) => {
     return apiAction({
-        url: ApiUrlFactory.events.deleteEvent(id, userKey),
+        url: ApiUrlFactory.events.deleteEvent(id),
         method: "DELETE",
         label: "deleteEvent",
-        onSuccess: () => {
-            console.log("TODO: fetch events");
-            return {
-                type: "",
-                payload: null
-            };
-        },
+        onSuccess: () => closeAlterEventModal(),
         onFailure: () => console.log("Error when deleting event")
     });
 };
