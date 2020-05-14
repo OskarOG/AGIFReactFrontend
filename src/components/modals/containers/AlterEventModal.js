@@ -14,10 +14,14 @@ import {
 } from "../../../actions/changingrooms";
 
 import AlterEventModalPresenter from "../presenters/AlterEventModal";
+import { getEventsBetweenDates, deleteEvent } from "../../../actions/events";
 
 const AlterEventModalContainer = ({
     dispatch
 }) => {
+    const selectedDate = useSelector(state => state.date.selectedDate);
+    const [eventIsUpdated, setEventIsUpdated] = useState(false);
+
     const COLORS = useSelector(state => state.color.colors);
     const alterEventModalIsHidden = useSelector(state => state.modal.alterEventModalIsHidden);
     const selectedEvent = useSelector(state => state.event.selectedEvent);
@@ -54,10 +58,16 @@ const AlterEventModalContainer = ({
     const handleOnColorChange = (color) => setSelectedEventColor(color);
 
     useEffect(() => {
-        if (alterEventModalIsHidden) {
-            return;
+        if (eventIsUpdated) {
+            const weekDaySpan = selectedDate.getWeekDateSpan();
+            dispatch(getEventsBetweenDates(weekDaySpan.startDate, weekDaySpan.endDate));
+            setEventIsUpdated(false);
+        } else if (!alterEventModalIsHidden) {
+            initializeData();  
         };
-        
+    }, [alterEventModalIsHidden]);
+
+    const initializeData = () => {
         const eventDateString = getDateString(selectedEvent);
         const eventTimeFrom = getTimeString(selectedEvent.TimeFrom.getHours(), selectedEvent.TimeFrom.getMinutes());
         const eventTimeTo = getTimeString(selectedEvent.TimeTo.getHours(), selectedEvent.TimeTo.getMinutes());
@@ -85,7 +95,7 @@ const AlterEventModalContainer = ({
         };
 
         getFieldSizes(eventDateString, eventTimeFrom, eventTimeTo, selectedEvent.FieldID);
-    }, [alterEventModalIsHidden]);
+    };
 
     const clearInputData = () => {
         setName("");
@@ -145,11 +155,14 @@ const AlterEventModalContainer = ({
     };
 
     const handleDeleteClick = () => {
-        // TODO: Show confirm box and then delete.
+        setEventIsUpdated(true);
+        dispatch(deleteEvent(selectedEvent.Id));
     };
 
     const handleUpdateClick = () => {
         // TODO: Dispatch update click with all the data. Then close modal.
+        setEventIsUpdated(true);
+
     };
 
     return <AlterEventModalPresenter
