@@ -69,8 +69,8 @@ const AlterEventModalContainer = ({
         setDate(eventDateString);
         setTimeFrom(eventTimeFrom);
         setTimeTo(eventTimeTo);
-        setSelectedFieldId(selectedEvent.FieldID); // TODO: Show current selected
-        setSelectedFieldSizeId(-1); // TODO: Show current selected
+        setSelectedFieldId(selectedEvent.FieldID);
+        setSelectedFieldSizeId(-1);
         setComment(selectedEvent.Comment);
         setSelectedEventColor(selectedEvent.EventColor);
         
