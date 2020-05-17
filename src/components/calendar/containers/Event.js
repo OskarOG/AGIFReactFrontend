@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 
 import EventPresenter from "../presenters/Event";
 
@@ -17,14 +17,18 @@ const EventContainer = ({
 }) => {
     const minPxlSize = 2.5; // If change timeline li height must change as well.
 
+    const isSignedIn = useSelector(state => state.login.isSignedIn);
+
     const zeroDate = new Date(event.TimeFrom);
     zeroDate.setHours(0,0,0,0);
     let height = (Math.abs(event.TimeFrom - event.TimeTo) / 60 / 1000) * minPxlSize;
     let topPos = (Math.abs(zeroDate - event.TimeFrom) / 60 / 1000) * minPxlSize;
 
     const handleEventClick = () => {
-        dispatch(setSelectedEvent(event));
-        dispatch(openAlterEventModal());
+        if (isSignedIn){
+            dispatch(setSelectedEvent(event));
+            dispatch(openAlterEventModal());
+        };
     };
 
     return <EventPresenter divide={event.ShouldDivide}
