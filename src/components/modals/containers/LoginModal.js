@@ -48,6 +48,12 @@ const LoginModalContainer = ({
         }));
     };
 
+    const handleTextboxKeyPress = (e) => {
+        if (e.key == 'Enter') {
+            console.log("Enter pressed");
+        };
+    };
+
     return <LoginModalPresenter
                 isHidden={isHidden}
                 email={email}
@@ -55,7 +61,8 @@ const LoginModalContainer = ({
                 password={password}
                 onPasswordChange={handleOnPasswordChange}
                 onClose={handleOnClose}
-                onSignIn={handleOnSignIn} />
+                onSignIn={handleOnSignIn}
+                onTextboxKeyPress={handleTextboxKeyPress} />
 };
 
 export default connect()(LoginModalContainer);

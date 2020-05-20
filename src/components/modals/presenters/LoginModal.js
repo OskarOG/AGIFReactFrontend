@@ -7,7 +7,8 @@ const LoginModalPresenter = ({
     password,
     onPasswordChange,
     onClose,
-    onSignIn
+    onSignIn,
+    onTextboxKeyPress
 }) => {
     return (
         <div className={"login-modal-overlay " + (isHidden ? "hidden" : "")}>
@@ -16,11 +17,11 @@ const LoginModalPresenter = ({
                 <form>
                     <div>
                         <label className="label">Email address*</label>
-                        <input className="input" value={email} onChange={onEmailChange} type="email" placeholder="name@example.com" />
+                        <input className="input" value={email} onChange={onEmailChange} type="email" placeholder="name@example.com" onKeyPress={onTextboxKeyPress} />
                     </div>
                     <div>
                         <label className="label">Lösenord</label>
-                        <input className="input" value={password} onChange={onPasswordChange} type="password" />
+                        <input className="input" value={password} onChange={onPasswordChange} type="password" onKeyPress={onTextboxKeyPress} />
                     </div>
                 </form>
                 
