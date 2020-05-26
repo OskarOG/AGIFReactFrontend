@@ -42,15 +42,17 @@ const LoginModalContainer = ({
     };
 
     const handleOnSignIn = () => {
-        dispatch(signin(email, password, (userKey) => {
-            dispatch(closeLoginModal());
-            return saveUserKeyAndSetSignedIn(userKey);
-        }));
+        if (email !== "" && password !== "") {
+            dispatch(signin(email, password, (userKey) => {
+                dispatch(closeLoginModal());
+                return saveUserKeyAndSetSignedIn(userKey);
+            }));
+        };
     };
 
     const handleTextboxKeyPress = (e) => {
-        if (e.key == 'Enter') {
-            console.log("Enter pressed");
+        if (e.key === 'Enter'){
+            handleOnSignIn();
         };
     };
 
