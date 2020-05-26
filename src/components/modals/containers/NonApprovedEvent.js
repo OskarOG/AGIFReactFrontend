@@ -64,13 +64,13 @@ const NonApprovedEventContainer = ({
                 fieldSize={event.FieldSize}
                 weekDay={event.TimeFrom.getDay()}
                 date={event.TimeFrom.toLocaleDateString()}
-                timeFrom={event.TimeFrom}
-                timeTo={event.TimeTo}
+                timeFrom={event.TimeFrom.toLocaleTimeString()}
+                timeTo={event.TimeTo.toLocaleTimeString()}
                 comment={event.Comment}
-                changingRoomTimeFrom={changingRoomTimeFrom}
+                changingRoomTimeFrom={changingRoomTimeFrom !== "" ? changingRoomTimeFrom.toLocaleTimeString() : ""}
                 onChangingRoomTimeFromChange={handleChangingRoomTimeFromChange}
                 onChangingRoomTimeFromBlur={handleChangingRoomTimeFromBlur}
-                changingRoomTimeTo={changingRoomTimeTo}
+                changingRoomTimeTo={changingRoomTimeTo !== "" ? changingRoomTimeTo.toLocaleTimeString() : ""}
                 onChangingRoomTimeToChange={handleChangingRoomTimeToChange}
                 onChangingRoomTimeToBlur={handleChangingRoomTimeToBlur}
                 changingRooms={availableChangingRooms}
