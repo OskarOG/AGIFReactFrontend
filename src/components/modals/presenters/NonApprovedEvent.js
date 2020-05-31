@@ -26,10 +26,8 @@ const NonApprovedEventPresenter = ({
     eventColor,
     colors = [],
     onColorChange = () => {},
-    isApproved,
-    onIsApproveClick = () => {},
-    isDeclined,
-    onIsDeclinedClick = () => {}
+    reviewSelectedOption = "",
+    onRadioChange = () => {}
 }) => {
     const changingRoomOpts = changingRooms.map((ch) => <option key={ch.Id} value={ch.Id}>{ch.Name} - {ch.Size}</option>);
 
@@ -88,8 +86,14 @@ const NonApprovedEventPresenter = ({
             </div>
 
             <div className="decision-buttons">
-                <button type="button" className={"btn " + (isApproved ? "approve-selected" : "")} onClick={onIsApproveClick(eventId)}>Godkänn</button>
-                <button type="button" className={"btn " + (isDeclined ? "deny-selected" : "")} onClick={onIsDeclinedClick(eventId)}>Neka</button>
+                <div className="inputGroup">
+                    <input id={`radioReviewApproveId${eventId}`} type="radio" value="approved" checked={reviewSelectedOption === "approved"} onChange={onRadioChange} />
+                    <label className="approve" htmlFor={`radioReviewApproveId${eventId}`}>Godkänn</label>
+                </div>
+                <div className="inputGroup">
+                    <input id={`radioReviewDeclineId${eventId}`} type="radio" value="declined" checked={reviewSelectedOption === "declined"} onChange={onRadioChange} />
+                    <label className="decline" htmlFor={`radioReviewDeclineId${eventId}`}>Avböj</label>
+                </div>
             </div>
         </div>
     );

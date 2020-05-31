@@ -11,9 +11,9 @@ const NonApprovedEventContainer = ({
 
     const [changingRoomTimeFrom, setChangingRoomTimeFrom] = useState("");
     const [changingRoomTimeTo, setChangingRoomTimeTo] = useState("");
-    const [changingRoomSelectedId, setChangingRoomSelectedId] = useState(-1);
-    const [eventIsApproved, setEventIsApproved] = useState(false);
-    const [eventIsDeclined, setEventIsDeclined] = useState(false);
+    const [eventColor, setEventColor] = useState(event.EventColor);
+
+    const [reviewSelectedOption, setReviewSelectedOption] = useState("");
 
     const handleChangingRoomTimeFromChange = changingRoomFrom => {
         setChangingRoomTimeFrom(changingRoomFrom);
@@ -36,23 +36,13 @@ const NonApprovedEventContainer = ({
     };
 
     const handleColorChange = id => {
-        // Update color change somehow
+        setEventColor(id);
     };
 
-    const handleIsApproveClick = () => {
-        setEventIsApproved(true);
-        setEventIsDeclined(false);
-
-        // Dispatch approve and remove decline
+    const handleRadioChange = (e) => {
+        setReviewSelectedOption(e.target.value);
     };
-
-    const handleIsDeclinedClick = () => {
-        setEventIsDeclined(true);
-        setEventIsApproved(false);
-
-        // Dispatch decline and remove approve
-    };
-
+    
     return <NonApprovedEventPresenter
                 colors={COLORS}
                 eventId={event.Id}
@@ -75,12 +65,10 @@ const NonApprovedEventContainer = ({
                 onChangingRoomTimeToBlur={handleChangingRoomTimeToBlur}
                 changingRooms={availableChangingRooms}
                 onChangingRoomIdChange={handleChangingRoomSelectedIdChange}
-                eventColor={event.Color}
+                eventColor={eventColor}
                 onColorChange={handleColorChange}
-                isApproved={eventIsApproved}
-                onIsApproveClick={handleIsApproveClick}
-                isDeclined={eventIsDeclined}
-                onIsDeclinedClick={handleIsDeclinedClick} />
+                reviewSelectedOption={reviewSelectedOption}
+                onRadioChange={handleRadioChange} />
 };
 
 export default NonApprovedEventContainer;
