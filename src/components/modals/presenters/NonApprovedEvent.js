@@ -17,10 +17,9 @@ const NonApprovedEventPresenter = ({
     comment,
     changingRoomTimeFrom,
     onChangingRoomTimeFromChange = () => {},
-    onChangingRoomTimeFromBlur = () => {},
     changingRoomTimeTo,
     onChangingRoomTimeToChange = () => {},
-    onChangingRoomTimeToBlur = () => {},
+    onChangingRoomTimeBlur = () => {},
     changingRooms = [],
     onChangingRoomIdChange = () => {},
     eventColor,
@@ -55,7 +54,7 @@ const NonApprovedEventPresenter = ({
                             <input className="time-input approve-input" 
                                 value={changingRoomTimeFrom} 
                                 onChange={onChangingRoomTimeFromChange} 
-                                onBlur={onChangingRoomTimeFromBlur} 
+                                onBlur={onChangingRoomTimeBlur} 
                                 type="time" />
                             <span>-</span>
                         </div>
@@ -66,7 +65,7 @@ const NonApprovedEventPresenter = ({
                             <input className="time-input approve-input"
                                 value={changingRoomTimeTo} 
                                 onChange={onChangingRoomTimeToChange} 
-                                onBlur={onChangingRoomTimeToBlur} 
+                                onBlur={onChangingRoomTimeBlur} 
                                 type="time" />
                         </div>
                     </div>
