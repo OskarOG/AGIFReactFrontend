@@ -588,6 +588,7 @@ html, body {
 }
 
 .decision-buttons {
+    margin-top: 15px;
     margin-bottom: 10px;
     width: 90%;
 }
@@ -765,4 +766,8 @@ html, body {
     transform: translateY(-50%);
     cursor: pointer;
     visibility: hidden;
+}
+
+.inputGroup label:hover {
+    background-color: rgb(238, 238, 238);
 }
