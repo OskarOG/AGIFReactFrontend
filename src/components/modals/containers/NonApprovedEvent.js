@@ -1,34 +1,60 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useSelector, connect } from "react-redux";
+
+import {
+    getChangingroomsInbetween
+} from "../../../actions/changingrooms";
+
+import {
+    setCurrentHandledNonApprovedEventId
+} from "../../../actions/nonApprovedEvents";
 
 import NonApprovedEventPresenter from "../presenters/NonApprovedEvent";
 
 const NonApprovedEventContainer = ({
+    dispatch,
     event
 }) => {
     const COLORS = useSelector(state => state.color.colors);
-    const availableChangingRooms = useSelector(state => state.modal.nonApprovedEvents);
+    const availableChangingRooms = useSelector(state => state.changingroom.availableChangingRooms);
+    const currentHandledNonApprovedEventId = useSelector(state => state.nonApprovedEvent.currentHandledNonApprovedEventId);
 
     const [changingRoomTimeFrom, setChangingRoomTimeFrom] = useState("");
     const [changingRoomTimeTo, setChangingRoomTimeTo] = useState("");
     const [eventColor, setEventColor] = useState(event.EventColor);
 
-    const [reviewSelectedOption, setReviewSelectedOption] = useState("");
+    const [isCurrentHandledEvent, setIsCurrentHandeledEvent] = useState(false);
 
-    const handleChangingRoomTimeFromChange = changingRoomFrom => {
-        setChangingRoomTimeFrom(changingRoomFrom);
+    useEffect(() => {
+        setIsCurrentHandeledEvent(currentHandledNonApprovedEventId == event.Id);
+
+        if (currentHandledNonApprovedEventId != event.Id) {
+            setChangingRoomTimeFrom("");
+            setChangingRoomTimeTo("");
+        };
+
+    }, [availableChangingRooms]);
+
+    const handleChangingRoomTimeFromChange = e => {
+        setChangingRoomTimeFrom(e.target.value);
     };
 
-    const handleChangingRoomTimeFromBlur = () => {
-        // Fetch available changingrooms from API.
+    const handleChangingRoomTimeBlur = () => {
+        if (changingRoomTimeFrom !== "" && changingRoomTimeTo !== "") {
+            const year = event.TimeFrom.getFullYear();
+            const month = event.TimeFrom.getMonth() + 1;
+            const day = event.TimeFrom.getDate();
+            
+            const from = new Date(`${year}-${month}-${day} ${changingRoomTimeFrom}`);
+            const to = new Date(`${year}-${month}-${day} ${changingRoomTimeTo}`);
+            
+            dispatch(setCurrentHandledNonApprovedEventId(event.Id));
+            dispatch(getChangingroomsInbetween(from, to));
+        };
     };
 
-    const handleChangingRoomTimeToChange = changingRoomTo => {
-        setChangingRoomTimeTo(changingRoomTo);
-    };
-
-    const handleChangingRoomTimeToBlur = () => {
-        // Dispatch availablerooms to redux
+    const handleChangingRoomTimeToChange = e => {
+        setChangingRoomTimeTo(e.target.value);
     };
 
     const handleChangingRoomSelectedIdChange = id => {
@@ -39,10 +65,14 @@ const NonApprovedEventContainer = ({
         setEventColor(id);
     };
 
-    const handleRadioChange = (e) => {
-        setReviewSelectedOption(e.target.value);
+    const handleOnSendApprove = () => {
+        // TODO: Dispatch approve event
     };
-    
+
+    const handleOnSendDecline = () => {
+        // TODO: Dispatch decline event
+    };
+
     return <NonApprovedEventPresenter
                 colors={COLORS}
                 eventId={event.Id}
@@ -57,18 +87,18 @@ const NonApprovedEventContainer = ({
                 timeFrom={event.TimeFrom.toLocaleTimeString()}
                 timeTo={event.TimeTo.toLocaleTimeString()}
                 comment={event.Comment}
-                changingRoomTimeFrom={changingRoomTimeFrom !== "" ? changingRoomTimeFrom.toLocaleTimeString() : ""}
+                changingRoomTimeFrom={changingRoomTimeFrom}
                 onChangingRoomTimeFromChange={handleChangingRoomTimeFromChange}
-                onChangingRoomTimeFromBlur={handleChangingRoomTimeFromBlur}
-                changingRoomTimeTo={changingRoomTimeTo !== "" ? changingRoomTimeTo.toLocaleTimeString() : ""}
+                changingRoomTimeTo={changingRoomTimeTo}
                 onChangingRoomTimeToChange={handleChangingRoomTimeToChange}
-                onChangingRoomTimeToBlur={handleChangingRoomTimeToBlur}
+                onChangingRoomTimeBlur={handleChangingRoomTimeBlur}
                 changingRooms={availableChangingRooms}
                 onChangingRoomIdChange={handleChangingRoomSelectedIdChange}
                 eventColor={eventColor}
                 onColorChange={handleColorChange}
-                reviewSelectedOption={reviewSelectedOption}
-                onRadioChange={handleRadioChange} />
+                isCurrentHandeledEvent={isCurrentHandledEvent}
+                onSendApprove={handleOnSendApprove}
+                onSendDecline={handleOnSendDecline} />
 };
 
-export default NonApprovedEventContainer;
+export default connect()(NonApprovedEventContainer);

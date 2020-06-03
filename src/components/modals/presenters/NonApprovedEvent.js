@@ -25,8 +25,9 @@ const NonApprovedEventPresenter = ({
     eventColor,
     colors = [],
     onColorChange = () => {},
-    reviewSelectedOption = "",
-    onRadioChange = () => {}
+    isCurrentHandeledEvent = false,
+    onSendApprove = () => {},
+    onSendDecline = () => {}
 }) => {
     const changingRoomOpts = changingRooms.map((ch) => <option key={ch.Id} value={ch.Id}>{ch.Name} - {ch.Size}</option>);
 
@@ -74,9 +75,11 @@ const NonApprovedEventPresenter = ({
 
             <div className="non-approved-changingroom-select">
                 Omklädningsrum:
-                <select disabled={changingRooms == null || changingRooms.length == 0 } className="input" onChange={onChangingRoomIdChange} defaultValue="-1">
+                <select className="input"
+                        onChange={onChangingRoomIdChange}
+                        defaultValue="-1">
                     <option disabled value="-1">Välj omklädningsrum</option>
-                    {changingRoomOpts}
+                    {changingRooms == null || changingRooms.length == 0 || !isCurrentHandeledEvent ? "" : changingRoomOpts}
                 </select>
             </div>
 
@@ -84,8 +87,10 @@ const NonApprovedEventPresenter = ({
                 <ColorPicker selectedColor={eventColor} colors={colors} onColorChange={onColorChange} />
             </div>
 
-            
-
+            <div className="decision-buttons">
+                <button type="button" className={"btn deny-selected"} onClick={onSendDecline}>Neka</button>
+                <button type="button" className={"btn approve-selected"} onClick={onSendApprove}>Godkänn</button>
+            </div>
         </div>
     );
 };

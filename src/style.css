@@ -590,7 +590,8 @@ html, body {
 .decision-buttons {
     margin-top: 15px;
     margin-bottom: 10px;
-    width: 90%;
+    display: flex;
+    justify-content: center;
 }
 
 .decision-buttons .btn {
