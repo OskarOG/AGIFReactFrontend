@@ -84,16 +84,8 @@ const NonApprovedEventPresenter = ({
                 <ColorPicker selectedColor={eventColor} colors={colors} onColorChange={onColorChange} />
             </div>
 
-            <div className="decision-buttons">
-                <div className="inputGroup">
-                    <input id={`radioReviewApproveId${eventId}`} type="radio" value="approved" checked={reviewSelectedOption === "approved"} onChange={onRadioChange} />
-                    <label className="approve" htmlFor={`radioReviewApproveId${eventId}`}>Godkänn</label>
-                </div>
-                <div className="inputGroup">
-                    <input id={`radioReviewDeclineId${eventId}`} type="radio" value="declined" checked={reviewSelectedOption === "declined"} onChange={onRadioChange} />
-                    <label className="decline" htmlFor={`radioReviewDeclineId${eventId}`}>Avböj</label>
-                </div>
-            </div>
+            
+
         </div>
     );
 };
