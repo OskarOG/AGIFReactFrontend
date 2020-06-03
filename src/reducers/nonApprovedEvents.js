@@ -1,11 +1,13 @@
 import {
     SET_NON_APPROVED_EVENTS,
-    SET_NON_APPROVED_EVENTS_COUNT
+    SET_NON_APPROVED_EVENTS_COUNT,
+    SET_CURRENT_HANDLED_NON_APPROVED_EVENT_ID
 } from "../constants/actionTypes";
 
 export default function (state = {
     nonApprovedEvents: [],
-    nonApprovedEventsCount: 0
+    nonApprovedEventsCount: 0,
+    currentHandledNonApprovedEventId: -1
 }, action) {
     switch (action.type) {
         case SET_NON_APPROVED_EVENTS:
@@ -30,6 +32,13 @@ export default function (state = {
             return {
                 ...state,
                 nonApprovedEventsCount: action.payload
+            };
+
+        case SET_CURRENT_HANDLED_NON_APPROVED_EVENT_ID:
+            console.log(SET_CURRENT_HANDLED_NON_APPROVED_EVENT_ID);
+            return {
+                ...state,
+                currentHandledNonApprovedEventId: action.payload
             };
     };
     return state;
