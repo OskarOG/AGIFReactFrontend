@@ -28,17 +28,12 @@ const ApproveEventModalContainer = ({
         dispatch(closeApproveEventModal());
     };
 
-    const handleOnSend = () => {
-        // Dispatch send to events reducer.
-    };
-
     const nonApprovedEventViews = nonApprovedEvents.map((e) => <NonApprovedEventContainer key={e.Id} event={e} />);
 
     return <ApproveEventModalPresenter 
                 isHidden={approveEventModalIsHidden}
                 events={nonApprovedEventViews}
-                onClose={handleCloseModal}
-                onSend={handleOnSend} />
+                onClose={handleCloseModal} />
 };
 
 export default connect()(ApproveEventModalContainer);
