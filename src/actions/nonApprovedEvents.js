@@ -24,14 +24,14 @@ export const getNonApprovedEventsCount = () => {
     });
 };
 
-export const approveEvent = (events) => {
+export const approveEvent = (eventApproval, onSuccess = () => {}, onFailure = () => {}) => {
     return apiAction({
         url: ApiUrlFactory.nonApprovedEvents.approve(),
         method: "PUT",
         label: "approveEvent",
-        data: events,
-        onSuccess: () => console.log("TODO: Events approved"),
-        onFailure: () => console.log("Error when approving event")
+        data: eventApproval,
+        onSuccess: onSuccess,
+        onFailure: onFailure
     });
 };
 
