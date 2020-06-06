@@ -205,7 +205,7 @@ html, body {
 
 /* CalendarWeek style */
 .calendar-week {
-    width:2166px;
+    width:4265px;
     height:100%;
 }
 
@@ -311,7 +311,7 @@ html, body {
 
 /* Field style */
 .field {
-    width:150px;
+    width:300px;
     float: left;
 }
 

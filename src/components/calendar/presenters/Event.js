@@ -18,7 +18,7 @@ const EventPresenter = ({
     changingRoomTimeTo
 }) => {
     const divStyle = {
-        width: divide ? "74px" : "150px",
+        width: divide ? "149px" : "300px",
         height: height,
         top: top,
         marginLeft: shouldBeRight ? "75px" : "0px",
