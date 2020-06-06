@@ -6,7 +6,8 @@ import {
 } from "../../../actions/changingrooms";
 
 import {
-    setCurrentHandledNonApprovedEventId
+    setCurrentHandledNonApprovedEventId,
+    approveEvent
 } from "../../../actions/nonApprovedEvents";
 
 import NonApprovedEventPresenter from "../presenters/NonApprovedEvent";
@@ -19,6 +20,7 @@ const NonApprovedEventContainer = ({
     const availableChangingRooms = useSelector(state => state.changingroom.availableChangingRooms);
     const currentHandledNonApprovedEventId = useSelector(state => state.nonApprovedEvent.currentHandledNonApprovedEventId);
 
+    const [selectedChangingRoomId, setSelectedChangingRoomId] = useState(-1);
     const [changingRoomTimeFrom, setChangingRoomTimeFrom] = useState("");
     const [changingRoomTimeTo, setChangingRoomTimeTo] = useState("");
     const [eventColor, setEventColor] = useState(event.EventColor);
@@ -34,6 +36,21 @@ const NonApprovedEventContainer = ({
         };
 
     }, [availableChangingRooms]);
+
+    const getEventApprovalObject = isApproved => {
+        const year = event.TimeFrom.getFullYear();
+        const month = event.TimeFrom.getMonth() + 1;
+        const day = event.TimeFrom.getDate();
+
+        return {
+            Id: event.Id,
+            IsApproved: isApproved,
+            Color: eventColor,
+            ChangingRoomId: selectedChangingRoomId,
+            ChangingRoomTimeFrom: new Date(`${year}-${month}-${day} ${changingRoomTimeFrom}`).getUnixTimestamp(),
+            ChangingRoomTimeTo: new Date(`${year}-${month}-${day} ${changingRoomTimeTo}`).getUnixTimestamp()
+        };
+    };
 
     const handleChangingRoomTimeFromChange = e => {
         setChangingRoomTimeFrom(e.target.value);
@@ -57,8 +74,8 @@ const NonApprovedEventContainer = ({
         setChangingRoomTimeTo(e.target.value);
     };
 
-    const handleChangingRoomSelectedIdChange = id => {
-        setChangingRoomSelectedId(id);
+    const handleChangingRoomSelectedIdChange = e => {
+        setSelectedChangingRoomId(e.target.value);
     };
 
     const handleColorChange = id => {
@@ -66,11 +83,23 @@ const NonApprovedEventContainer = ({
     };
 
     const handleOnSendApprove = () => {
-        // TODO: Dispatch approve event
+        dispatch(approveEvent(getEventApprovalObject(true),
+        (data) => {
+            
+        },
+        (err) => {
+            
+        }));
     };
 
     const handleOnSendDecline = () => {
-        // TODO: Dispatch decline event
+        dispatch(approveEvent(getEventApprovalObject(false),
+        (data) => {
+            
+        },
+        (err) => {
+            
+        }));
     };
 
     return <NonApprovedEventPresenter
@@ -93,6 +122,7 @@ const NonApprovedEventContainer = ({
                 onChangingRoomTimeToChange={handleChangingRoomTimeToChange}
                 onChangingRoomTimeBlur={handleChangingRoomTimeBlur}
                 changingRooms={availableChangingRooms}
+                selectedChangingRoomId={selectedChangingRoomId}
                 onChangingRoomIdChange={handleChangingRoomSelectedIdChange}
                 eventColor={eventColor}
                 onColorChange={handleColorChange}
