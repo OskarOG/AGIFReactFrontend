@@ -17,10 +17,9 @@ const AlterEventModalPresenter = ({
     onDateChange,
     timeFrom,
     onTimeFromChange,
-    onTimeFromLeave,
     timeTo,
     onTimeToChange,
-    onTimeToLeave,
+    onTimeLeave,
     selectedField = -1,
     onSelectedFieldChange,
     availableFields,
@@ -31,6 +30,7 @@ const AlterEventModalPresenter = ({
     onChangingRoomTimeFromChange,
     changingRoomTimeTo,
     onChangingRoomTimeToChange,
+    onChangingRoomTimeLeave,
     selectedChangingRoom,
     onChangingRoomChange,
     availableChangingRooms,
@@ -78,14 +78,14 @@ const AlterEventModalPresenter = ({
                             <div className="time-input-div">
                                 <div>
                                     <div>Från</div>
-                                    <input className="time-input" value={timeFrom} onChange={onTimeFromChange} onBlur={onTimeFromLeave} type="time" />
+                                    <input className="time-input" value={timeFrom} onChange={onTimeFromChange} onBlur={onTimeLeave} type="time" />
                                     <span>-</span>
                                 </div>
                             </div>
                             <div className="time-input-div">
                                 <div>
                                     <div>Till</div>
-                                    <input className="time-input" value={timeTo} onChange={onTimeToChange} onBlur={onTimeToLeave} type="time" />
+                                    <input className="time-input" value={timeTo} onChange={onTimeToChange} onBlur={onTimeLeave} type="time" />
                                 </div>
                             </div>
                         </div>
@@ -111,7 +111,10 @@ const AlterEventModalPresenter = ({
                                 <div>
                                     <div>Från</div>
                                     <input className="time-input approve-input" 
-                                        value={changingRoomTimeFrom} onChange={onChangingRoomTimeFromChange} type="time" />
+                                            value={changingRoomTimeFrom} 
+                                            onChange={onChangingRoomTimeFromChange} 
+                                            onBlur={onChangingRoomTimeLeave}
+                                            type="time" />
                                     <span>-</span>
                                 </div>
                             </div>
@@ -119,7 +122,10 @@ const AlterEventModalPresenter = ({
                                 <div>
                                     <div>Till</div>
                                     <input className="time-input approve-input" 
-                                        value={changingRoomTimeTo} onChange={onChangingRoomTimeToChange} type="time" />
+                                        value={changingRoomTimeTo}
+                                        onChange={onChangingRoomTimeToChange}
+                                        onBlur={onChangingRoomTimeLeave}
+                                        type="time" />
                                 </div>
                             </div>
                         </div>

@@ -16,7 +16,8 @@ import {
 } from "../../../actions/fieldSizes";
 
 import {
-    getChangingroomsInbetween
+    getChangingroomsInbetween,
+    clearAvailableChangingrooms
 } from "../../../actions/changingrooms";
 
 import NewEventModalPresenter from "../presenters/NewEventModal";
@@ -64,13 +65,13 @@ const NewEventModalContainer = ({
 
     const getFieldSizes = (date, timeFrom, timeTo, selectedFieldId) => {
         if (date != "" && timeFrom != "" && timeTo != "" && selectedFieldId != -1 && selectedFieldId != "") {
-            dispatch(getAvailableFieldSizes(selectedFieldId, new Date(date + " " + timeFrom), new Date(date + " " + timeTo)));
+            dispatch(getAvailableFieldSizes(selectedFieldId, new Date(`${date}T${timeFrom}`), new Date(`${date}T${timeTo}`)));
         };
     };
 
-    const getChangingRooms = (crTimeFrom, crTimeTo) => {
+    const getChangingRooms = (date, crTimeFrom, crTimeTo) => {
         if (date != "" && changingRoomTimeFrom != "" && changingRoomTimeTo != "") {
-            dispatch(getChangingroomsInbetween(new Date(date + " " + crTimeFrom), new Date(date + " " + crTimeTo)));
+            dispatch(getChangingroomsInbetween(new Date(`${date}T${crTimeFrom}`), new Date(`${date}T${crTimeTo}`)));
         };
     };
 
@@ -92,6 +93,7 @@ const NewEventModalContainer = ({
         setEventColor("");
 
         dispatch(clearAvailableFieldSizes());
+        dispatch(clearAvailableChangingrooms());
     };
 
     const isValidNewEvent = () => {
@@ -124,6 +126,7 @@ const NewEventModalContainer = ({
     const handleOnDateChange = () => {
         setDate(event.target.value);
         getFieldSizes(event.target.value, timeFrom, timeTo, selectedFieldId);
+        getChangingRooms(event.target.value, changingRoomTimeFrom, changingRoomTimeTo);
     };
 
     const handleOnFieldIdChange = () => {
@@ -136,7 +139,7 @@ const NewEventModalContainer = ({
     };
 
     const handleOnChangingRoomTimeLeave = () => {
-        getChangingRooms(changingRoomTimeFrom, changingRoomTimeTo);
+        getChangingRooms(date, changingRoomTimeFrom, changingRoomTimeTo);
     };
 
     const handleOnCloseClick = () => {

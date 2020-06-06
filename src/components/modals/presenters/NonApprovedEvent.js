@@ -17,24 +17,28 @@ const NonApprovedEventPresenter = ({
     comment,
     changingRoomTimeFrom,
     onChangingRoomTimeFromChange = () => {},
-    onChangingRoomTimeFromBlur = () => {},
     changingRoomTimeTo,
     onChangingRoomTimeToChange = () => {},
-    onChangingRoomTimeToBlur = () => {},
+    onChangingRoomTimeBlur = () => {},
     changingRooms = [],
+    selectedChangingRoomId = -1,
     onChangingRoomIdChange = () => {},
     eventColor,
     colors = [],
     onColorChange = () => {},
-    isApproved,
-    onIsApproveClick = () => {},
-    isDeclined,
-    onIsDeclinedClick = () => {}
+    isCurrentHandeledEvent = false,
+    onSendApprove = () => {},
+    onSendDecline = () => {},
+    isLoading = false
 }) => {
     const changingRoomOpts = changingRooms.map((ch) => <option key={ch.Id} value={ch.Id}>{ch.Name} - {ch.Size}</option>);
 
     return (
         <div className="non-approved-event-box">
+            <div className={isLoading ? "non-approved-event-overlay-loader" : "hidden"}>
+                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+            </div>
+
             <h3>{ team } - { club }</h3>
             <p>
                 Namn: { name }<br />
@@ -57,7 +61,7 @@ const NonApprovedEventPresenter = ({
                             <input className="time-input approve-input" 
                                 value={changingRoomTimeFrom} 
                                 onChange={onChangingRoomTimeFromChange} 
-                                onBlur={onChangingRoomTimeFromBlur} 
+                                onBlur={onChangingRoomTimeBlur} 
                                 type="time" />
                             <span>-</span>
                         </div>
@@ -68,7 +72,7 @@ const NonApprovedEventPresenter = ({
                             <input className="time-input approve-input"
                                 value={changingRoomTimeTo} 
                                 onChange={onChangingRoomTimeToChange} 
-                                onBlur={onChangingRoomTimeToBlur} 
+                                onBlur={onChangingRoomTimeBlur} 
                                 type="time" />
                         </div>
                     </div>
@@ -77,9 +81,11 @@ const NonApprovedEventPresenter = ({
 
             <div className="non-approved-changingroom-select">
                 Omklädningsrum:
-                <select disabled={changingRooms == null || changingRooms.length == 0 } className="input" onChange={onChangingRoomIdChange} defaultValue="-1">
+                <select className="input"
+                        onChange={onChangingRoomIdChange}
+                        value={selectedChangingRoomId}>
                     <option disabled value="-1">Välj omklädningsrum</option>
-                    {changingRoomOpts}
+                    {changingRooms == null || changingRooms.length == 0 || !isCurrentHandeledEvent ? "" : changingRoomOpts}
                 </select>
             </div>
 
@@ -88,8 +94,8 @@ const NonApprovedEventPresenter = ({
             </div>
 
             <div className="decision-buttons">
-                <button type="button" className={"btn " + (isApproved ? "approve-selected" : "")} onClick={onIsApproveClick(eventId)}>Godkänn</button>
-                <button type="button" className={"btn " + (isDeclined ? "deny-selected" : "")} onClick={onIsDeclinedClick(eventId)}>Neka</button>
+                <button type="button" className={"btn deny-selected"} onClick={onSendDecline}>Neka</button>
+                <button type="button" className={"btn approve-selected"} onClick={onSendApprove}>Godkänn</button>
             </div>
         </div>
     );
