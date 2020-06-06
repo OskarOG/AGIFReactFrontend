@@ -1,7 +1,8 @@
 import {
     SET_NON_APPROVED_EVENTS,
     SET_NON_APPROVED_EVENTS_COUNT,
-    SET_CURRENT_HANDLED_NON_APPROVED_EVENT_ID
+    SET_CURRENT_HANDLED_NON_APPROVED_EVENT_ID,
+    REMOVE_HANDLED_NON_APPROVED_EVENT
 } from "../constants/actionTypes";
 
 export default function (state = {
@@ -39,6 +40,13 @@ export default function (state = {
             return {
                 ...state,
                 currentHandledNonApprovedEventId: action.payload
+            };
+
+        case REMOVE_HANDLED_NON_APPROVED_EVENT:
+            console.log(REMOVE_HANDLED_NON_APPROVED_EVENT)
+            return {
+                ...state,
+                nonApprovedEvents: state.nonApprovedEvents.filter(e => e.Id != action.payload)
             };
     };
     return state;

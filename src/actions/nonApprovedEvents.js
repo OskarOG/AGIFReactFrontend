@@ -1,7 +1,8 @@
 import {
     SET_NON_APPROVED_EVENTS,
     SET_NON_APPROVED_EVENTS_COUNT,
-    SET_CURRENT_HANDLED_NON_APPROVED_EVENT_ID
+    SET_CURRENT_HANDLED_NON_APPROVED_EVENT_ID,
+    REMOVE_HANDLED_NON_APPROVED_EVENT
 } from "../constants/actionTypes";
 import { apiAction } from "./api";
 import ApiUrlFactory from "../factories/ApiUrlFactory";
@@ -52,6 +53,13 @@ export const setNonApprovedEvents = nonapprovedEvents => {
 export const setCurrentHandledNonApprovedEventId = eventId => {
     return {
         type: SET_CURRENT_HANDLED_NON_APPROVED_EVENT_ID,
+        payload: eventId
+    };
+};
+
+export const removeHandledNonApprovedEvent = eventId => {
+    return {
+        type: REMOVE_HANDLED_NON_APPROVED_EVENT,
         payload: eventId
     };
 };
