@@ -21,6 +21,7 @@ const NonApprovedEventPresenter = ({
     onChangingRoomTimeToChange = () => {},
     onChangingRoomTimeBlur = () => {},
     changingRooms = [],
+    selectedChangingRoomId = -1,
     onChangingRoomIdChange = () => {},
     eventColor,
     colors = [],
@@ -77,7 +78,7 @@ const NonApprovedEventPresenter = ({
                 Omklädningsrum:
                 <select className="input"
                         onChange={onChangingRoomIdChange}
-                        defaultValue="-1">
+                        value={selectedChangingRoomId}>
                     <option disabled value="-1">Välj omklädningsrum</option>
                     {changingRooms == null || changingRooms.length == 0 || !isCurrentHandeledEvent ? "" : changingRoomOpts}
                 </select>
