@@ -26,6 +26,7 @@ const NonApprovedEventContainer = ({
     const [eventColor, setEventColor] = useState(event.EventColor);
 
     const [isCurrentHandledEvent, setIsCurrentHandeledEvent] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         setIsCurrentHandeledEvent(currentHandledNonApprovedEventId == event.Id);
@@ -83,23 +84,17 @@ const NonApprovedEventContainer = ({
     };
 
     const handleOnSendApprove = () => {
+        setIsLoading(true);
         dispatch(approveEvent(getEventApprovalObject(true),
-        (data) => {
-            
-        },
-        (err) => {
-            
-        }));
+        () => setIsLoading(false),
+        () => setIsLoading(false)));
     };
 
     const handleOnSendDecline = () => {
+        setIsLoading(true);
         dispatch(approveEvent(getEventApprovalObject(false),
-        (data) => {
-            
-        },
-        (err) => {
-            
-        }));
+        () => setIsLoading(false),
+        () => setIsLoading(false)));
     };
 
     return <NonApprovedEventPresenter
@@ -128,7 +123,8 @@ const NonApprovedEventContainer = ({
                 onColorChange={handleColorChange}
                 isCurrentHandeledEvent={isCurrentHandledEvent}
                 onSendApprove={handleOnSendApprove}
-                onSendDecline={handleOnSendDecline} />
+                onSendDecline={handleOnSendDecline}
+                isLoading={isLoading} />
 };
 
 export default connect()(NonApprovedEventContainer);
