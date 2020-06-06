@@ -7,7 +7,8 @@ import {
 
 import {
     setCurrentHandledNonApprovedEventId,
-    approveEvent
+    approveEvent,
+    removeHandledNonApprovedEvent
 } from "../../../actions/nonApprovedEvents";
 
 import NonApprovedEventPresenter from "../presenters/NonApprovedEvent";
@@ -86,14 +87,20 @@ const NonApprovedEventContainer = ({
     const handleOnSendApprove = () => {
         setIsLoading(true);
         dispatch(approveEvent(getEventApprovalObject(true),
-        () => setIsLoading(false),
+        () => {
+            setIsLoading(false)
+            dispatch(removeHandledNonApprovedEvent(event.Id));
+        },
         () => setIsLoading(false)));
     };
 
     const handleOnSendDecline = () => {
         setIsLoading(true);
         dispatch(approveEvent(getEventApprovalObject(false),
-        () => setIsLoading(false),
+        () => {
+            setIsLoading(false);
+            dispatch(removeHandledNonApprovedEvent(event.Id));
+        },
         () => setIsLoading(false)));
     };
 
