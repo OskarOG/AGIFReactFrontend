@@ -39,7 +39,10 @@ const apiMiddleware = ({dispatch}) => next => action => {
         [dataOrParams]: data
     })
     .then(({data}) => {
-        dispatch(onSuccess(data));
+        var reducerObject = onSuccess(data);
+        if (reducerObject !== undefined) {
+            dispatch(reducerObject);
+        };
     })
     .catch(error => {
         dispatch(apiError(error));
