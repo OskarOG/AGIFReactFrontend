@@ -28,12 +28,17 @@ const NonApprovedEventPresenter = ({
     onColorChange = () => {},
     isCurrentHandeledEvent = false,
     onSendApprove = () => {},
-    onSendDecline = () => {}
+    onSendDecline = () => {},
+    isLoading = false
 }) => {
     const changingRoomOpts = changingRooms.map((ch) => <option key={ch.Id} value={ch.Id}>{ch.Name} - {ch.Size}</option>);
 
     return (
         <div className="non-approved-event-box">
+            <div className={isLoading ? "non-approved-event-overlay-loader" : "hidden"}>
+                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+            </div>
+
             <h3>{ team } - { club }</h3>
             <p>
                 Namn: { name }<br />
