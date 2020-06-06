@@ -36,7 +36,7 @@ const NonApprovedEventPresenter = ({
     return (
         <div className="non-approved-event-box">
             <div className={isLoading ? "non-approved-event-overlay-loader" : "hidden"}>
-                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+                <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
             </div>
 
             <h3>{ team } - { club }</h3>
