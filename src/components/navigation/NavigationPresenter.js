@@ -4,7 +4,7 @@ import "react-day-picker/lib/style.css";
 import DayPicker from "react-day-picker";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserCog, faSignOutAlt, faSignInAlt, faBars, faTimes, faStepForward, faStepBackward, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faUserCog, faSignOutAlt, faSignInAlt, faBars, faTimes, faStepForward, faStepBackward, faPlus, faClipboardCheck } from "@fortawesome/free-solid-svg-icons";
 
 const NavigationPresenter = ({
     drawerIsOpen,
@@ -64,7 +64,7 @@ const NavigationPresenter = ({
                 </div>
 
                 <div onClick={onShowApproveModalClick} className={"nav-item " + (isLoggedIn ? "" : "hidden")}>
-                    <FontAwesomeIcon className="nav-item-icon admin-icon" icon={ faUserCog } />
+                    <FontAwesomeIcon className="nav-item-icon event-review-icon" icon={ faClipboardCheck } />
                     <p className={(drawerIsOpen ? "" : "hidden")}>Godkänn förfrågningar <strong>{ nonApprovedCount }</strong></p>
                 </div>
                 
