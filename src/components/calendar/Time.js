@@ -8,7 +8,6 @@ const Time = () => {
         window.addEventListener('scroll', (e) => {
             if (e.currentTarget.scrollX != horiScroll) {
                 horiScroll = e.currentTarget.scrollX;
-                // window.requestAnimationFrame(() => document.getElementById("cal-time").style = "left:" + horiScroll + "px");
                 calTimeRef.current.style = "left:" + horiScroll + "px";
             };
         });
