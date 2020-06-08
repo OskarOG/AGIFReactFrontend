@@ -7,13 +7,17 @@ const TimelineContainer = ({
 }) => {
     const [timelinePos, setTimelinePos] = useState(0);
 
+    const setTimeline = () => {
+        const thisDate = new Date();
+        setTimelinePos(`${(((thisDate.getHours() * 60) + thisDate.getMinutes()) * 2.5) + 82}px`);
+    };
+
     useEffect(() => {
+        setTimeline();
+
         const d = new Date();
         setTimeout(() => {
-            setInterval(() => {
-                const thisDate = new Date();
-                setTimelinePos(`${(((thisDate.getHours() * 60) + thisDate.getMinutes()) * 2.5) + 82}px`);
-            }, 60000);
+            setInterval(setTimeline, 60000);
         }, (60 - d.getSeconds()) * 1000);
     }, []);
 
