@@ -1,22 +1,24 @@
 import {
-    SESSION_STORAGE_SET_ITEM
+    SESSION_STORAGE_SET_ITEM,
+    SESSION_STORAGE_REMOVE_ITEM
 } from "../constants/actionTypes";
 
 const sessionStorageMiddleware = ({dispatch}) => next => action => {
-    if (action.type !== SESSION_STORAGE_SET_ITEM) {
-        next(action);
-        return;
+    switch(action.type) {
+        case SESSION_STORAGE_SET_ITEM:
+            sessionStorage.setItem(action.payload.sessionKey, action.payload.data);
+            break;
+
+        case SESSION_STORAGE_REMOVE_ITEM:
+            sessionStorage.removeItem(action.payload.sessionKey);
+            break;
+
+        default:
+            next(action);
+            return;
     };
 
-    const {
-        sessionKey,
-        data,
-        onSuccess
-    } = action.payload;
-
-    sessionStorage.setItem(sessionKey, data);
-
-    dispatch(onSuccess());
+    dispatch(action.payload.onSuccess());
 };
 
 export default sessionStorageMiddleware;
