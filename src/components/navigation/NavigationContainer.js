@@ -5,17 +5,24 @@ import {
     openMenu,
     closeMenu
 } from "../../actions/menu";
+
 import {
     setSelectedDate
 } from "../../actions/dates";
+
 import {
     openApproveEventModal,
     openNewEventModal,
     openLoginModal
 } from "../../actions/modals";
+
 import {
     getNonApprovedEventsCount
 } from "../../actions/nonApprovedEvents";
+
+import {
+    signout
+} from "../../actions/login";
 
 import NavigationPresenter from "./NavigationPresenter";
 
@@ -66,7 +73,7 @@ const NavigationContainer = ({
     };
 
     const handleLogoutClick = () => {
-        // Dispatch SIGN_OUT
+        dispatch(signout());
     };
 
     return <NavigationPresenter
