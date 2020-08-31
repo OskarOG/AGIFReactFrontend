@@ -8,7 +8,7 @@ const apiMiddleware = ({dispatch}) => next => action => {
     if (action.type !== API) {
         next(action);
         return;
-    };
+    }
 
     const {
         url,
@@ -21,25 +21,25 @@ const apiMiddleware = ({dispatch}) => next => action => {
 
     const dataOrParams = ["GET", "DELETE"].includes(method) ? "params" : "data";
 
-    axios.defaults.baseURL = process.env.NODE_ENV === "development" ? "https://localhost:44387/api" : "/api";
+    axios.defaults.baseURL = process.env.NODE_ENV === "development" ? "http://172.20.126.138/api" : "/api";
     axios.defaults.headers.common["Content-Type"] = "application/json";
 
     const userKey = sessionStorage.getItem(AGIFBOOKING_USER_KEY);
     if (userKey !== null) {
         axios.defaults.headers.common["Authorization"] = `AgifAuth ${userKey}`;
-    };
+    }
     
     if (label) {
         dispatch(apiStart(label));
-    };
+    }
 
     axios({
         url,
         method,
         [dataOrParams]: data
     })
-    .then(({data}) => {
-        var reducerObject = onSuccess(data);
+    .then(({data: result}) => {
+        var reducerObject = onSuccess(result);
         if (reducerObject !== undefined) {
             dispatch(reducerObject);
         };
