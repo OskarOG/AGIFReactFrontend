@@ -21,7 +21,7 @@ const EventPresenter = ({
         width: divide ? "149px" : "300px",
         height: height,
         top: top,
-        marginLeft: shouldBeRight ? "75px" : "0px",
+        marginLeft: shouldBeRight ? "150px" : "0px",
         marginRight: divide ? "1px" : "0"
     };
 
