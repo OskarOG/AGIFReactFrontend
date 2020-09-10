@@ -680,7 +680,7 @@ html, body {
 /* Timeline style */
 .timeline {
     content: '';
-    width: 2166px;
+    width: 4263px;
     height: 1px;
     border-bottom: 1px solid red;
     display: block;
