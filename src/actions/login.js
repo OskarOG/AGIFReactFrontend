@@ -5,6 +5,10 @@ import {
     SESSION_STORAGE_SET_ITEM,
     SESSION_STORAGE_REMOVE_ITEM
 } from "../constants/actionTypes";
+import {
+    SIGNING_LABEL,
+    SIGNOUT_LABEL
+} from "../constants/apiLabelConstants";
 import { apiAction } from "./api";
 import {
     AGIFBOOKING_USER_KEY
@@ -15,7 +19,7 @@ export const signin = (username, password, onSuccess) => {
     return apiAction({
         url: ApiUrlFactory.login.signin(username, password),
         method: "GET",
-        label: "signin",
+        label: SIGNING_LABEL,
         onSuccess: onSuccess,
         onFailure: () => console.log("Error when signing in")
     });
@@ -25,7 +29,7 @@ export const signout = () => {
     return apiAction({
         url: ApiUrlFactory.login.signout(),
         method: "DELETE",
-        label: "signout",
+        label: SIGNOUT_LABEL,
         onSuccess: removeUserKeyAndSetSignedOut,
         onFailure: () => console.log("Error when signing out")
     })

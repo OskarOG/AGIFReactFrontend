@@ -4,6 +4,12 @@ import {
     SET_EVENTS,
     SET_SELECTED_EVENT
 } from "../constants/actionTypes";
+import {
+    DELETE_EVENT_LABEL,
+    GET_EVENTS_BETWEEN_DATES_LABEL,
+    POST_EVENT_LABEL,
+    UPDATE_EVENT_LABEL
+} from "../constants/apiLabelConstants";
 
 import {
     apiAction
@@ -16,7 +22,7 @@ import {
 export const getEventsBetweenDates = (startDate, endDate) => {
     return apiAction({
         url: ApiUrlFactory.events.getForWeek(startDate, endDate),
-        label: "getEventsBetweenDates",
+        label: GET_EVENTS_BETWEEN_DATES_LABEL,
         onSuccess: setEvents,
         onFailure: () => console.log("Error when fetching events")
     });
@@ -42,7 +48,7 @@ export const postEvent = (
     return apiAction({
         url: ApiUrlFactory.events.postEvent(),
         method: "POST",
-        label: "postEvent",
+        label: POST_EVENT_LABEL,
         data: {
             Name: name,
             Email: email,
@@ -84,7 +90,7 @@ export const updateEvent = (
     return apiAction({
         url: ApiUrlFactory.events.updateEvent(),
         method: "PUT",
-        label: "updateEvent",
+        label: UPDATE_EVENT_LABEL,
         data: {
             Id: id,
             Name: name,
@@ -110,7 +116,7 @@ export const deleteEvent = (id) => {
     return apiAction({
         url: ApiUrlFactory.events.deleteEvent(id),
         method: "DELETE",
-        label: "deleteEvent",
+        label: DELETE_EVENT_LABEL,
         onSuccess: () => closeAlterEventModal(),
         onFailure: () => console.log("Error when deleting event")
     });

@@ -5,11 +5,12 @@ import {
 } from "../constants/actionTypes";
 
 import { apiAction } from "./api"
+import { GET_AVAILABLE_FIELDSIZES_LABEL } from "../constants/apiLabelConstants";
 
 export const getAvailableFieldSizes = (fieldId, timeFrom, timeTo) => {
     return apiAction({
         url: ApiUrlFactory.fields.getFieldSizes(fieldId, timeFrom, timeTo),
-        label: "getAvailableFieldSizes",
+        label: GET_AVAILABLE_FIELDSIZES_LABEL,
         onSuccess: setFieldSizes,
         onFailure: () => console.log("Error when getting field sizes")
     });
